@@ -236,7 +236,22 @@ public class ByteBufAllocatorAllocPatternBenchmark {
 
         @TearDown
         public void tearDown() {
+            printProcRSS();
             releaseBufferArray(buffers);
+        }
+
+        private static void printProcRSS() {
+            try {
+                java.util.Optional<String> vmRSS = java.nio.file.Files.lines(
+                        java.nio.file.Paths.get("/proc/self/status"))
+                        .filter(l -> l.startsWith("VmRSS:")).findFirst();
+                java.util.Optional<String> vmHWM = java.nio.file.Files.lines(
+                        java.nio.file.Paths.get("/proc/self/status"))
+                        .filter(l -> l.startsWith("VmHWM:")).findFirst();
+                long rss = vmRSS.map(l -> Long.parseLong(l.trim().split("\\s+")[1]) / 1024).orElse(-1L);
+                long peak = vmHWM.map(l -> Long.parseLong(l.trim().split("\\s+")[1]) / 1024).orElse(-1L);
+                System.out.println("cRSS-pRSS:[" + rss + ", " + peak + "]");
+            } catch (Exception e) { }
         }
     }
 
