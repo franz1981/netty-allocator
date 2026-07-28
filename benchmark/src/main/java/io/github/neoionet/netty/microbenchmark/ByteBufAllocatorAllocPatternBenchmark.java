@@ -41,6 +41,7 @@ import org.openjdk.jmh.runner.Runner;
 import org.openjdk.jmh.runner.RunnerException;
 import org.openjdk.jmh.runner.options.Options;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
+import org.openjdk.jol.info.GraphLayout;
 import java.util.SplittableRandom;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
@@ -236,7 +237,44 @@ public class ByteBufAllocatorAllocPatternBenchmark {
 
         @TearDown
         public void tearDown() throws InterruptedException {
+            printProcRSS();
+            printAllocatorRetained(allocator);
             releaseBufferArray(buffers);
+        }
+
+        private static void printAllocatorRetained(ByteBufAllocator allocator) {
+            try {
+                GraphLayout layout = GraphLayout.parseInstance(allocator);
+                long totalBytes = layout.totalSize();
+                String human;
+                if (totalBytes >= 1024L * 1024L) {
+                    human = String.format("%.2f MB", totalBytes / (1024.0 * 1024.0));
+                } else if (totalBytes >= 1024L) {
+                    human = String.format("%.2f KB", totalBytes / 1024.0);
+                } else {
+                    human = totalBytes + " B";
+                }
+                System.out.println("allocRetained:[" + human + "]");
+                if ("true".equals(System.getProperty("jol.footprint"))) {
+                    System.out.println(layout.toFootprint());
+                }
+            } catch (Exception e) {
+                System.err.println("JOL retained measurement failed: " + e.getMessage());
+            }
+        }
+
+        private static void printProcRSS() {
+            try {
+                java.util.Optional<String> vmRSS = java.nio.file.Files.lines(
+                        java.nio.file.Paths.get("/proc/self/status"))
+                        .filter(l -> l.startsWith("VmRSS:")).findFirst();
+                java.util.Optional<String> vmHWM = java.nio.file.Files.lines(
+                        java.nio.file.Paths.get("/proc/self/status"))
+                        .filter(l -> l.startsWith("VmHWM:")).findFirst();
+                long rss = vmRSS.map(l -> Long.parseLong(l.trim().split("\\s+")[1]) / 1024).orElse(-1L);
+                long peak = vmHWM.map(l -> Long.parseLong(l.trim().split("\\s+")[1]) / 1024).orElse(-1L);
+                System.out.println("cRSS-pRSS:[" + rss + ", " + peak + "]");
+            } catch (Exception e) { }
         }
     }
 
