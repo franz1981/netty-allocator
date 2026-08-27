@@ -238,7 +238,13 @@ public class ByteBufAllocatorAllocPatternBenchmark {
         @TearDown
         public void tearDown() throws InterruptedException {
             printProcRSS();
-            printAllocatorRetained(allocator);
+            // JOL walk disabled: it runs once per benchmark thread (32 concurrent graph walks of a
+            // multi-GB object graph), throws ~1.4M InaccessibleObjectExceptions, inflates RSS by
+            // 10+ GB at teardown and pollutes later threads' RSS prints and every profiler tail.
+            // Re-enable explicitly with -Djol.retained=true.
+            if (Boolean.getBoolean("jol.retained")) {
+                printAllocatorRetained(allocator);
+            }
             releaseBufferArray(buffers);
         }
 
