@@ -28,6 +28,7 @@ import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
 import org.openjdk.jmh.annotations.CompilerControl;
 import org.openjdk.jmh.annotations.Fork;
+import org.openjdk.jmh.annotations.Level;
 import org.openjdk.jmh.annotations.Measurement;
 import org.openjdk.jmh.annotations.Mode;
 import org.openjdk.jmh.annotations.OutputTimeUnit;
@@ -36,14 +37,27 @@ import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.Setup;
 import org.openjdk.jmh.annotations.State;
 import org.openjdk.jmh.annotations.TearDown;
+import org.openjdk.jmh.annotations.Threads;
 import org.openjdk.jmh.annotations.Warmup;
+import org.openjdk.jmh.infra.BenchmarkParams;
 import org.openjdk.jmh.runner.Runner;
 import org.openjdk.jmh.runner.RunnerException;
 import org.openjdk.jmh.runner.options.Options;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Set;
 import java.util.SplittableRandom;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
+import java.util.stream.Stream;
 
 /**
  * This is a modified portion of `io.netty.microbench.buffer.ByteBufAllocatorAllocPatternBenchmark`
@@ -125,6 +139,8 @@ public class ByteBufAllocatorAllocPatternBenchmark {
            "65536", // 64K buffers per thread
     })
     public int MAX_LIVE_BUFFERS;
+
+    public static Set<BenchmarkParams> benchParamsSet = ConcurrentHashMap.newKeySet();
 
     @State(Scope.Thread)
     public static class AllocationPatternState {
@@ -234,8 +250,61 @@ public class ByteBufAllocatorAllocPatternBenchmark {
             }
         }
 
+        private static final String netDataJavaRSSUrl =
+                "http://localhost:19999/api/v1/data?chart=app.java_mem_usage&points=1&after=-1&format=json";
+
+        private static void printNetDataRSS() throws Exception {
+            URL url = new URL(netDataJavaRSSUrl);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    System.out.print(line);
+                }
+            }
+            conn.disconnect();
+        }
+
+        private static void printProcRSS() throws Exception {
+            System.out.println("cRSS-pRSS:[" + ProcessMemoryUtil.getSelfRssKb() / 1024 + ", " +
+                    ProcessMemoryUtil.getSelfPeakRssKb() / 1024 + "]");
+        }
+
+        private void printUsedMemory(BenchmarkParams benchmarkParams) throws Exception {
+            long usedMem = 0;
+            if (allocator instanceof PooledByteBufAllocator) {
+                if (benchmarkParams.getBenchmark().contains("directAllocation")) {
+                    usedMem = ((PooledByteBufAllocator) allocator).metric().usedDirectMemory();
+                } else {
+                    usedMem = ((PooledByteBufAllocator) allocator).metric().usedHeapMemory();
+                }
+            }
+            if (allocator instanceof AdaptiveByteBufAllocator) {
+                if (benchmarkParams.getBenchmark().contains("directAllocation")) {
+                    usedMem = ((AdaptiveByteBufAllocator) allocator).usedDirectMemory();
+                } else {
+                    usedMem = ((AdaptiveByteBufAllocator) allocator).usedHeapMemory();
+                }
+            }
+            if (allocator instanceof MiByteBufAllocator) {
+                if (benchmarkParams.getBenchmark().contains("directAllocation")) {
+                    usedMem = ((MiByteBufAllocator) allocator).usedDirectMemory();
+                } else {
+                    usedMem = ((MiByteBufAllocator) allocator).usedHeapMemory();
+                }
+
+            }
+            System.out.println(";used-memory:[" + usedMem / 1024 / 1024 + "]");
+        }
+
         @TearDown
-        public void tearDown() throws InterruptedException {
+        public void tearDown(BenchmarkParams benchmarkParams) throws Exception {
+            if (benchParamsSet.add(benchmarkParams)) {
+                // printNetDataRSS();
+                printProcRSS();
+                printUsedMemory(benchmarkParams);
+            }
             releaseBufferArray(buffers);
         }
     }
@@ -244,6 +313,7 @@ public class ByteBufAllocatorAllocPatternBenchmark {
     public void setupAllocator() {
         allocator = allocatorType.create();
         sizesArray = sizePattern.create();
+        benchParamsSet.clear();
     }
 
     @Benchmark
@@ -261,5 +331,36 @@ public class ByteBufAllocatorAllocPatternBenchmark {
                 .include(ByteBufAllocatorAllocPatternBenchmark.class.getSimpleName())
                 .build();
         new Runner(opt).run();
+    }
+
+    private static final class ProcessMemoryUtil {
+
+        private ProcessMemoryUtil() {}
+
+        static long getSelfRssKb() {
+            return readField("VmRSS:");
+        }
+
+        static long getSelfPeakRssKb() {
+            return readField("VmHWM:");
+        }
+
+        private static long readField(String prefix) {
+            Path statusPath = Paths.get("/proc/self/status");
+            try (Stream<String> lines = Files.lines(statusPath)) {
+                return lines
+                        .filter(line -> line.startsWith(prefix))
+                        .findFirst()
+                        .map(ProcessMemoryUtil::parseKbLine)
+                        .orElseThrow(() -> new IllegalStateException(prefix + " not found in /proc/self/status"));
+            } catch (IOException e) {
+                throw new RuntimeException("Failed to read /proc/self/status", e);
+            }
+        }
+
+        private static long parseKbLine(String line) {
+            String[] parts = line.trim().split("\\s+");
+            return Long.parseLong(parts[1]);
+        }
     }
 }
