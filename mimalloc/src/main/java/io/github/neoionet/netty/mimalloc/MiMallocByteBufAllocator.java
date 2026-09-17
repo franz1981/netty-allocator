@@ -886,8 +886,14 @@ final class MiMallocByteBufAllocator {
             int pageSize = alignUp(requiredSize,
                     requiredSize > MEDIUM_PAGE_SIZE ? MEDIUM_PAGE_SIZE : SEGMENT_SLICE_SIZE);
             int slicesNeeded = pageSize >> SEGMENT_SLICE_SHIFT;
+            if (SEG_TELEMETRY) {
+                PAGE_ALLOC_ENTRIES.increment();
+            }
             Page page = segmentsPageFindAndAllocate(slicesNeeded);
             if (page == null) {
+                if (SEG_TELEMETRY) {
+                    PAGE_ALLOC_NO_SPAN.increment();
+                }
                 // No free page, allocate a new segment and try again.
                 if (segmentReclaimOrAlloc(slicesNeeded, blockSize) == null) {
                     // OOM or reclaimed a good page in the heap.
@@ -1394,6 +1400,15 @@ final class MiMallocByteBufAllocator {
             Segment segment = page.segment;
             // Mark it as free now.
             segmentPageClear(page);
+            if (SEG_TELEMETRY) {
+                PAGE_FREE_CALLS.increment();
+                if (segment.usedPages == 0) {
+                    PAGE_FREE_SEG_EMPTY.increment();
+                } else {
+                    PAGE_FREE_SEG_NONEMPTY.increment();
+                    PAGE_FREE_USEDPAGES_SUM.add(segment.usedPages);
+                }
+            }
             if (segment.usedPages == 0) {
                 // No more used pages; remove it from the free list and free the segment.
                 segmentFree(segment);
@@ -1780,8 +1795,14 @@ final class MiMallocByteBufAllocator {
                     if (index > heap.pageRetiredMax) {
                         heap.pageRetiredMax = index;
                     }
+                    if (SEG_TELEMETRY) {
+                        RETIRE_KEPT.increment();
+                    }
                     return; // don't free after all
                 }
+            }
+            if (SEG_TELEMETRY) {
+                RETIRE_FREED.increment();
             }
             heap.pageFree(page, pq);
         }
@@ -1891,9 +1912,105 @@ final class MiMallocByteBufAllocator {
         }
     }
 
+    static final boolean SEG_TELEMETRY =
+            Boolean.getBoolean("io.mimalloc.segTelemetry");
+    static final java.util.concurrent.atomic.LongAdder SEG_ALLOCS =
+            new java.util.concurrent.atomic.LongAdder();
+    static final java.util.concurrent.atomic.LongAdder SEG_ALLOC_BYTES =
+            new java.util.concurrent.atomic.LongAdder();
+    static final java.util.concurrent.atomic.LongAdder SEG_FREES =
+            new java.util.concurrent.atomic.LongAdder();
+    static final java.util.concurrent.atomic.LongAdder SEG_FREE_BYTES =
+            new java.util.concurrent.atomic.LongAdder();
+    static final java.util.concurrent.atomic.LongAdder PAGE_FREE_CALLS =
+            new java.util.concurrent.atomic.LongAdder();
+    static final java.util.concurrent.atomic.LongAdder PAGE_FREE_SEG_EMPTY =
+            new java.util.concurrent.atomic.LongAdder();
+    static final java.util.concurrent.atomic.LongAdder PAGE_FREE_SEG_NONEMPTY =
+            new java.util.concurrent.atomic.LongAdder();
+    static final java.util.concurrent.atomic.LongAdder PAGE_FREE_USEDPAGES_SUM =
+            new java.util.concurrent.atomic.LongAdder();
+    static final java.util.concurrent.atomic.LongAdder RETIRE_KEPT =
+            new java.util.concurrent.atomic.LongAdder();
+    static final java.util.concurrent.atomic.LongAdder RETIRE_FREED =
+            new java.util.concurrent.atomic.LongAdder();
+    static final java.util.concurrent.atomic.LongAdder PAGE_ALLOC_ENTRIES =
+            new java.util.concurrent.atomic.LongAdder();
+    static final java.util.concurrent.atomic.LongAdder PAGE_ALLOC_NO_SPAN =
+            new java.util.concurrent.atomic.LongAdder();
+    static final java.util.concurrent.atomic.LongAdder LIVE_BYTES =
+            new java.util.concurrent.atomic.LongAdder();
+    static volatile long LIVE_MAX;
+    static final StringBuilder LIVE_TRACE = new StringBuilder();
+    static {
+        if (SEG_TELEMETRY) {
+            Thread sampler = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    long t0 = System.nanoTime();
+                    while (true) {
+                        try { Thread.sleep(1000); } catch (InterruptedException e) { return; }
+                        long v = LIVE_BYTES.sum();
+                        if (v > LIVE_MAX) { LIVE_MAX = v; }
+                        synchronized (LIVE_TRACE) {
+                            LIVE_TRACE.append(String.format("  t=%-3d live=%.2f GB%n",
+                                    (System.nanoTime() - t0) / 1000000000L, v / 1073741824.0));
+                        }
+                    }
+                }
+            }, "mimalloc-live-sampler");
+            sampler.setDaemon(true);
+            sampler.start();
+            Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    System.err.printf("%n=== MIMALLOC SEGMENT TELEMETRY ===%n"
+                                    + "  segment.ALLOC  n=%,d  %.2f GB%n"
+                                    + "  segment.FREE   n=%,d  %.2f GB%n",
+                            SEG_ALLOCS.sum(), SEG_ALLOC_BYTES.sum() / 1073741824.0,
+                            SEG_FREES.sum(), SEG_FREE_BYTES.sum() / 1073741824.0);
+                    long ne = PAGE_FREE_SEG_NONEMPTY.sum();
+                    System.err.printf(
+                            "  pageFree calls n=%,d  -> segEmpty=%,d  segNONempty=%,d%n"
+                          + "  avg usedPages when NOT empty = %.2f%n"
+                          + "  pageRetire: KEPT(last page of bin)=%,d  FREED=%,d%n",
+                            PAGE_FREE_CALLS.sum(), PAGE_FREE_SEG_EMPTY.sum(), ne,
+                            ne == 0 ? 0.0 : (double) PAGE_FREE_USEDPAGES_SUM.sum() / ne,
+                            RETIRE_KEPT.sum(), RETIRE_FREED.sum());
+                    long pe = PAGE_ALLOC_ENTRIES.sum(), pm = PAGE_ALLOC_NO_SPAN.sum();
+                    System.err.printf("  page allocs: entries=%,d  no-span(new segment needed)=%,d"
+                            + "  served from EXISTING segment span=%,d (%.2f%%)%n",
+                            pe, pm, pe - 2 * pm, 100.0 * (pe - 2 * pm) / (pe - pm));
+                    System.err.printf("  LIVE segment bytes: max=%.2f GB%n%s",
+                            LIVE_MAX / 1073741824.0, LIVE_TRACE);
+                    try {
+                        Runtime rt = Runtime.getRuntime();
+                        System.err.printf("  JVM heap: total=%.2f GB used=%.2f GB max=%.2f GB%n",
+                                rt.totalMemory() / 1073741824.0,
+                                (rt.totalMemory() - rt.freeMemory()) / 1073741824.0,
+                                rt.maxMemory() / 1073741824.0);
+                        for (String l : java.nio.file.Files.readAllLines(
+                                java.nio.file.Paths.get("/proc/self/status"))) {
+                            if (l.startsWith("Vm") || l.startsWith("Rss") || l.startsWith("Hugetlb")) {
+                                System.err.println("  " + l);
+                            }
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }, "mimalloc-seg-telemetry"));
+        }
+    }
+
     private AbstractByteBuf newChunk(int size) {
         try {
             AbstractByteBuf buf = chunkAllocator.allocate(size, size);
+            if (SEG_TELEMETRY) {
+                SEG_ALLOCS.increment();
+                SEG_ALLOC_BYTES.add(size);
+                LIVE_BYTES.add(size);
+            }
             this.usedMemory.addAndGet(size);
             return buf;
         } catch (OutOfMemoryError e) {
@@ -1974,6 +2091,11 @@ final class MiMallocByteBufAllocator {
         void deallocate() {
             AbstractByteBuf delegate = this.delegate;
             assert delegate != null;
+            if (SEG_TELEMETRY) {
+                SEG_FREES.increment();
+                SEG_FREE_BYTES.add(this.segmentSize);
+                LIVE_BYTES.add(-this.segmentSize);
+            }
             delegate.release();
             this.parent.usedMemory.addAndGet(-this.segmentSize);
         }
