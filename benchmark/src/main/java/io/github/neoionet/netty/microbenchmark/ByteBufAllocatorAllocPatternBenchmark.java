@@ -21,6 +21,7 @@ import io.github.neoionet.netty.microbenchmark.data.ApiGatewayPattern;
 import io.netty.buffer.AdaptiveByteBufAllocator;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
+import io.netty.buffer.CycleArenaAllocator;
 import io.netty.buffer.PooledByteBufAllocator;
 import io.netty.util.ResourceLeakDetector;
 import io.netty.util.internal.MathUtil;
@@ -102,7 +103,8 @@ public class ByteBufAllocatorAllocPatternBenchmark {
     public enum AllocatorType {
         ADAPTIVE(AdaptiveByteBufAllocator::new),
         MIMALLOC(MiByteBufAllocator::new),
-        POOLED(() -> PooledByteBufAllocator.DEFAULT);
+        POOLED(() -> PooledByteBufAllocator.DEFAULT),
+        ARENA(CycleArenaAllocator::new);
         private final Supplier<ByteBufAllocator> factory;
         AllocatorType(Supplier<ByteBufAllocator> factory) {
             this.factory = factory;
@@ -190,10 +192,66 @@ public class ByteBufAllocatorAllocPatternBenchmark {
             nextSizeIndex = 0;
         }
 
+        // EXPERIMENT: -Dexpt.randomRelease=true releases a uniformly random live slot instead of the next one in the
+        // ring: lifetimes become geometric (same mean N) instead of exactly N.
+        static final boolean RANDOM_RELEASE = Boolean.getBoolean("expt.randomRelease");
+        private long rnd = 0x9E3779B97F4A7C15L;
         private int getNextReleaseIndex() {
+            if (RANDOM_RELEASE) {
+                long x = rnd; x ^= x << 13; x ^= x >>> 7; x ^= x << 17; rnd = x;
+                return (int) (x >>> 1) & (releaseIndexes.length - 1);
+            }
             int index = nextReleaseIndex;
             nextReleaseIndex = (nextReleaseIndex + 1) & (releaseIndexes.length - 1);
             return releaseIndexes[index];
+        }
+
+        // EXPERIMENT: reuse distance and 4 KiB page locality of the memory handed out.
+        static final boolean REUSE = Boolean.getBoolean("expt.reuse");
+        private final java.util.HashMap<Long, Long> lastFreed = new java.util.HashMap<Long, Long>();
+        private long opCount;
+        private final long[] hist = new long[12];
+        private long reuseSamples;
+        private final long[] recentPages = new long[64];
+        private int recentPos;
+        private long samePage8, samePage64, sameAsPrev, adjacentToPrev, distSum, distN;
+        private long prevPage = Long.MIN_VALUE;
+        private static long memKey(ByteBuf b) {
+            if (b.hasMemoryAddress()) { return b.memoryAddress(); }
+            return ((long) System.identityHashCode(b.array()) << 32) + b.arrayOffset();
+        }
+        void probeAlloc(ByteBuf b) {
+            if (!REUSE) { return; }
+            opCount++;
+            long key = memKey(b);
+            Long last = lastFreed.get(key);
+            int bucket = 11;
+            if (last != null) { long d = opCount - last; bucket = 0; while (d > 1 && bucket < 10) { d >>= 1; bucket++; } }
+            hist[bucket]++; reuseSamples++;
+            long page = key >> 12;
+            if (page == prevPage) { sameAsPrev++; } else if (Math.abs(page - prevPage) == 1) { adjacentToPrev++; }
+            if (prevPage != Long.MIN_VALUE && Math.abs(page - prevPage) < (1L << 20)) { distSum += Math.abs(page - prevPage); distN++; }
+            boolean in8 = false, in64 = false;
+            for (int i = 1; i <= 64; i++) { long q = recentPages[(recentPos - i) & 63]; if (q == page) { in64 = true; if (i <= 8) { in8 = true; } } }
+            if (in8) { samePage8++; } if (in64) { samePage64++; }
+            recentPages[recentPos & 63] = page; recentPos++; prevPage = page;
+        }
+        void probeFree(ByteBuf b) {
+            if (!REUSE) { return; }
+            lastFreed.put(memKey(b), opCount);
+        }
+        @TearDown
+        public void dumpReuse() {
+            if (!REUSE || reuseSamples == 0) { return; }
+            java.util.HashSet<Long> arrays = new java.util.HashSet<Long>();
+            for (Long k : lastFreed.keySet()) { arrays.add(k >> 32); }
+            StringBuilder sb = new StringBuilder("REUSE allocs=" + reuseSamples + " distinctBackingArraysSeen=" + arrays.size() + " freed-ops-ago:");
+            String[] lab = {"<=1","2-3","4-7","8-15","16-31","32-63","64-127","128-255","256-511","512-1023",">=1024","never"};
+            for (int i = 0; i < hist.length; i++) { sb.append(String.format(" %s=%.1f%%", lab[i], 100.0 * hist[i] / reuseSamples)); }
+            sb.append(String.format(" | PAGE sameAsPrev=%.1f%% adjacentToPrev=%.1f%% inLast8=%.1f%% inLast64=%.1f%% meanPageDist=%.0f",
+                    100.0 * sameAsPrev / reuseSamples, 100.0 * adjacentToPrev / reuseSamples, 100.0 * samePage8 / reuseSamples,
+                    100.0 * samePage64 / reuseSamples, distN == 0 ? 0.0 : (double) distSum / distN));
+            System.out.println(sb); System.out.flush();
         }
 
         private int getNextSizeIndex() {
@@ -218,6 +276,7 @@ public class ByteBufAllocatorAllocPatternBenchmark {
             this.readAndRelease(releaseIndex);
             int size = sizes[getNextSizeIndex()];
             ByteBuf newBuf = allocateDirect(allocator, size);
+            probeAlloc(newBuf);
             if (enableReadWrite) {
                 newBuf.writeByte(size);
             }
@@ -231,6 +290,7 @@ public class ByteBufAllocatorAllocPatternBenchmark {
             this.readAndRelease(releaseIndex);
             int size = sizes[getNextSizeIndex()];
             ByteBuf newBuf = allocateHeap(allocator, size);
+            probeAlloc(newBuf);
             if (enableReadWrite) {
                 newBuf.writeByte(size);
             }
@@ -245,6 +305,7 @@ public class ByteBufAllocatorAllocPatternBenchmark {
                 if (enableReadWrite) {
                     oldBuf.readByte();
                 }
+                probeFree(oldBuf);
                 oldBuf.release();
             }
             return oldBuf;
@@ -301,6 +362,14 @@ public class ByteBufAllocatorAllocPatternBenchmark {
                 printUsedMemory(benchmarkParams);
             }
             releaseBufferArray(buffers);
+        }
+    }
+
+    @TearDown
+    public void dumpArenaCounters() {
+        if (allocatorType == AllocatorType.ARENA) {
+            System.out.println(CycleArenaAllocator.counters());
+            System.out.flush();
         }
     }
 
