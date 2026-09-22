@@ -104,7 +104,22 @@ public class ByteBufAllocatorAllocPatternBenchmark {
         ADAPTIVE(AdaptiveByteBufAllocator::new),
         MIMALLOC(MiByteBufAllocator::new),
         POOLED(() -> PooledByteBufAllocator.DEFAULT),
-        ARENA(CycleArenaAllocator::new);
+        ARENA(CycleArenaAllocator::new),
+        // Reflective so that this module keeps compiling without netty-ffm-allocator.jar on the
+        // classpath; pass that jar at run time (java -cp benchmarks.jar:netty-ffm-allocator.jar ...).
+        FFM_GLIBC(() -> newFfm("GLIBC")),
+        FFM_MI(() -> newFfm("MIMALLOC"));
+
+        private static ByteBufAllocator newFfm(String backend) {
+            try {
+                Class<?> type = Class.forName("io.netty.buffer.FfmMallocByteBufAllocator");
+                return (ByteBufAllocator) type.getConstructor(String.class).newInstance(backend);
+            } catch (ReflectiveOperationException e) {
+                throw new IllegalStateException(
+                        "io.netty.buffer.FfmMallocByteBufAllocator is not on the classpath", e);
+            }
+        }
+
         private final Supplier<ByteBufAllocator> factory;
         AllocatorType(Supplier<ByteBufAllocator> factory) {
             this.factory = factory;
