@@ -153,6 +153,8 @@ public class ByteBufAllocatorAllocPatternBenchmark {
         @Setup
         public void setup(ByteBufAllocatorAllocPatternBenchmark benchmark, BenchmarkParams params) {
             this.allocator = benchmark.allocator;
+            this.arena = benchmark.allocator instanceof CycleArenaAllocator
+                    ? (CycleArenaAllocator) benchmark.allocator : null;
             this.enableReadWrite = benchmark.enableReadWrite;
             releaseIndexes = new int[benchmark.MAX_LIVE_BUFFERS];
             sizes = new int[MathUtil.findNextPositivePowerOfTwo(benchmark.sizesArray.length)];
@@ -190,6 +192,20 @@ public class ByteBufAllocatorAllocPatternBenchmark {
                 buffers[i] = buf;
             }
             nextSizeIndex = 0;
+        }
+
+        // EXPERIMENT: -Dexpt.hookEvery=N drives the event-loop arena's end-of-iteration hook every N
+        // operations from this thread, which is not an event loop and would otherwise never close an
+        // iteration at all. 0 (the default) leaves the arena without a hook.
+        static final int HOOK_EVERY = Integer.getInteger("expt.hookEvery", 0);
+        private CycleArenaAllocator arena;
+        private int hookCountdown = HOOK_EVERY;
+
+        private void hookIfDue() {
+            if (HOOK_EVERY > 0 && arena != null && --hookCountdown <= 0) {
+                hookCountdown = HOOK_EVERY;
+                arena.endOfIteration();
+            }
         }
 
         // EXPERIMENT: -Dexpt.randomRelease=true releases a uniformly random live slot instead of the next one in the
@@ -281,6 +297,7 @@ public class ByteBufAllocatorAllocPatternBenchmark {
                 newBuf.writeByte(size);
             }
             buffers[releaseIndex] = newBuf;
+            hookIfDue();
             return newBuf;
         }
 
@@ -295,6 +312,7 @@ public class ByteBufAllocatorAllocPatternBenchmark {
                 newBuf.writeByte(size);
             }
             buffers[releaseIndex] = newBuf;
+            hookIfDue();
             return newBuf;
         }
 

@@ -50,6 +50,8 @@ public class CycleScopedAllocBenchmark {
     public String sizes;
 
     private ByteBufAllocator allocator;
+    /** Non-null for ARENA: the cycle boundary of this benchmark is the arena's end-of-iteration hook. */
+    private CycleArenaAllocator arena;
     private ByteBuf[] bufs;
     private int[] sizeTable;
     private int sizeIdx;
@@ -59,6 +61,7 @@ public class CycleScopedAllocBenchmark {
         allocator = "MIMALLOC".equals(allocatorType) ? new MiByteBufAllocator()
                 : "ARENA".equals(allocatorType) ? new CycleArenaAllocator()
                 : new AdaptiveByteBufAllocator();
+        arena = allocator instanceof CycleArenaAllocator ? (CycleArenaAllocator) allocator : null;
         bufs = new ByteBuf[k];
         sizeTable = "SMALL".equals(sizes) ? new int[] {64, 128, 256, 512}
                 : new int[] {64, 1500, 256, 8192, 128, 4096, 1024, 32768, 512, 2048, 96, 16384};
@@ -98,6 +101,17 @@ public class CycleScopedAllocBenchmark {
                 bufs[i].release();
                 bufs[i] = null;
             }
+        }
+        if (arena != null) {
+            arena.endOfIteration();     // this invocation IS one event-loop iteration
+        }
+    }
+
+    @TearDown
+    public void dumpArenaCounters() {
+        if (arena != null) {
+            System.out.println(CycleArenaAllocator.counters());
+            System.out.flush();
         }
     }
 }
