@@ -142,6 +142,18 @@ b.group(group)
                                          .build();
 ```
 
+## 🧪 `ffm-allocator`: the same allocator, called instead of ported
+
+This fork carries a second, experimental module: [`ffm-allocator`](ffm-allocator/README.md), a Netty
+`ByteBufAllocator` whose direct buffers are plain `malloc`'d blocks reached through the Java FFM API
+([JEP 454](https://openjdk.org/jeps/454)) with `Linker.Option.critical` linking, with glibc `malloc` and
+native mimalloc as interchangeable back ends. Where the `mimalloc` module *ports* the mimalloc algorithm
+to the Java heap, this one *calls* the C library, so the two can be measured against each other and
+against Netty's `AdaptiveByteBufAllocator` in the same harness run (`FFM_GLIBC` / `FFM_MI` allocator types
+in `ByteBufAllocatorAllocPatternBenchmark`). It needs JDK 25 and is therefore behind the `-Pffm` profile,
+outside the default JDK 21 build. Measurements, `perf` counters and profiles are in
+[`ffm-allocator/RESULTS.md`](ffm-allocator/RESULTS.md).
+
 ## ⭐ Acknowledgments
 
 This project would not be possible without the following open-source works:
