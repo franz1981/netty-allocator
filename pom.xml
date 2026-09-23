@@ -24,6 +24,9 @@
         <maven-compiler-plugin.version>3.15.0</maven-compiler-plugin.version>
         <jmh.version>1.37</jmh.version>
         <maven-shade-plugin.version>3.6.1</maven-shade-plugin.version>
+        <maven-surefire-plugin.version>3.5.2</maven-surefire-plugin.version>
+        <maven-enforcer-plugin.version>3.6.3</maven-enforcer-plugin.version>
+        <junit.version>5.11.3</junit.version>
     </properties>
 
     <dependencyManagement>
@@ -53,6 +56,12 @@
                 <artifactId>jmh-generator-annprocess</artifactId>
                 <version>${jmh.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter</artifactId>
+                <version>${junit.version}</version>
+                <scope>test</scope>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -68,6 +77,11 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-shade-plugin</artifactId>
                     <version>${maven-shade-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>${maven-surefire-plugin.version}</version>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -140,6 +154,43 @@
             <modules>
                 <module>benchmark</module>
             </modules>
+        </profile>
+        <!--
+            The FFM malloc/mimalloc allocator. Not activated automatically: it needs JDK 25 (final FFM API,
+            Linker.Option.critical), while the rest of the build targets JDK 8/11 and is built with JDK 21.
+            Build it with:  JAVA_HOME=<jdk25> mvn -Pffm package
+        -->
+        <profile>
+            <id>ffm</id>
+            <modules>
+                <module>ffm-allocator</module>
+            </modules>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-enforcer-plugin</artifactId>
+                        <version>${maven-enforcer-plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <id>ffm-requires-jdk25</id>
+                                <goals>
+                                    <goal>enforce</goal>
+                                </goals>
+                                <configuration>
+                                    <rules>
+                                        <requireJavaVersion>
+                                            <version>[25,)</version>
+                                            <message>-Pffm needs JDK 25 or later (final FFM API and
+                                                Linker.Option.critical). Build without -Pffm on JDK 21.</message>
+                                        </requireJavaVersion>
+                                    </rules>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
         </profile>
     </profiles>
 
