@@ -18,8 +18,14 @@ The module is **not** part of the default build. The rest of the repository targ
 with JDK 21; this module needs JDK 25, so it sits behind the `ffm` profile, which enforces the JDK version:
 
 ```
-JAVA_HOME=~/.sdkman/candidates/java/25.0.3-tem mvn -Pffm package
+JAVA_HOME=~/.sdkman/candidates/java/25.0.3-tem mvn -Pffm -Dnetty.version=4.2.17.Final-SNAPSHOT package
 ```
+
+The `-Dnetty.version` override is a property of this branch, not of this module: the `benchmark` module here
+imports `io.netty.buffer.CycleArenaAllocator`, which exists only in the locally installed
+`4.2.17.Final-SNAPSHOT` and not in the released `4.2.17.Final`, so a plain `mvn -Pffm package` fails in
+`benchmark` before it reaches this module. Building this module alone needs no override:
+`mvn -Pffm -pl ffm-allocator package`.
 
 `mvn package` on JDK 21 does not build it (the reactor is `netty-allocator`, `mimalloc`, `benchmark`), and
 `mvn -Pffm package` on JDK 21 fails with
