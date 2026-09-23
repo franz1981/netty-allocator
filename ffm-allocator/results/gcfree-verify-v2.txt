@@ -1,0 +1,20 @@
+=== GLIBC ftlt
+FfmMallocByteBufAllocator(GLIBC, libc malloc/free/realloc (default lookup), localCache=4096, platformCache=4096+mpsc4096, platformRecycler=default)
+ops=20000000 ns/op=30.61 heapBytesAllocatedByThread=0 (0.0000 B/op) youngAndOldGCs=0 wrappersCreated=0
+FFM wrappersCreated=1024 localStackHits=25000000 recyclerGets=1024 handBackOffered=0 handBackDrained=0 handBackDroppedToGc=0 ownerStackFullDroppedToGc=0
+=== GLIBC platform
+FfmMallocByteBufAllocator(GLIBC, libc malloc/free/realloc (default lookup), localCache=4096, platformCache=4096+mpsc4096, platformRecycler=default)
+ops=20000000 ns/op=34.37 heapBytesAllocatedByThread=0 (0.0000 B/op) youngAndOldGCs=0 wrappersCreated=0
+FFM wrappersCreated=1024 localStackHits=25000000 recyclerGets=1024 handBackOffered=0 handBackDrained=0 handBackDroppedToGc=0 ownerStackFullDroppedToGc=0
+=== MIMALLOC ftlt
+FfmMallocByteBufAllocator(MIMALLOC, mi_malloc/mi_free/mi_realloc from /home/forked_franz/IdeaProjects/netty-ffm-allocator/native/mimalloc/out/release/libmimalloc.so, localCache=4096, platformCache=4096+mpsc4096, platformRecycler=default)
+ops=20000000 ns/op=29.73 heapBytesAllocatedByThread=0 (0.0000 B/op) youngAndOldGCs=0 wrappersCreated=0
+FFM wrappersCreated=1024 localStackHits=25000000 recyclerGets=1024 handBackOffered=0 handBackDrained=0 handBackDroppedToGc=0 ownerStackFullDroppedToGc=0
+=== MIMALLOC platform
+FfmMallocByteBufAllocator(MIMALLOC, mi_malloc/mi_free/mi_realloc from /home/forked_franz/IdeaProjects/netty-ffm-allocator/native/mimalloc/out/release/libmimalloc.so, localCache=4096, platformCache=4096+mpsc4096, platformRecycler=default)
+ops=20000000 ns/op=33.75 heapBytesAllocatedByThread=0 (0.0000 B/op) youngAndOldGCs=0 wrappersCreated=0
+FFM wrappersCreated=1024 localStackHits=25000000 recyclerGets=1024 handBackOffered=0 handBackDrained=0 handBackDroppedToGc=0 ownerStackFullDroppedToGc=0
+=== GLIBC platform, ffm.platformCache=false (Recycler) + batchFastThreadLocalOnly=false
+FfmMallocByteBufAllocator(GLIBC, libc malloc/free/realloc (default lookup), localCache=4096, platformCache=off, platformRecycler=default)
+ops=20000000 ns/op=35.40 heapBytesAllocatedByThread=1760000000 (88.0000 B/op) youngAndOldGCs=3 wrappersCreated=20000000
+FFM wrappersCreated=25001024 localStackHits=0 recyclerGets=25001024 handBackOffered=0 handBackDrained=0 handBackDroppedToGc=0 ownerStackFullDroppedToGc=0

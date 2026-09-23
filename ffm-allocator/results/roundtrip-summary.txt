@@ -1,0 +1,8 @@
+glibcCritical {'size': '64'} 10.68 0.2 ns/op
+glibcCritical {'size': '1024'} 10.58 0.01 ns/op
+glibcNonCritical {'size': '64'} 14.58 0.0 ns/op
+glibcNonCritical {'size': '1024'} 15.75 0.92 ns/op
+mimallocCritical {'size': '64'} 10.7 0.06 ns/op
+mimallocCritical {'size': '1024'} 11.89 0.03 ns/op
+mimallocNonCritical {'size': '64'} 16.71 4.23 ns/op
+mimallocNonCritical {'size': '1024'} 15.15 0.02 ns/op

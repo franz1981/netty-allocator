@@ -1,0 +1,1363 @@
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by org.openjdk.jmh.util.Utils (file:/tmp/claude-1000/-home-forked-franz-IdeaProjects-netty/01a26e43-89a8-433b-a89e-c560138e4359/scratchpad/lao/benchmark/target/benchmarks.jar)
+WARNING: Please consider reporting this to the maintainers of class org.openjdk.jmh.util.Utils
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+# JMH version: 1.37
+# VM version: JDK 25.0.3, OpenJDK 64-Bit Server VM, 25.0.3+9-LTS
+# VM invoker: /home/forked_franz/.sdkman/candidates/java/25.0.3-tem/bin/java
+# VM options: -server -dsa -da -XX:InitialRAMPercentage=40.0 -XX:MaxRAMPercentage=40.0 -Dio.netty.leakDetection.level=disabled -Djmh.executor=CUSTOM -Djmh.executor.class=io.github.neoionet.netty.microbenchmark.executor.FastThreadLocalThreadHarnessExecutor -XX:MaxRAM=60g --enable-native-access=ALL-UNNAMED --sun-misc-unsafe-memory-access=allow -Dffm.mimalloc.lib=/home/forked_franz/IdeaProjects/netty-ffm-allocator/native/mimalloc/out/release/libmimalloc.so -Djmh.executor=PLATFORM
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 5 iterations, 1 s each
+# Measurement: 5 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 32 threads, will synchronize iterations
+# Benchmark mode: Average time, time/op
+# Benchmark: io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark.directAllocation
+# Parameters: (MAX_LIVE_BUFFERS = 1024, allocatorType = ADAPTIVE, enableReadWrite = true, sizePattern = E_COMMERCE)
+
+# Run progress: 0.00% complete, ETA 00:00:10
+# Fork: 1 of 1
+# Preparing profilers: LinuxPerfAsmProfiler 
+# Profilers consume stdout and stderr from target VM, use -v EXTRA to copy to console
+# Warmup Iteration   1: 32741.060 ±(99.9%) 8322.403 ns/op
+# Warmup Iteration   2: 1087.644 ±(99.9%) 193.593 ns/op
+# Warmup Iteration   3: 493.277 ±(99.9%) 74.581 ns/op
+# Warmup Iteration   4: 392.813 ±(99.9%) 55.850 ns/op
+# Warmup Iteration   5: 406.502 ±(99.9%) 85.837 ns/op
+Iteration   1: 416.266 ±(99.9%) 97.865 ns/op
+Iteration   2: 406.764 ±(99.9%) 85.952 ns/op
+Iteration   3: 399.659 ±(99.9%) 69.198 ns/op
+Iteration   4: 410.664 ±(99.9%) 87.081 ns/op
+Iteration   5: cRSS-pRSS:[2115, 2116]
+;used-memory:[282]
+394.566 ±(99.9%) 76.105 ns/op
+# Processing profiler results: LinuxPerfAsmProfiler 
+
+
+Result "io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark.directAllocation":
+  405.584 ±(99.9%) 33.226 ns/op [Average]
+  (min, avg, max) = (394.566, 405.584, 416.266), stdev = 8.629
+  CI (99.9%): [372.358, 438.809] (assumes normal distribution)
+
+Secondary result "io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark.directAllocation:asm":
+PrintAssembly processed: 640734 total address lines.
+Perf output processed (skipped 25.063 seconds):
+ Column 1: cycles (70133 events)
+
+Hottest code regions (>10.00% "cycles" events):
+ Event counts are percents of total event count.
+
+....[Hottest Region 1]..............................................................................
+c2, level 4, io.netty.buffer.AdaptivePoolingAllocator::allocateShared, version 6, compile id 2240 
+
+                # parm0:    rdx       = int
+                # parm1:    rcx       = int
+                # parm2:    r8        = int
+                # parm3:    r9:r9     = &apos;java/lang/Thread&apos;
+                # parm4:    rdi:rdi   = &apos;io/netty/buffer/AdaptivePoolingAllocator$AdaptiveByteBuf&apos;
+                #           [sp+0xb0]  (sp of caller)
+                0x00007f203004f282:   mov    0x8(%rsi),%r10d
+                0x00007f203004f286:   cmp    0x8(%rax),%r10d
+                0x00007f203004f28a:   jne    0x00007f202f8ad5e0           ;   {runtime_call Shared Runtime ic_miss_blob}
+              [Verified Entry Point]
+   0.04%        0x00007f203004f290:   mov    %eax,-0x14000(%rsp)
+   0.06%        0x00007f203004f297:   push   %rbp
+   0.03%        0x00007f203004f298:   sub    $0xa0,%rsp
+   0.03%        0x00007f203004f29f:   nop
+                0x00007f203004f2a0:   cmpl   $0x1,0x20(%r15)
+   0.02%        0x00007f203004f2a8:   jne    0x00007f2030050fc8           ;*synchronization entry
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@-1 (line 321)
+   0.12%        0x00007f203004f2ae:   mov    %r8d,0x18(%rsp)
+   0.19%        0x00007f203004f2b3:   mov    %ecx,0x14(%rsp)
+   0.03%        0x00007f203004f2b7:   mov    %edx,0x10(%rsp)
+   0.07%        0x00007f203004f2bb:   mov    %rsi,0x8(%rsp)
+   0.04%        0x00007f203004f2c0:   test   %rdi,%rdi
+   0.01%        0x00007f203004f2c3:   jne    0x00007f203004ff74           ;*ifnull {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@2 (line 321)
+                0x00007f203004f2c9:   mov    0x18(%r9),%r10               ; implicit exception: dispatches to 0x00007f203005034c
+   0.03%        0x00007f203004f2cd:   mov    0xc(%rsi),%r8d
+   0.08%        0x00007f203004f2d1:   mov    %r8d,0x20(%rsp)              ;*getfield stripeScanLength {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@23 (line 326)
+   0.11%        0x00007f203004f2d6:   mov    %r10d,%r10d                  ;*l2i {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::threadIndex@4 (line 1475)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@14 (line 322)
+   0.02%        0x00007f203004f2d9:   lea    (%r8,%r8,1),%r11d
+   0.01%        0x00007f203004f2dd:   mov    %r11d,0x4(%rsp)
+   0.05%        0x00007f203004f2e2:   mov    %r10d,%r8d
+   0.02%        0x00007f203004f2e5:   shr    $0x10,%r8d
+   0.01%        0x00007f203004f2e9:   xor    %r10d,%r8d                   ;*ixor {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::threadIndex@11 (line 1476)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@14 (line 322)
+                0x00007f203004f2ec:   mov    %r8d,0x24(%rsp)
+   0.05%        0x00007f203004f2f1:   mov    0x20(%rsp),%r14d
+   0.21%        0x00007f203004f2f6:   dec    %r14d                        ;*isub {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@31 (line 327)
+   0.08%        0x00007f203004f2f9:   mov    %r8d,%r10d
+   0.01%        0x00007f203004f2fc:   and    %r14d,%r10d                  ;*iand {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@38 (line 328)
+   0.01%        0x00007f203004f2ff:   mov    %r10d,0x1c(%rsp)
+   0.01%        0x00007f203004f304:   xor    %ebx,%ebx                    ;*iload {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@50 (line 329)
+   0.02%        0x00007f203004f306:   cmp    0x4(%rsp),%ebx
+   0.12%        0x00007f203004f30a:   jge    0x00007f203004fecc           ;*if_icmpge {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@54 (line 329)
+                0x00007f203004f310:   mov    %ebx,%r10d
+   0.01%        0x00007f203004f313:   add    0x1c(%rsp),%r10d
+   0.45%        0x00007f203004f318:   mov    0x8(%rsp),%r11
+   0.03%        0x00007f203004f31d:   mov    0x1c(%r11),%r11d             ;*getfield stripedHeaps {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@58 (line 330)
+   0.03%        0x00007f203004f321:   and    %r14d,%r10d                  ;*iand {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@68 (line 330)
+   0.06%        0x00007f203004f324:   mov    0xc(%r12,%r11,8),%r9d        ; implicit exception: dispatches to 0x00007f20300502f0
+   0.43%        0x00007f203004f329:   cmp    %r9d,%r10d
+   0.01%        0x00007f203004f32c:   jae    0x00007f203004fd91
+                0x00007f203004f332:   shl    $0x3,%r11
+   0.01%        0x00007f203004f336:   mov    0x10(%r11,%r10,4),%r8d       ;*aaload {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@69 (line 330)
+   0.53%        0x00007f203004f33b:   mov    0xc(%r12,%r8,8),%r13d        ; implicit exception: dispatches to 0x00007f2030050308
+                                                                          ;*getfield lock {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$StripedHeap::tryAllocate@1 (line 708)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@82 (line 331)
+   2.18%        0x00007f203004f340:   mov    0x10(%r12,%r13,8),%rdx       ; implicit exception: dispatches to 0x00007f203005031c
+                                                                          ;*getfield state {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - java.util.concurrent.locks.StampedLock::tryAcquireWrite@1 (line 430)
+                                                                          ; - java.util.concurrent.locks.StampedLock::tryWriteLock@1 (line 491)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$StripedHeap::tryAllocate@8 (line 709)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@82 (line 331)
+   1.85%        0x00007f203004f345:   test   $0xff,%edx
+   0.06%        0x00007f203004f34b:   jne    0x00007f203004f938           ;*invokevirtual compareAndSetLong {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - java.util.concurrent.locks.StampedLock::casState@9 (line 424)
+                                                                          ; - java.util.concurrent.locks.StampedLock::tryAcquireWrite@24 (line 430)
+                                                                          ; - java.util.concurrent.locks.StampedLock::tryWriteLock@1 (line 491)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$StripedHeap::tryAllocate@8 (line 709)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@82 (line 331)
+                0x00007f203004f351:   mov    %rdx,%rdi
+   0.00%        0x00007f203004f354:   or     $0x80,%rdi                   ;*lor {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - java.util.concurrent.locks.StampedLock::tryAcquireWrite@21 (line 430)
+                                                                          ; - java.util.concurrent.locks.StampedLock::tryWriteLock@1 (line 491)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$StripedHeap::tryAllocate@8 (line 709)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@82 (line 331)
+   0.01%        0x00007f203004f35b:   mov    %rdx,%rax
+   0.00%        0x00007f203004f35e:   lock cmpxchg %rdi,0x10(%r12,%r13,8)
+   1.68%        0x00007f203004f365:   sete   %r10b
+   0.03%        0x00007f203004f369:   movzbl %r10b,%r10d                  ;*invokevirtual compareAndSetLong {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - java.util.concurrent.locks.StampedLock::casState@9 (line 424)
+                                                                          ; - java.util.concurrent.locks.StampedLock::tryAcquireWrite@24 (line 430)
+                                                                          ; - java.util.concurrent.locks.StampedLock::tryWriteLock@1 (line 491)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$StripedHeap::tryAllocate@8 (line 709)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@82 (line 331)
+                0x00007f203004f36d:   test   %r10d,%r10d
+   0.03%        0x00007f203004f370:   je     0x00007f203004f938           ;*invokevirtual storeStoreFence {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - java.util.concurrent.locks.StampedLock::tryAcquireWrite@33 (line 431)
+                                                                          ; - java.util.concurrent.locks.StampedLock::tryWriteLock@1 (line 491)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$StripedHeap::tryAllocate@8 (line 709)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@82 (line 331)
+                0x00007f203004f376:   test   %rdi,%rdi
+   0.22%        0x00007f203004f379:   je     0x00007f203004f938           ;*ifne {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$StripedHeap::tryAllocate@17 (line 710)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@82 (line 331)
+                0x00007f203004f37f:   lea    (%r12,%r13,8),%rax           ;*getfield lock {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$StripedHeap::tryAllocate@1 (line 708)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@82 (line 331)
+   0.00%        0x00007f203004f383:   lea    (%r12,%r8,8),%rsi            ;*aaload {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@69 (line 330)
+                0x00007f203004f387:   mov    0x10(%rsp),%r11d             ;   {other}
+                0x00007f203004f38c:   cmp    $0x16,%r11d
+                0x00007f203004f390:   jge    0x00007f203004fcac           ;*if_icmpge {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$StripedHeap::tryAllocate@26 (line 714)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@82 (line 331)
+                0x00007f203004f396:   mov    0x10(%r12,%r8,8),%ebp        ;*getfield magazines {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$StripedHeap::getOrCreateMagazine@1 (line 635)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$StripedHeap::tryAllocate@33 (line 715)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@82 (line 331)
+   2.47%        0x00007f203004f39b:   mov    0xc(%r12,%rbp,8),%r10d       ; implicit exception: dispatches to 0x00007f2030050438
+   0.18%        0x00007f203004f3a0:   cmp    %r10d,%r11d
+                0x00007f203004f3a3:   jae    0x00007f203004fdf8
+                0x00007f203004f3a9:   lea    (%r12,%rbp,8),%r10
+   0.00%        0x00007f203004f3ad:   mov    0x10(%r10,%r11,4),%r8d       ;*aaload {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$StripedHeap::getOrCreateMagazine@18 (line 639)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$StripedHeap::tryAllocate@33 (line 715)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@82 (line 331)
+   0.16%        0x00007f203004f3b2:   test   %r8d,%r8d
+                0x00007f203004f3b5:   je     0x00007f203004fc49           ;*ifnonnull {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$StripedHeap::getOrCreateMagazine@23 (line 640)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$StripedHeap::tryAllocate@33 (line 715)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@82 (line 331)
+                0x00007f203004f3bb:   lea    (%r12,%r8,8),%r9             ;*aload {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$StripedHeap::getOrCreateMagazine@34 (line 643)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$StripedHeap::tryAllocate@33 (line 715)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@82 (line 331)
+   0.16%        0x00007f203004f3bf:   mov    0x34(%r9),%ecx               ;*getfield bufRecycler {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassMagazine::newBuffer@1 (line 1700)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$StripedHeap::tryAllocate@45 (line 717)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@82 (line 331)
+   1.31%        0x00007f203004f3c3:   mov    0xc(%r12,%rcx,8),%ebp        ; implicit exception: dispatches to 0x00007f2030050464
+                                                                          ;*getfield localPool {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.util.Recycler::get@1 (line 326)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassMagazine::newBuffer@11 (line 1700)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$StripedHeap::tryAllocate@45 (line 717)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@82 (line 331)
+   0.91%        0x00007f203004f3c8:   mov    0x8(%r12,%rbp,8),%r10d       ; implicit exception: dispatches to 0x00007f20300504a8
+   0.85%        0x00007f203004f3cd:   cmp    $0x1099088,%r10d             ;   {metadata(&apos;io/netty/util/Recycler$UnguardedLocalPool&apos;)}
+   0.09%        0x00007f203004f3d4:   jne    0x00007f203004fe24
+                0x00007f203004f3da:   lea    (%r12,%rbp,8),%r10           ;*invokevirtual getWith {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.util.Recycler::get@12 (line 327)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassMagazine::newBuffer@11 (line 1700)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$StripedHeap::tryAllocate@45 (line 717)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@82 (line 331)
+                0x00007f203004f3de:   mov    0x10(%r10),%ebp              ;*getfield batchSize {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.util.Recycler$LocalPool::acquire@1 (line 587)
+                                                                          ; - io.netty.util.Recycler$UnguardedLocalPool::getWith@1 (line 520)
+                                                                          ; - io.netty.util.Recycler::get@12 (line 327)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassMagazine::newBuffer@11 (line 1700)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$StripedHeap::tryAllocate@45 (line 717)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@82 (line 331)
+   0.09%        0x00007f203004f3e2:   test   %ebp,%ebp
+   0.01%        0x00007f203004f3e4:   jne    0x00007f203004ff10           ;*ifne {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.util.Recycler$LocalPool::acquire@6 (line 588)
+                                                                          ; - io.netty.util.Recycler$UnguardedLocalPool::getWith@1 (line 520)
+                                                                          ; - io.netty.util.Recycler::get@12 (line 327)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassMagazine::newBuffer@11 (line 1700)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$StripedHeap::tryAllocate@45 (line 717)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@82 (line 331)
+                0x00007f203004f3ea:   mov    0x20(%r10),%ebp              ;*getfield pooledHandles {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.util.Recycler$LocalPool::acquire@10 (line 590)
+                                                                          ; - io.netty.util.Recycler$UnguardedLocalPool::getWith@1 (line 520)
+                                                                          ; - io.netty.util.Recycler::get@12 (line 327)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassMagazine::newBuffer@11 (line 1700)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$StripedHeap::tryAllocate@45 (line 717)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@82 (line 331)
+   0.11%        0x00007f203004f3ee:   mov    0x8(%r12,%rbp,8),%r8d        ; implicit exception: dispatches to 0x00007f20300504dc
+   0.60%        0x00007f203004f3f3:   cmp    $0x10a3660,%r8d              ;   {metadata(&apos;io/netty/util/internal/shaded/org/jctools/queues/MpscArrayQueue&apos;)}
+   0.06%        0x00007f203004f3fa:   jne    0x00007f203004fe58
+                0x00007f203004f400:   mov    %r10,0x58(%rsp)
+   0.01%        0x00007f203004f405:   mov    %ecx,0x50(%rsp)
+   0.01%        0x00007f203004f409:   mov    %r9,0x48(%rsp)
+   0.01%        0x00007f203004f40e:   mov    %rax,0x40(%rsp)
+                0x00007f203004f413:   mov    %rdi,0x30(%rsp)
+   0.01%        0x00007f203004f418:   mov    %rdx,0x38(%rsp)
+   0.10%        0x00007f203004f41d:   mov    %r13d,0x2c(%rsp)
+   0.19%        0x00007f203004f422:   mov    %ebx,(%rsp)
+   0.07%        0x00007f203004f425:   mov    %r14d,0x28(%rsp)
+   0.01%        0x00007f203004f42a:   mov    %r11d,0x10(%rsp)
+   0.01%        0x00007f203004f42f:   lea    (%r12,%rbp,8),%r9            ;*invokeinterface relaxedPoll {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.util.Recycler$LocalPool::acquire@21 (line 594)
+                                                                          ; - io.netty.util.Recycler$UnguardedLocalPool::getWith@1 (line 520)
+                                                                          ; - io.netty.util.Recycler::get@12 (line 327)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassMagazine::newBuffer@11 (line 1700)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$StripedHeap::tryAllocate@45 (line 717)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@82 (line 331)
+   0.03%        0x00007f203004f433:   mov    0x218(%r9),%rbx              ;*invokevirtual getReferenceVolatile {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - sun.misc.Unsafe::getObjectVolatile@8 (line 1264)
+                                                                          ; - io.netty.util.internal.shaded.org.jctools.util.UnsafeRefArrayAccess::lvRefElement@5 (line 89)
+                                                                          ; - io.netty.util.internal.shaded.org.jctools.queues.MpscArrayQueue::relaxedPoll@23 (line 467)
+                                                                          ; - io.netty.util.Recycler$LocalPool::acquire@21 (line 594)
+                                                                          ; - io.netty.util.Recycler$UnguardedLocalPool::getWith@1 (line 520)
+                                                                          ; - io.netty.util.Recycler::get@12 (line 327)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassMagazine::newBuffer@11 (line 1700)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$StripedHeap::tryAllocate@45 (line 717)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@82 (line 331)
+   0.06%        0x00007f203004f43a:   mov    0x8c(%r9),%r10d              ;*getfield buffer {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.util.internal.shaded.org.jctools.queues.MpscArrayQueue::relaxedPoll@1 (line 462)
+                                                                          ; - io.netty.util.Recycler$LocalPool::acquire@21 (line 594)
+                                                                          ; - io.netty.util.Recycler$UnguardedLocalPool::getWith@1 (line 520)
+                                                                          ; - io.netty.util.Recycler::get@12 (line 327)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassMagazine::newBuffer@11 (line 1700)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$StripedHeap::tryAllocate@45 (line 717)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@82 (line 331)
+   0.08%        0x00007f203004f441:   lea    (%r12,%r10,8),%rdi
+   0.21%        0x00007f203004f445:   mov    %rbx,%rdx
+   0.13%        0x00007f203004f448:   and    0x90(%r9),%rdx               ;*land {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.util.internal.shaded.org.jctools.util.UnsafeRefArrayAccess::calcCircularRefElementOffset@5 (line 110)
+                                                                          ; - io.netty.util.internal.shaded.org.jctools.queues.MpscArrayQueue::relaxedPoll@15 (line 464)
+                                                                          ; - io.netty.util.Recycler$LocalPool::acquire@21 (line 594)
+                                                                          ; - io.netty.util.Recycler$UnguardedLocalPool::getWith@1 (line 520)
+                                                                          ; - io.netty.util.Recycler::get@12 (line 327)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassMagazine::newBuffer@11 (line 1700)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$StripedHeap::tryAllocate@45 (line 717)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@82 (line 331)
+   0.11%        0x00007f203004f44f:   mov    0x10(%rdi,%rdx,4),%r11d      ;*invokevirtual getReferenceVolatile {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - sun.misc.Unsafe::getObjectVolatile@8 (line 1264)
+                                                                          ; - io.netty.util.internal.shaded.org.jctools.util.UnsafeRefArrayAccess::lvRefElement@5 (line 89)
+                                                                          ; - io.netty.util.internal.shaded.org.jctools.queues.MpscArrayQueue::relaxedPoll@23 (line 467)
+                                                                          ; - io.netty.util.Recycler$LocalPool::acquire@21 (line 594)
+                                                                          ; - io.netty.util.Recycler$UnguardedLocalPool::getWith@1 (line 520)
+                                                                          ; - io.netty.util.Recycler::get@12 (line 327)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassMagazine::newBuffer@11 (line 1700)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$StripedHeap::tryAllocate@45 (line 717)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@82 (line 331)
+   1.00%        0x00007f203004f454:   test   %r11d,%r11d
+                0x00007f203004f457:   je     0x00007f203004f789           ;*if_acmpne {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.util.internal.shaded.org.jctools.queues.MpscArrayQueue::relaxedPoll@31 (line 468)
+                                                                          ; - io.netty.util.Recycler$LocalPool::acquire@21 (line 594)
+                                                                          ; - io.netty.util.Recycler$UnguardedLocalPool::getWith@1 (line 520)
+                                                                          ; - io.netty.util.Recycler::get@12 (line 327)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassMagazine::newBuffer@11 (line 1700)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$StripedHeap::tryAllocate@45 (line 717)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@82 (line 331)
+                0x00007f203004f45d:   lea    (%r12,%r11,8),%rsi           ;*invokevirtual getReferenceVolatile {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - sun.misc.Unsafe::getObjectVolatile@8 (line 1264)
+                                                                          ; - io.netty.util.internal.shaded.org.jctools.util.UnsafeRefArrayAccess::lvRefElement@5 (line 89)
+                                                                          ; - io.netty.util.internal.shaded.org.jctools.queues.MpscArrayQueue::relaxedPoll@23 (line 467)
+                                                                          ; - io.netty.util.Recycler$LocalPool::acquire@21 (line 594)
+                                                                          ; - io.netty.util.Recycler$UnguardedLocalPool::getWith@1 (line 520)
+                                                                          ; - io.netty.util.Recycler::get@12 (line 327)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassMagazine::newBuffer@11 (line 1700)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$StripedHeap::tryAllocate@45 (line 717)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@82 (line 331)
+   0.00%        0x00007f203004f461:   inc    %rbx
+   0.06%        0x00007f203004f464:   xor    %rcx,%rcx
+                0x00007f203004f467:   lea    0x10(%rdi,%rdx,4),%r11
+   0.28%        0x00007f203004f46c:   cmpb   $0x0,0x48(%r15)
+   0.02%        0x00007f203004f471:   jne    0x00007f20300506f3
+   0.01%        0x00007f203004f477:   mov    %ecx,(%r11)
+   0.33%        0x00007f203004f47a:   mov    %rbx,0x218(%r9)              ;*invokevirtual putLongRelease {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - sun.misc.Unsafe::putOrderedLong@10 (line 1494)
+                                                                          ; - io.netty.util.internal.shaded.org.jctools.queues.MpscArrayQueueConsumerIndexField::soConsumerIndex@8 (line 169)
+                                                                          ; - io.netty.util.internal.shaded.org.jctools.queues.MpscArrayQueue::relaxedPoll@47 (line 474)
+                                                                          ; - io.netty.util.Recycler$LocalPool::acquire@21 (line 594)
+                                                                          ; - io.netty.util.Recycler$UnguardedLocalPool::getWith@1 (line 520)
+                                                                          ; - io.netty.util.Recycler::get@12 (line 327)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassMagazine::newBuffer@11 (line 1700)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$StripedHeap::tryAllocate@45 (line 717)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@82 (line 331)
+   0.01%        0x00007f203004f481:   mov    %rsi,%r10                    ;*aload_2 {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.util.Recycler$UnguardedLocalPool::getWith@31 (line 524)
+                                                                          ; - io.netty.util.Recycler::get@12 (line 327)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassMagazine::newBuffer@11 (line 1700)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$StripedHeap::tryAllocate@45 (line 717)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@82 (line 331)
+   0.04%        0x00007f203004f484:   mov    0x8(%r10),%r11d
+   1.69%        0x00007f203004f488:   cmp    $0x1096788,%r11d             ;   {metadata(&apos;io/netty/buffer/AdaptivePoolingAllocator$AdaptiveByteBuf&apos;)}
+   0.35%        0x00007f203004f48f:   jne    0x00007f20300502b8
+   0.01%        0x00007f203004f495:   mov    %r10,%rbx                    ;*invokevirtual putIntRelease {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - sun.misc.Unsafe::putOrderedInt@10 (line 1483)
+                                                                          ; - io.netty.util.internal.PlatformDependent0::putOrderedInt@6 (line 861)
+                                                                          ; - io.netty.util.internal.PlatformDependent::putOrderedInt@3 (line 815)
+                                                                          ; - io.netty.util.internal.RefCnt$UnsafeRefCnt::resetRefCnt@5 (line 465)
+                                                                          ; - io.netty.util.internal.RefCnt::resetRefCnt@29 (line 226)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::resetRefCnt@4 (line 56)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassMagazine::newBuffer@31 (line 1701)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$StripedHeap::tryAllocate@45 (line 717)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@82 (line 331)
+                0x00007f203004f498:   mov    0x20(%rbx),%r10d             ;*getfield refCnt {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::resetRefCnt@1 (line 56)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassMagazine::newBuffer@31 (line 1701)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$StripedHeap::tryAllocate@45 (line 717)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@82 (line 331)
+   0.16%        0x00007f203004f49c:   movl   $0x2,0xc(%r12,%r10,8)        ;*invokevirtual putIntRelease {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - sun.misc.Unsafe::putOrderedInt@10 (line 1483)
+                                                                          ; - io.netty.util.internal.PlatformDependent0::putOrderedInt@6 (line 861)
+                                                                          ; - io.netty.util.internal.PlatformDependent::putOrderedInt@3 (line 815)
+                                                                          ; - io.netty.util.internal.RefCnt$UnsafeRefCnt::resetRefCnt@5 (line 465)
+                                                                          ; - io.netty.util.internal.RefCnt::resetRefCnt@29 (line 226)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::resetRefCnt@4 (line 56)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassMagazine::newBuffer@31 (line 1701)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$StripedHeap::tryAllocate@45 (line 717)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@82 (line 331)
+   1.24%        0x00007f203004f4a5:   mov    %r12d,0x14(%rbx)             ;*putfield markedReaderIndex {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.buffer.AbstractByteBuf::discardMarks@7 (line 1502)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassMagazine::newBuffer@35 (line 1702)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$StripedHeap::tryAllocate@45 (line 717)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@82 (line 331)
+   0.02%        0x00007f203004f4a9:   mov    %r12d,0x18(%rbx)             ;*putfield markedWriterIndex {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.buffer.AbstractByteBuf::discardMarks@4 (line 1502)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassMagazine::newBuffer@35 (line 1702)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$StripedHeap::tryAllocate@45 (line 717)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@82 (line 331)
+   0.00%        0x00007f203004f4ad:   mov    0x48(%rsp),%rdi
+   0.05%        0x00007f203004f4b2:   mov    0x24(%rdi),%r11d             ;*getfield chunkController {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassMagazine::allocate@1 (line 1616)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$StripedHeap::tryAllocate@56 (line 719)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@82 (line 331)
+   0.10%        0x00007f203004f4b6:   mov    0xc(%r12,%r11,8),%r10d       ; implicit exception: dispatches to 0x00007f2030050360
+   0.28%        0x00007f203004f4bb:   cmp    0x18(%rsp),%r10d
+   0.01%        0x00007f203004f4c0:   mov    0x18(%rsp),%r8d
+                0x00007f203004f4c5:   cmovg  %r8d,%r10d                   ;*invokestatic min {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassChunkController::computeBufferCapacity@5 (line 1403)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassMagazine::allocate@5 (line 1616)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$StripedHeap::tryAllocate@56 (line 719)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@82 (line 331)
+   0.18%        0x00007f203004f4c9:   mov    0x18(%rdi),%r11d             ;*getfield current {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassMagazine::allocate@11 (line 1617)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$StripedHeap::tryAllocate@56 (line 719)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@82 (line 331)
+   0.02%        0x00007f203004f4cd:   test   %r11d,%r11d
+                0x00007f203004f4d0:   je     0x00007f203004f969           ;*ifnull {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassMagazine::allocate@18 (line 1618)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$StripedHeap::tryAllocate@56 (line 719)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@82 (line 331)
+                0x00007f203004f4d6:   mov    0x30(%r12,%r11,8),%ecx       ;*getfield localFreeList {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunk::nextAvailableSegmentOffset@1 (line 2282)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunk::readInitInto@23 (line 2266)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassMagazine::allocate@28 (line 1619)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$StripedHeap::tryAllocate@56 (line 719)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@82 (line 331)
+   0.14%        0x00007f203004f4db:   mov    0xc(%r12,%rcx,8),%r9d        ; implicit exception: dispatches to 0x00007f2030050398
+                                                                          ;*getfield top {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$IntStack::isEmpty@1 (line 2107)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunk::nextAvailableSegmentOffset@6 (line 2283)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunk::readInitInto@23 (line 2266)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassMagazine::allocate@28 (line 1619)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$StripedHeap::tryAllocate@56 (line 719)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@82 (line 331)
+   0.57%        0x00007f203004f4e0:   lea    (%r12,%r11,8),%rdx           ;*getfield current {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassMagazine::allocate@11 (line 1617)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$StripedHeap::tryAllocate@56 (line 719)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@82 (line 331)
+   0.03%        0x00007f203004f4e4:   cmp    $0xffffffff,%r9d
+   0.00%        0x00007f203004f4e8:   je     0x00007f203004f745           ;*ifne {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunk::nextAvailableSegmentOffset@9 (line 2283)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunk::readInitInto@23 (line 2266)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassMagazine::allocate@28 (line 1619)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$StripedHeap::tryAllocate@56 (line 719)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@82 (line 331)
+                0x00007f203004f4ee:   mov    %rdx,0x60(%rsp)
+   0.10%        0x00007f203004f4f3:   mov    %r11d,0x5c(%rsp)
+   0.00%        0x00007f203004f4f8:   mov    %r10d,0x58(%rsp)
+   0.02%        0x00007f203004f4fd:   mov    %rbx,0x50(%rsp)
+   0.11%        0x00007f203004f502:   mov    0x10(%r12,%rcx,8),%ebp       ;*getfield stack {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$IntStack::pop@1 (line 2111)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunk::nextAvailableSegmentOffset@13 (line 2284)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunk::readInitInto@23 (line 2266)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassMagazine::allocate@28 (line 1619)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$StripedHeap::tryAllocate@56 (line 719)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@82 (line 331)
+   0.06%        0x00007f203004f507:   mov    0xc(%r12,%rbp,8),%r11d       ; implicit exception: dispatches to 0x00007f2030050400
+   1.00%        0x00007f203004f50c:   cmp    %r11d,%r9d
+   0.00%        0x00007f203004f50f:   jae    0x00007f203004fea8
+                0x00007f203004f515:   lea    (%r12,%rbp,8),%r11
+   0.01%        0x00007f203004f519:   mov    0x10(%r11,%r9,4),%eax        ;*iaload {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$IntStack::pop@8 (line 2111)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunk::nextAvailableSegmentOffset@13 (line 2284)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunk::readInitInto@23 (line 2266)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassMagazine::allocate@28 (line 1619)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$StripedHeap::tryAllocate@56 (line 719)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@82 (line 331)
+   0.22%        0x00007f203004f51e:   dec    %r9d
+   0.05%        0x00007f203004f521:   mov    %r9d,0xc(%r12,%rcx,8)        ;*invokespecial nextAvailableSegmentOffset {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunk::readInitInto@23 (line 2266)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassMagazine::allocate@28 (line 1619)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$StripedHeap::tryAllocate@56 (line 719)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@82 (line 331)
+   0.01%        0x00007f203004f526:   cmp    $0xffffffff,%eax
+   0.04%        0x00007f203004f529:   je     0x00007f2030050004           ;*if_icmpne {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunk::readInitInto@31 (line 2267)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassMagazine::allocate@28 (line 1619)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$StripedHeap::tryAllocate@56 (line 719)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@82 (line 331)
+                0x00007f203004f52f:   mov    0x50(%rsp),%r11
+   0.08%        0x00007f203004f534:   mov    0x58(%rsp),%r8d
+   0.01%        0x00007f203004f539:   mov    %r8d,0x3c(%r11)              ;*putfield maxFastCapacity {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$AdaptiveByteBuf::init@20 (line 2778)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunk::readInitInto@63 (line 2272)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassMagazine::allocate@28 (line 1619)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$StripedHeap::tryAllocate@56 (line 719)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@82 (line 331)
+   0.07%        0x00007f203004f53d:   mov    0x14(%rsp),%r10d
+   0.00%        0x00007f203004f542:   mov    %r10d,0x38(%r11)             ;*putfield length {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$AdaptiveByteBuf::init@14 (line 2777)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunk::readInitInto@63 (line 2272)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassMagazine::allocate@28 (line 1619)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$StripedHeap::tryAllocate@56 (line 719)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@82 (line 331)
+   0.05%        0x00007f203004f546:   mov    %eax,0x34(%r11)              ;*putfield startIndex {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$AdaptiveByteBuf::init@3 (line 2775)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunk::readInitInto@63 (line 2272)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassMagazine::allocate@28 (line 1619)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$StripedHeap::tryAllocate@56 (line 719)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@82 (line 331)
+   0.03%        0x00007f203004f54a:   mov    0x18(%rsp),%r9d
+   0.00%        0x00007f203004f54f:   mov    %r9d,0x1c(%r11)              ;*putfield maxCapacity {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.buffer.AbstractByteBuf::maxCapacity@2 (line 114)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$AdaptiveByteBuf::init@26 (line 2779)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunk::readInitInto@63 (line 2272)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassMagazine::allocate@28 (line 1619)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$StripedHeap::tryAllocate@56 (line 719)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@82 (line 331)
+   0.06%        0x00007f203004f553:   mov    %r12d,0x10(%r11)             ;*putfield writerIndex {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.buffer.AbstractByteBuf::setIndex0@7 (line 1498)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$AdaptiveByteBuf::init@33 (line 2780)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunk::readInitInto@63 (line 2272)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassMagazine::allocate@28 (line 1619)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$StripedHeap::tryAllocate@56 (line 719)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@82 (line 331)
+   0.10%        0x00007f203004f557:   mov    %r12d,0xc(%r11)              ;*putfield readerIndex {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.buffer.AbstractByteBuf::setIndex0@2 (line 1497)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$AdaptiveByteBuf::init@33 (line 2780)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunk::readInitInto@63 (line 2272)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassMagazine::allocate@28 (line 1619)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$StripedHeap::tryAllocate@56 (line 719)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@82 (line 331)
+   0.01%        0x00007f203004f55b:   mov    0x5c(%rsp),%r11d
+   0.08%        0x00007f203004f560:   mov    0x44(%r12,%r11,8),%ebx       ;*getfield segmentSize {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunk::readInitInto@42 (line 2270)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassMagazine::allocate@28 (line 1619)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$StripedHeap::tryAllocate@56 (line 719)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@82 (line 331)
+   0.03%        0x00007f203004f565:   mov    0x24(%r12,%r11,8),%ebp       ;*getfield delegate {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunk::readInitInto@51 (line 2272)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassMagazine::allocate@28 (line 1619)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$StripedHeap::tryAllocate@56 (line 719)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@82 (line 331)
+   0.06%        0x00007f203004f56a:   mov    %ebx,%r9d
+   0.00%        0x00007f203004f56d:   add    0x48(%r12,%r11,8),%r9d       ;*iadd {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunk::readInitInto@45 (line 2270)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassMagazine::allocate@28 (line 1619)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$StripedHeap::tryAllocate@56 (line 719)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@82 (line 331)
+   0.02%        0x00007f203004f572:   mov    %r9d,0x48(%r12,%r11,8)       ;*putfield allocatedBytes {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunk::readInitInto@46 (line 2270)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassMagazine::allocate@28 (line 1619)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$StripedHeap::tryAllocate@56 (line 719)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@82 (line 331)
+   0.05%        0x00007f203004f577:   mov    0x50(%rsp),%rdi
+   0.09%        0x00007f203004f57c:   mov    0x5c(%rsp),%esi
+   0.02%        0x00007f203004f580:   lea    0x2c(%rdi),%r11
+   0.08%        0x00007f203004f584:   cmpb   $0x0,0x48(%r15)              ;   {other}
+   0.01%        0x00007f203004f589:   jne    0x00007f2030050766
+   0.06%        0x00007f203004f58f:   mov    %esi,(%r11)
+   0.04%        0x00007f203004f592:   mov    %esi,%ecx
+   0.00%        0x00007f203004f594:   shl    $0x3,%rcx
+                0x00007f203004f598:   mov    %r11,%r8
+   0.05%        0x00007f203004f59b:   xor    %rcx,%r8
+   0.00%        0x00007f203004f59e:   shr    $0x18,%r8
+   0.08%  ╭     0x00007f203004f5a2:   je     0x00007f203004f5c6
+   0.00%  │     0x00007f203004f5a8:   mov    %r11,%r8
+   0.09%  │     0x00007f203004f5ab:   shr    $0x9,%r8
+   0.00%  │     0x00007f203004f5af:   movabs $0x7f2021200000,%rcx
+   0.00%  │     0x00007f203004f5b9:   add    %rcx,%r8
+   0.01%  │     0x00007f203004f5bc:   cmpb   $0x2,(%r8)
+   0.52%  │     0x00007f203004f5c0:   jne    0x00007f20300507d9           ;*putfield chunk {reexecute=0 rethrow=0 return_oop=0}
+          │                                                               ; - io.netty.buffer.AdaptivePoolingAllocator$AdaptiveByteBuf::init@8 (line 2776)
+          │                                                               ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunk::readInitInto@63 (line 2272)
+          │                                                               ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassMagazine::allocate@28 (line 1619)
+          │                                                               ; - io.netty.buffer.AdaptivePoolingAllocator$StripedHeap::tryAllocate@56 (line 719)
+          │                                                               ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@82 (line 331)
+   0.02%  ↘     0x00007f203004f5c6:   mov    0x8(%r12,%rbp,8),%r11d       ; implicit exception: dispatches to 0x00007f20300503d4
+   0.27%        0x00007f203004f5cb:   cmp    $0x10ac688,%r11d             ;   {metadata(&apos;io/netty/buffer/UnpooledUnsafeDirectByteBuf&apos;)}
+   0.06%        0x00007f203004f5d2:   jne    0x00007f203004fe90           ;*invokevirtual hasArray {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$AdaptiveByteBuf::init@38 (line 2781)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunk::readInitInto@63 (line 2272)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassMagazine::allocate@28 (line 1619)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$StripedHeap::tryAllocate@56 (line 719)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@82 (line 331)
+                0x00007f203004f5d8:   mov    0x50(%rsp),%r10
+   0.06%        0x00007f203004f5dd:   movb   $0x1,0x41(%r10)              ;*putfield hasMemoryAddress {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$AdaptiveByteBuf::init@49 (line 2782)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunk::readInitInto@63 (line 2272)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassMagazine::allocate@28 (line 1619)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$StripedHeap::tryAllocate@56 (line 719)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@82 (line 331)
+   0.27%        0x00007f203004f5e2:   mov    %r12b,0x40(%r10)             ;*putfield hasArray {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$AdaptiveByteBuf::init@41 (line 2781)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunk::readInitInto@63 (line 2272)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassMagazine::allocate@28 (line 1619)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$StripedHeap::tryAllocate@56 (line 719)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@82 (line 331)
+   0.05%        0x00007f203004f5e6:   shl    $0x3,%rbp
+   0.02%        0x00007f203004f5ea:   mov    0xc(%r12,%rsi,8),%edx
+   0.08%        0x00007f203004f5ef:   sub    %r9d,%edx                    ;*isub {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunk::remainingCapacity@8 (line 2313)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassMagazine::allocate@40 (line 1620)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$StripedHeap::tryAllocate@56 (line 719)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@82 (line 331)
+   0.06%        0x00007f203004f5f2:   mov    0x50(%rsp),%rax
+   0.07%        0x00007f203004f5f7:   xor    %r11,%r11
+   0.04%        0x00007f203004f5fa:   lea    0x30(%rax),%rdi
+   0.03%        0x00007f203004f5fe:   cmpb   $0x0,0x48(%r15)
+   0.11%        0x00007f203004f603:   jne    0x00007f2030050847
+   0.04%        0x00007f203004f609:   mov    %r11d,(%rdi)                 ;*putfield tmpNioBuf {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$AdaptiveByteBuf::init@59 (line 2784)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunk::readInitInto@63 (line 2272)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassMagazine::allocate@28 (line 1619)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$StripedHeap::tryAllocate@56 (line 719)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@82 (line 331)
+   0.19%        0x00007f203004f60c:   lea    0x28(%rax),%r11
+   0.04%        0x00007f203004f610:   cmpb   $0x0,0x48(%r15)
+   0.08%        0x00007f203004f615:   jne    0x00007f20300508d9
+   0.06%        0x00007f203004f61b:   mov    %rbp,%r8
+   0.02%        0x00007f203004f61e:   shr    $0x3,%r8
+                0x00007f203004f622:   mov    %r8d,(%r11)
+   0.12%        0x00007f203004f625:   mov    %r11,%r10
+   0.04%        0x00007f203004f628:   xor    %rbp,%r10
+   0.01%        0x00007f203004f62b:   shr    $0x18,%r10
+   0.03%   ╭    0x00007f203004f62f:   je     0x00007f203004f653
+   0.03%   │    0x00007f203004f635:   mov    %r11,%r10
+   0.05%   │    0x00007f203004f638:   shr    $0x9,%r10
+           │    0x00007f203004f63c:   movabs $0x7f2021200000,%r8
+   0.04%   │    0x00007f203004f646:   add    %r8,%r10
+   0.01%   │    0x00007f203004f649:   cmpb   $0x2,(%r10)
+   0.21%   │    0x00007f203004f64d:   jne    0x00007f2030050944           ;*putfield rootParent {reexecute=0 rethrow=0 return_oop=0}
+           │                                                              ; - io.netty.buffer.AdaptivePoolingAllocator$AdaptiveByteBuf::init@54 (line 2783)
+           │                                                              ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunk::readInitInto@63 (line 2272)
+           │                                                              ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassMagazine::allocate@28 (line 1619)
+           │                                                              ; - io.netty.buffer.AdaptivePoolingAllocator$StripedHeap::tryAllocate@56 (line 719)
+           │                                                              ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@82 (line 331)
+   0.05%   ↘    0x00007f203004f653:   cmp    %ebx,%edx
+   0.08%        0x00007f203004f655:   jle    0x00007f203004f945           ;*if_icmple {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunk::remainingCapacity@15 (line 2314)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassMagazine::allocate@40 (line 1620)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$StripedHeap::tryAllocate@56 (line 719)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@82 (line 331)
+                0x00007f203004f65b:   mov    0x5c(%rsp),%r10d             ;*ireturn {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunk::remainingCapacity@27 (line 2314)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassMagazine::allocate@40 (line 1620)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$StripedHeap::tryAllocate@56 (line 719)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@82 (line 331)
+   0.06%        0x00007f203004f660:   test   %edx,%edx
+   0.03%        0x00007f203004f662:   je     0x00007f203004f9f4           ;*invokevirtual allocate {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$StripedHeap::tryAllocate@56 (line 719)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@82 (line 331)
+   0.00%        0x00007f203004f668:   mov    0x48(%rsp),%r10
+   0.04%        0x00007f203004f66d:   mov    0x14(%r10),%r11d
+   0.23%        0x00007f203004f671:   inc    %r11d                        ;*iadd {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassMagazine::tickAllocPurge@6 (line 1569)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$StripedHeap::tryAllocate@64 (line 720)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@82 (line 331)
+   0.06%        0x00007f203004f674:   mov    %r11d,0x14(%r10)             ;*putfield allocCount {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassMagazine::tickAllocPurge@8 (line 1569)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$StripedHeap::tryAllocate@64 (line 720)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@82 (line 331)
+   0.11%        0x00007f203004f678:   mov    0x10(%r10),%r8d
+   0.12%        0x00007f203004f67c:   cmp    %r8d,%r11d
+   0.05%        0x00007f203004f67f:   jge    0x00007f203004fc0e           ;*synchronization entry
+                                                                          ; - java.util.concurrent.locks.StampedLock::unlockWrite@-1 (line 654)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$StripedHeap::tryAllocate@75 (line 739)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@82 (line 331)
+   0.00%        0x00007f203004f685:   mov    0x2c(%rsp),%r10d
+   0.03%        0x00007f203004f68a:   mov    0x10(%r12,%r10,8),%r11       ;*getfield state {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - java.util.concurrent.locks.StampedLock::unlockWrite@1 (line 654)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$StripedHeap::tryAllocate@75 (line 739)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@82 (line 331)
+   1.28%        0x00007f203004f68f:   cmp    0x30(%rsp),%r11
+   0.08%        0x00007f203004f694:   jne    0x00007f203004ff48           ;*ifne {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - java.util.concurrent.locks.StampedLock::unlockWrite@6 (line 654)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$StripedHeap::tryAllocate@75 (line 739)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@82 (line 331)
+                0x00007f203004f69a:   mov    0x38(%rsp),%r8
+   0.02%        0x00007f203004f69f:   and    $0x80,%r8
+   0.05%        0x00007f203004f6a6:   or     $0x80,%r8                    ;*lor {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - java.util.concurrent.locks.StampedLock::tryAcquireWrite@21 (line 430)
+                                                                          ; - java.util.concurrent.locks.StampedLock::tryWriteLock@1 (line 491)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$StripedHeap::tryAllocate@8 (line 709)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@82 (line 331)
+   0.01%        0x00007f203004f6ad:   xor    %r11d,%r11d
+   0.04%        0x00007f203004f6b0:   test   %r8,%r8
+   0.03%        0x00007f203004f6b3:   je     0x00007f203004ffa4           ;*ifne {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - java.util.concurrent.locks.StampedLock::unlockWrite@16 (line 654)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$StripedHeap::tryAllocate@75 (line 739)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@82 (line 331)
+                0x00007f203004f6b9:   mov    0x30(%rsp),%r8
+   0.07%        0x00007f203004f6be:   add    $0x80,%r8                    ;*ladd {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - java.util.concurrent.locks.StampedLock::unlockWriteState@4 (line 458)
+                                                                          ; - java.util.concurrent.locks.StampedLock::releaseWrite@2 (line 462)
+                                                                          ; - java.util.concurrent.locks.StampedLock::unlockWrite@29 (line 656)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$StripedHeap::tryAllocate@75 (line 739)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@82 (line 331)
+   0.04%        0x00007f203004f6c5:   je     0x00007f203004ffc8           ;   {other}
+   0.00%        0x00007f203004f6cb:   mov    %r8,0x10(%r12,%r10,8)
+   0.11%        0x00007f203004f6d0:   lock addl $0x0,-0x40(%rsp)          ;*putfield state {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - java.util.concurrent.locks.StampedLock::releaseWrite@6 (line 462)
+                                                                          ; - java.util.concurrent.locks.StampedLock::unlockWrite@29 (line 656)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$StripedHeap::tryAllocate@75 (line 739)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@82 (line 331)
+   5.46%        0x00007f203004f6d6:   mov    0x18(%r12,%r10,8),%ebp       ;*getfield head {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - java.util.concurrent.locks.StampedLock::releaseWrite@11 (line 463)
+                                                                          ; - java.util.concurrent.locks.StampedLock::unlockWrite@29 (line 656)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$StripedHeap::tryAllocate@75 (line 739)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@82 (line 331)
+   0.46%        0x00007f203004f6db:   test   %ebp,%ebp
+                0x00007f203004f6dd:   jne    0x00007f203004ffec           ;*ifnull {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - java.util.concurrent.locks.StampedLock::signalNext@1 (line 1162)
+                                                                          ; - java.util.concurrent.locks.StampedLock::releaseWrite@14 (line 463)
+                                                                          ; - java.util.concurrent.locks.StampedLock::unlockWrite@29 (line 656)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$StripedHeap::tryAllocate@75 (line 739)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@82 (line 331)
+                0x00007f203004f6e3:   mov    0x50(%rsp),%rax              ;*invokevirtual tryAllocate {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator::allocateShared@82 (line 331)
+   0.00%        0x00007f203004f6e8:   add    $0xa0,%rsp
+   0.00%        0x00007f203004f6ef:   pop    %rbp
+   0.02%        0x00007f203004f6f0:   cmp    0x5b8(%r15),%rsp
+   0.05%        0x00007f203004f6f7:   jb     0x00007f203004f73a
+                0x00007f203004f6fd:   mov    %r15,%rdi
+                0x00007f203004f700:   test   $0xf,%spl
+            ╭   0x00007f203004f704:   je     0x00007f203004f71c
+            │   0x00007f203004f70a:   sub    $0x8,%rsp
+            │   0x00007f203004f70e:   call   0x00007f2047b540e0           ;   {runtime_call SharedRuntime::enable_stack_reserved_zone(JavaThread*)}
+            │   0x00007f203004f713:   add    $0x8,%rsp
+            │╭  0x00007f203004f717:   jmp    0x00007f203004f721
+            ↘│  0x00007f203004f71c:   call   0x00007f2047b540e0           ;   {runtime_call SharedRuntime::enable_stack_reserved_zone(JavaThread*)}
+             ↘  0x00007f203004f721:   jmp    0x00007f202f8ac9e0           ;   {runtime_call Shared Runtime throw_delayed_StackOverflowError_blob}
+                0x00007f203004f726:   movabs $0x7f2047f7973c,%rdi         ;   {external_word}
+....................................................................................................
+  37.75%  <total for region 1>
+
+....[Hottest Region 2]..............................................................................
+c2, level 4, io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease, version 2, compile id 2230 
+
+                0x00007f203004e400:   xchg   %ax,%ax
+              [Entry Point]
+                # {method} {0x00007f1fd8527340} &apos;handleRelease&apos; &apos;(Z)Z&apos; in &apos;io/netty/buffer/AbstractReferenceCountedByteBuf&apos;
+                # this:     rsi:rsi   = &apos;io/netty/buffer/AbstractReferenceCountedByteBuf&apos;
+                # parm0:    rdx       = boolean
+                #           [sp+0x60]  (sp of caller)
+                0x00007f203004e402:   mov    0x8(%rsi),%r10d
+                0x00007f203004e406:   cmp    0x8(%rax),%r10d
+                0x00007f203004e40a:   jne    0x00007f202f8ad5e0           ;   {runtime_call Shared Runtime ic_miss_blob}
+              [Verified Entry Point]
+   0.03%        0x00007f203004e410:   mov    %eax,-0x14000(%rsp)
+   0.01%        0x00007f203004e417:   push   %rbp
+   0.10%        0x00007f203004e418:   sub    $0x50,%rsp
+   0.01%        0x00007f203004e41c:   cmpl   $0x1,0x20(%r15)
+   0.70%        0x00007f203004e424:   jne    0x00007f203004f045           ;*synchronization entry
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@-1 (line 92)
+   0.21%        0x00007f203004e42a:   mov    %edx,(%rsp)
+   0.01%        0x00007f203004e42d:   test   %edx,%edx
+   0.00%        0x00007f203004e42f:   je     0x00007f203004e9ae           ;*ifeq {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@1 (line 92)
+                0x00007f203004e435:   mov    0x8(%rsi),%r11d
+   0.00%        0x00007f203004e439:   cmp    $0x1096788,%r11d             ;   {metadata(&apos;io/netty/buffer/AdaptivePoolingAllocator$AdaptiveByteBuf&apos;)}
+   0.14%        0x00007f203004e440:   jne    0x00007f203004e8b5           ;*invokevirtual deallocate {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+                0x00007f203004e446:   mov    %rsi,0x8(%rsp)
+   0.00%        0x00007f203004e44b:   mov    0x2c(%rsi),%r10d             ;*getfield chunk {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$AdaptiveByteBuf::deallocate@39 (line 3270)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+   0.01%        0x00007f203004e44f:   mov    0x8(%r12,%r10,8),%ecx        ; implicit exception: dispatches to 0x00007f203004ecb0
+                                                                          ;*invokevirtual releaseSegment {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$AdaptiveByteBuf::deallocate@57 (line 3271)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+   1.11%        0x00007f203004e454:   mov    0x34(%rsi),%r11d             ;*getfield startIndex {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$AdaptiveByteBuf::deallocate@50 (line 3271)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+   0.15%        0x00007f203004e458:   lea    (%r12,%r10,8),%r8
+   0.01%        0x00007f203004e45c:   cmp    $0x10a1000,%ecx              ;   {metadata(&apos;io/netty/buffer/AdaptivePoolingAllocator$SizeClassedChunk&apos;)}
+   0.02%        0x00007f203004e462:   jne    0x00007f203004e7ea           ;*invokevirtual releaseSegment {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$AdaptiveByteBuf::deallocate@57 (line 3271)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+                0x00007f203004e468:   mov    %r8,0x10(%rsp)
+   0.01%        0x00007f203004e46d:   mov    0x34(%r8),%r10d              ;*getfield ownerThread {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunk::releaseSegment@1 (line 2337)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$AdaptiveByteBuf::deallocate@57 (line 3271)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+   0.20%        0x00007f203004e471:   test   %r10d,%r10d
+                0x00007f203004e474:   jne    0x00007f203004e9c4           ;*ifnull {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunk::releaseSegment@4 (line 2337)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$AdaptiveByteBuf::deallocate@57 (line 3271)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+                0x00007f203004e47a:   mov    0x38(%r8),%ecx               ;*getfield owningCache {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunk::releaseSegment@33 (line 2341)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$AdaptiveByteBuf::deallocate@57 (line 3271)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+   0.02%        0x00007f203004e47e:   mov    0x24(%r12,%rcx,8),%r9d       ; implicit exception: dispatches to 0x00007f203004ebf4
+                                                                          ;*getfield stripeLock {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunkCache::tryLockForRelease@1 (line 1160)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunk::releaseSegment@38 (line 2342)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$AdaptiveByteBuf::deallocate@57 (line 3271)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+   0.62%        0x00007f203004e483:   mov    0x10(%r12,%r9,8),%rdx        ; implicit exception: dispatches to 0x00007f203004ecd4
+                                                                          ;*getfield state {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - java.util.concurrent.locks.StampedLock::tryAcquireWrite@1 (line 430)
+                                                                          ; - java.util.concurrent.locks.StampedLock::tryWriteLock@1 (line 491)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunkCache::tryLockForRelease@15 (line 1160)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunk::releaseSegment@38 (line 2342)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$AdaptiveByteBuf::deallocate@57 (line 3271)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+   2.93%        0x00007f203004e488:   lea    (%r12,%rcx,8),%rbx           ;*getfield owningCache {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunk::releaseSegment@33 (line 2341)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$AdaptiveByteBuf::deallocate@57 (line 3271)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+   0.06%        0x00007f203004e48c:   test   $0xff,%edx
+   0.09%        0x00007f203004e492:   jne    0x00007f203004e715           ;*invokevirtual compareAndSetLong {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - java.util.concurrent.locks.StampedLock::casState@9 (line 424)
+                                                                          ; - java.util.concurrent.locks.StampedLock::tryAcquireWrite@24 (line 430)
+                                                                          ; - java.util.concurrent.locks.StampedLock::tryWriteLock@1 (line 491)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunkCache::tryLockForRelease@15 (line 1160)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunk::releaseSegment@38 (line 2342)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$AdaptiveByteBuf::deallocate@57 (line 3271)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+   0.00%        0x00007f203004e498:   mov    %rdx,%r8
+   0.00%        0x00007f203004e49b:   or     $0x80,%r8                    ;*lor {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - java.util.concurrent.locks.StampedLock::tryAcquireWrite@21 (line 430)
+                                                                          ; - java.util.concurrent.locks.StampedLock::tryWriteLock@1 (line 491)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunkCache::tryLockForRelease@15 (line 1160)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunk::releaseSegment@38 (line 2342)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$AdaptiveByteBuf::deallocate@57 (line 3271)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+                0x00007f203004e4a2:   mov    %rdx,%rax
+   0.00%        0x00007f203004e4a5:   lock cmpxchg %r8,0x10(%r12,%r9,8)
+   6.03%        0x00007f203004e4ac:   sete   %r10b
+   0.08%        0x00007f203004e4b0:   movzbl %r10b,%r10d                  ;*invokevirtual compareAndSetLong {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - java.util.concurrent.locks.StampedLock::casState@9 (line 424)
+                                                                          ; - java.util.concurrent.locks.StampedLock::tryAcquireWrite@24 (line 430)
+                                                                          ; - java.util.concurrent.locks.StampedLock::tryWriteLock@1 (line 491)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunkCache::tryLockForRelease@15 (line 1160)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunk::releaseSegment@38 (line 2342)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$AdaptiveByteBuf::deallocate@57 (line 3271)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+                0x00007f203004e4b4:   test   %r10d,%r10d
+   0.53%        0x00007f203004e4b7:   je     0x00007f203004e715           ;*invokevirtual storeStoreFence {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - java.util.concurrent.locks.StampedLock::tryAcquireWrite@33 (line 431)
+                                                                          ; - java.util.concurrent.locks.StampedLock::tryWriteLock@1 (line 491)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunkCache::tryLockForRelease@15 (line 1160)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunk::releaseSegment@38 (line 2342)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$AdaptiveByteBuf::deallocate@57 (line 3271)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+                0x00007f203004e4bd:   test   %r8,%r8
+   0.03%        0x00007f203004e4c0:   je     0x00007f203004e7dc           ;*ifeq {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunk::releaseSegment@47 (line 2343)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$AdaptiveByteBuf::deallocate@57 (line 3271)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+                0x00007f203004e4c6:   mov    0x10(%rsp),%r10
+                0x00007f203004e4cb:   mov    0x30(%r10),%r10d             ;*getfield localFreeList {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunk::releaseSegment@51 (line 2345)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$AdaptiveByteBuf::deallocate@57 (line 3271)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+   0.01%        0x00007f203004e4cf:   mov    0x10(%r12,%r10,8),%r9d       ; implicit exception: dispatches to 0x00007f203004ec34
+                                                                          ;*getfield stack {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$IntStack::push@1 (line 2117)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunk::releaseSegment@55 (line 2345)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$AdaptiveByteBuf::deallocate@57 (line 3271)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+   0.18%        0x00007f203004e4d4:   mov    0xc(%r12,%r10,8),%eax        ;*getfield top {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$IntStack::push@5 (line 2117)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunk::releaseSegment@55 (line 2345)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$AdaptiveByteBuf::deallocate@57 (line 3271)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+   0.06%        0x00007f203004e4d9:   lea    0x1(%rax),%ebp
+   0.02%        0x00007f203004e4dc:   mov    0xc(%r12,%r9,8),%edi         ; implicit exception: dispatches to 0x00007f203004ec6c
+   0.64%        0x00007f203004e4e1:   cmp    %edi,%ebp
+                0x00007f203004e4e3:   jae    0x00007f203004e8e4
+                0x00007f203004e4e9:   mov    %ebp,0xc(%r12,%r10,8)        ;*putfield top {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$IntStack::push@19 (line 2118)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunk::releaseSegment@55 (line 2345)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$AdaptiveByteBuf::deallocate@57 (line 3271)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+   0.32%        0x00007f203004e4ee:   mov    0x10(%rsp),%r10
+   0.00%        0x00007f203004e4f3:   mov    0x3c(%r10),%ebp
+                0x00007f203004e4f7:   lea    (%r12,%r9,8),%r10
+   0.01%        0x00007f203004e4fb:   movslq %eax,%r9
+   0.01%        0x00007f203004e4fe:   mov    %r11d,0x14(%r10,%r9,4)       ;*getfield state {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunk::afterLockedRelease@1 (line 2388)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunk::releaseSegment@60 (line 2346)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$AdaptiveByteBuf::deallocate@57 (line 3271)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+   0.28%        0x00007f203004e503:   cmp    $0xffffffff,%ebp
+   0.00%        0x00007f203004e506:   jne    0x00007f203004ea34           ;*if_icmpeq {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunk::afterLockedRelease@7 (line 2389)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunk::releaseSegment@60 (line 2346)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$AdaptiveByteBuf::deallocate@57 (line 3271)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+                0x00007f203004e50c:   mov    0x10(%rsp),%r10
+   0.04%        0x00007f203004e511:   cmp    0x14(%r10),%r12d
+   0.21%        0x00007f203004e515:   jne    0x00007f203004e6de           ;*return {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunk::afterLockedRelease@28 (line 2396)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunk::releaseSegment@60 (line 2346)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$AdaptiveByteBuf::deallocate@57 (line 3271)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+                0x00007f203004e51b:   mov    0x24(%r12,%rcx,8),%r10d      ;*getfield stripeLock {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunkCache::unlockAfterRelease@23 (line 1172)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunk::releaseSegment@66 (line 2348)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$AdaptiveByteBuf::deallocate@57 (line 3271)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+   0.03%        0x00007f203004e520:   mov    0x10(%r12,%r10,8),%r11       ; implicit exception: dispatches to 0x00007f203004ec8c
+                                                                          ;*getfield state {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - java.util.concurrent.locks.StampedLock::unlockWrite@1 (line 654)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunkCache::unlockAfterRelease@27 (line 1172)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunk::releaseSegment@66 (line 2348)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$AdaptiveByteBuf::deallocate@57 (line 3271)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+   1.10%        0x00007f203004e525:   cmp    %r8,%r11
+   0.01%        0x00007f203004e528:   jne    0x00007f203004ea10           ;*ifne {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - java.util.concurrent.locks.StampedLock::unlockWrite@6 (line 654)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunkCache::unlockAfterRelease@27 (line 1172)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunk::releaseSegment@66 (line 2348)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$AdaptiveByteBuf::deallocate@57 (line 3271)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+                0x00007f203004e52e:   and    $0x80,%rdx
+   0.01%        0x00007f203004e535:   or     $0x80,%rdx                   ;*lor {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - java.util.concurrent.locks.StampedLock::tryAcquireWrite@21 (line 430)
+                                                                          ; - java.util.concurrent.locks.StampedLock::tryWriteLock@1 (line 491)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunkCache::tryLockForRelease@15 (line 1160)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunk::releaseSegment@38 (line 2342)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$AdaptiveByteBuf::deallocate@57 (line 3271)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+   0.00%        0x00007f203004e53c:   xor    %r11d,%r11d
+   0.06%        0x00007f203004e53f:   test   %rdx,%rdx
+   0.00%        0x00007f203004e542:   je     0x00007f203004ea50           ;*ifne {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - java.util.concurrent.locks.StampedLock::unlockWrite@16 (line 654)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunkCache::unlockAfterRelease@27 (line 1172)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunk::releaseSegment@66 (line 2348)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$AdaptiveByteBuf::deallocate@57 (line 3271)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+                0x00007f203004e548:   add    $0x80,%r8                    ;*ladd {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - java.util.concurrent.locks.StampedLock::unlockWriteState@4 (line 458)
+                                                                          ; - java.util.concurrent.locks.StampedLock::releaseWrite@2 (line 462)
+                                                                          ; - java.util.concurrent.locks.StampedLock::unlockWrite@29 (line 656)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunkCache::unlockAfterRelease@27 (line 1172)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunk::releaseSegment@66 (line 2348)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$AdaptiveByteBuf::deallocate@57 (line 3271)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+   0.04%        0x00007f203004e54f:   je     0x00007f203004ea74
+                0x00007f203004e555:   mov    %r8,0x10(%r12,%r10,8)
+   0.13%        0x00007f203004e55a:   lock addl $0x0,-0x40(%rsp)          ;*putfield state {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - java.util.concurrent.locks.StampedLock::releaseWrite@6 (line 462)
+                                                                          ; - java.util.concurrent.locks.StampedLock::unlockWrite@29 (line 656)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunkCache::unlockAfterRelease@27 (line 1172)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunk::releaseSegment@66 (line 2348)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$AdaptiveByteBuf::deallocate@57 (line 3271)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+                                                                          ;   {other}
+   3.29%        0x00007f203004e560:   mov    0x18(%r12,%r10,8),%ebp       ;*getfield head {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - java.util.concurrent.locks.StampedLock::releaseWrite@11 (line 463)
+                                                                          ; - java.util.concurrent.locks.StampedLock::unlockWrite@29 (line 656)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunkCache::unlockAfterRelease@27 (line 1172)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunk::releaseSegment@66 (line 2348)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$AdaptiveByteBuf::deallocate@57 (line 3271)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+   0.16%        0x00007f203004e565:   test   %ebp,%ebp
+                0x00007f203004e567:   jne    0x00007f203004eaa0           ;*invokevirtual releaseSegment {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$AdaptiveByteBuf::deallocate@57 (line 3271)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+                0x00007f203004e56d:   mov    0x8(%rsp),%r10
+                0x00007f203004e572:   mov    0x24(%r10),%r10d             ;*getfield handle {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$AdaptiveByteBuf::deallocate@76 (line 3276)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+   0.01%        0x00007f203004e576:   xor    %r11,%r11
+   0.00%        0x00007f203004e579:   mov    0x8(%rsp),%rbx
+   0.00%        0x00007f203004e57e:   lea    0x2c(%rbx),%r8
+   0.00%        0x00007f203004e582:   cmpb   $0x0,0x48(%r15)
+   0.09%        0x00007f203004e587:   jne    0x00007f203004ee01
+   0.54%        0x00007f203004e58d:   mov    %r11d,(%r8)                  ;*putfield chunk {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$AdaptiveByteBuf::deallocate@67 (line 3274)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+   0.03%        0x00007f203004e590:   lea    0x30(%rbx),%r8
+   0.00%        0x00007f203004e594:   cmpb   $0x0,0x48(%r15)
+   0.00%        0x00007f203004e599:   jne    0x00007f203004ee80
+   0.00%        0x00007f203004e59f:   mov    %r11d,(%r8)                  ;*putfield tmpNioBuf {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$AdaptiveByteBuf::deallocate@62 (line 3273)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+   0.01%        0x00007f203004e5a2:   lea    0x28(%rbx),%r8
+   0.00%        0x00007f203004e5a6:   cmpb   $0x0,0x48(%r15)
+   0.11%        0x00007f203004e5ab:   jne    0x00007f203004eeff
+   0.55%        0x00007f203004e5b1:   mov    %r11d,(%r8)                  ;*putfield rootParent {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$AdaptiveByteBuf::deallocate@72 (line 3275)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+   0.02%        0x00007f203004e5b4:   mov    0xc(%r12,%r10,8),%r10d       ; implicit exception: dispatches to 0x00007f203004ec1c
+                                                                          ;*getfield pool {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.util.Recycler$LocalPoolHandle::unguardedRecycle@1 (line 69)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$AdaptiveByteBuf::deallocate@80 (line 3276)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+   0.01%        0x00007f203004e5b9:   mov    0x1c(%r12,%r10,8),%ebp       ; implicit exception: dispatches to 0x00007f203004ed08
+                                                                          ;*getfield owner {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.util.Recycler$LocalPool::release@1 (line 604)
+                                                                          ; - io.netty.util.Recycler$LocalPoolHandle::unguardedRecycle@11 (line 71)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$AdaptiveByteBuf::deallocate@80 (line 3276)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+   0.10%        0x00007f203004e5be:   test   %ebp,%ebp
+                0x00007f203004e5c0:   jne    0x00007f203004e9f8           ;*ifnull {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.util.Recycler$LocalPool::release@6 (line 605)
+                                                                          ; - io.netty.util.Recycler$LocalPoolHandle::unguardedRecycle@11 (line 71)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$AdaptiveByteBuf::deallocate@80 (line 3276)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+                0x00007f203004e5c6:   mov    0x20(%r12,%r10,8),%ebp       ;*getfield pooledHandles {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.util.Recycler$LocalPool::release@76 (line 612)
+                                                                          ; - io.netty.util.Recycler$LocalPoolHandle::unguardedRecycle@11 (line 71)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$AdaptiveByteBuf::deallocate@80 (line 3276)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+   0.01%        0x00007f203004e5cb:   mov    0x8(%r12,%rbp,8),%r11d       ; implicit exception: dispatches to 0x00007f203004ed24
+   0.13%        0x00007f203004e5d0:   cmp    $0x10a3660,%r11d             ;   {metadata(&apos;io/netty/util/internal/shaded/org/jctools/queues/MpscArrayQueue&apos;)}
+   0.02%        0x00007f203004e5d7:   jne    0x00007f203004e8d0           ;*synchronization entry
+                                                                          ; - io.netty.util.internal.shaded.org.jctools.queues.MpscArrayQueueProducerLimitField::lvProducerLimit@-1 (line 110)
+                                                                          ; - io.netty.util.internal.shaded.org.jctools.queues.MpscArrayQueue::offer@19 (line 290)
+                                                                          ; - io.netty.util.internal.shaded.org.jctools.queues.MpscArrayQueue::relaxedOffer@2 (line 456)
+                                                                          ; - io.netty.util.Recycler$LocalPool::release@86 (line 614)
+                                                                          ; - io.netty.util.Recycler$LocalPoolHandle::unguardedRecycle@11 (line 71)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$AdaptiveByteBuf::deallocate@80 (line 3276)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+                0x00007f203004e5dd:   lea    (%r12,%rbp,8),%r9            ;*invokeinterface relaxedOffer {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.util.Recycler$LocalPool::release@86 (line 614)
+                                                                          ; - io.netty.util.Recycler$LocalPoolHandle::unguardedRecycle@11 (line 71)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$AdaptiveByteBuf::deallocate@80 (line 3276)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+   0.32%        0x00007f203004e5e1:   mov    0x198(%r9),%r10              ;*aload_0 {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.util.internal.shaded.org.jctools.queues.MpscArrayQueue::offer@24 (line 294)
+                                                                          ; - io.netty.util.internal.shaded.org.jctools.queues.MpscArrayQueue::relaxedOffer@2 (line 456)
+                                                                          ; - io.netty.util.Recycler$LocalPool::release@86 (line 614)
+                                                                          ; - io.netty.util.Recycler$LocalPoolHandle::unguardedRecycle@11 (line 71)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$AdaptiveByteBuf::deallocate@80 (line 3276)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+   0.45%  ↗     0x00007f203004e5e8:   mov    0x110(%r9),%rcx              ;*getfield producerIndex {reexecute=0 rethrow=0 return_oop=0}
+          │                                                               ; - io.netty.util.internal.shaded.org.jctools.queues.MpscArrayQueueProducerIndexField::lvProducerIndex@1 (line 60)
+          │                                                               ; - io.netty.util.internal.shaded.org.jctools.queues.MpscArrayQueue::offer@25 (line 294)
+          │                                                               ; - io.netty.util.internal.shaded.org.jctools.queues.MpscArrayQueue::relaxedOffer@2 (line 456)
+          │                                                               ; - io.netty.util.Recycler$LocalPool::release@86 (line 614)
+          │                                                               ; - io.netty.util.Recycler$LocalPoolHandle::unguardedRecycle@11 (line 71)
+          │                                                               ; - io.netty.buffer.AdaptivePoolingAllocator$AdaptiveByteBuf::deallocate@80 (line 3276)
+          │                                                               ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+   0.02%  │     0x00007f203004e5ef:   mov    0x90(%r9),%rbp               ;*getfield mask {reexecute=0 rethrow=0 return_oop=0}
+          │                                                               ; - io.netty.util.internal.shaded.org.jctools.queues.MpscArrayQueue::offer@14 (line 288)
+          │                                                               ; - io.netty.util.internal.shaded.org.jctools.queues.MpscArrayQueue::relaxedOffer@2 (line 456)
+          │                                                               ; - io.netty.util.Recycler$LocalPool::release@86 (line 614)
+          │                                                               ; - io.netty.util.Recycler$LocalPoolHandle::unguardedRecycle@11 (line 71)
+          │                                                               ; - io.netty.buffer.AdaptivePoolingAllocator$AdaptiveByteBuf::deallocate@80 (line 3276)
+          │                                                               ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+   0.03%  │     0x00007f203004e5f6:   cmp    %r10,%rcx
+   0.02%  │     0x00007f203004e5f9:   jge    0x00007f203004e77d
+          │     0x00007f203004e5ff:   lea    0x1(%rcx),%r11
+   0.01%  │     0x00007f203004e603:   mov    %rcx,%rax
+   0.01%  │     0x00007f203004e606:   lock cmpxchg %r11,0x110(%r9)
+   2.80%  │     0x00007f203004e60f:   sete   %r8b
+          │     0x00007f203004e613:   movzbl %r8b,%r8d                    ;*ifeq {reexecute=0 rethrow=0 return_oop=0}
+          │                                                               ; - io.netty.util.internal.shaded.org.jctools.queues.MpscArrayQueue::offer@78 (line 312)
+          │                                                               ; - io.netty.util.internal.shaded.org.jctools.queues.MpscArrayQueue::relaxedOffer@2 (line 456)
+          │                                                               ; - io.netty.util.Recycler$LocalPool::release@86 (line 614)
+          │                                                               ; - io.netty.util.Recycler$LocalPoolHandle::unguardedRecycle@11 (line 71)
+          │                                                               ; - io.netty.buffer.AdaptivePoolingAllocator$AdaptiveByteBuf::deallocate@80 (line 3276)
+          │                                                               ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+   0.00%  │     0x00007f203004e617:   mov    0x30(%r15),%r11              ; ImmutableOopMap {r9=Oop [8]=Oop }
+          │                                                               ;*ifeq {reexecute=1 rethrow=0 return_oop=0}
+          │                                                               ; - (reexecute) io.netty.util.internal.shaded.org.jctools.queues.MpscArrayQueue::offer@78 (line 312)
+          │                                                               ; - io.netty.util.internal.shaded.org.jctools.queues.MpscArrayQueue::relaxedOffer@2 (line 456)
+          │                                                               ; - io.netty.util.Recycler$LocalPool::release@86 (line 614)
+          │                                                               ; - io.netty.util.Recycler$LocalPoolHandle::unguardedRecycle@11 (line 71)
+          │                                                               ; - io.netty.buffer.AdaptivePoolingAllocator$AdaptiveByteBuf::deallocate@80 (line 3276)
+          │                                                               ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+   0.24%  │     0x00007f203004e61b:   test   %eax,(%r11)                  ;   {poll}
+   0.08%  │     0x00007f203004e61e:   test   %r8d,%r8d
+          ╰     0x00007f203004e621:   je     0x00007f203004e5e8           ;*invokevirtual putReferenceRelease {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - sun.misc.Unsafe::putOrderedObject@10 (line 1472)
+                                                                          ; - io.netty.util.internal.shaded.org.jctools.util.UnsafeRefArrayAccess::soRefElement@6 (line 63)
+                                                                          ; - io.netty.util.internal.shaded.org.jctools.queues.MpscArrayQueue::offer@96 (line 320)
+                                                                          ; - io.netty.util.internal.shaded.org.jctools.queues.MpscArrayQueue::relaxedOffer@2 (line 456)
+                                                                          ; - io.netty.util.Recycler$LocalPool::release@86 (line 614)
+                                                                          ; - io.netty.util.Recycler$LocalPoolHandle::unguardedRecycle@11 (line 71)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$AdaptiveByteBuf::deallocate@80 (line 3276)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+                0x00007f203004e623:   mov    0x8c(%r9),%r11d              ;*getfield buffer {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.util.internal.shaded.org.jctools.queues.MpscArrayQueue::offer@90 (line 320)
+                                                                          ; - io.netty.util.internal.shaded.org.jctools.queues.MpscArrayQueue::relaxedOffer@2 (line 456)
+                                                                          ; - io.netty.util.Recycler$LocalPool::release@86 (line 614)
+                                                                          ; - io.netty.util.Recycler$LocalPoolHandle::unguardedRecycle@11 (line 71)
+                                                                          ; - io.netty.buffer.AdaptivePoolingAllocator$AdaptiveByteBuf::deallocate@80 (line 3276)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+   0.00%        0x00007f203004e62a:   and    %rcx,%rbp
+                0x00007f203004e62d:   mov    (%rsp),%eax
+   0.01%        0x00007f203004e630:   and    $0x1,%eax                    ;*synchronization entry
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@-1 (line 92)
+                0x00007f203004e633:   lea    (%r12,%r11,8),%r10
+   0.00%        0x00007f203004e637:   mov    0x8(%rsp),%rcx
+   0.22%        0x00007f203004e63c:   lea    0x10(%r10,%rbp,4),%r8
+   0.11%        0x00007f203004e641:   cmpb   $0x0,0x48(%r15)
+   0.00%        0x00007f203004e646:   jne    0x00007f203004ef6a
+                0x00007f203004e64c:   mov    %rcx,%r9
+   0.01%        0x00007f203004e64f:   shr    $0x3,%r9
+                0x00007f203004e653:   mov    %r9d,(%r8)
+   0.06%        0x00007f203004e656:   mov    %r8,%r11
+   0.02%        0x00007f203004e659:   xor    %rcx,%r11
+                0x00007f203004e65c:   shr    $0x18,%r11
+   0.16%   ╭    0x00007f203004e660:   je     0x00007f203004e684
+   0.08%   │    0x00007f203004e666:   mov    %r8,%r11
+   0.01%   │    0x00007f203004e669:   shr    $0x9,%r11
+   0.01%   │    0x00007f203004e66d:   movabs $0x7f2021200000,%r9
+   0.00%   │    0x00007f203004e677:   add    %r9,%r11
+   0.01%   │    0x00007f203004e67a:   cmpb   $0x2,(%r11)
+   0.14%   │    0x00007f203004e67e:   jne    0x00007f203004efd5           ;*invokevirtual putReferenceRelease {reexecute=0 rethrow=0 return_oop=0}
+           │                                                              ; - sun.misc.Unsafe::putOrderedObject@10 (line 1472)
+           │                                                              ; - io.netty.util.internal.shaded.org.jctools.util.UnsafeRefArrayAccess::soRefElement@6 (line 63)
+           │                                                              ; - io.netty.util.internal.shaded.org.jctools.queues.MpscArrayQueue::offer@96 (line 320)
+           │                                                              ; - io.netty.util.internal.shaded.org.jctools.queues.MpscArrayQueue::relaxedOffer@2 (line 456)
+           │                                                              ; - io.netty.util.Recycler$LocalPool::release@86 (line 614)
+           │                                                              ; - io.netty.util.Recycler$LocalPoolHandle::unguardedRecycle@11 (line 71)
+           │                                                              ; - io.netty.buffer.AdaptivePoolingAllocator$AdaptiveByteBuf::deallocate@80 (line 3276)
+           │                                                              ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+   0.03%   ↘    0x00007f203004e684:   add    $0x50,%rsp
+   0.09%        0x00007f203004e688:   pop    %rbp
+   0.12%        0x00007f203004e689:   cmp    0x5b8(%r15),%rsp
+   0.03%        0x00007f203004e690:   jb     0x00007f203004e6d3
+                0x00007f203004e696:   mov    %r15,%rdi
+                0x00007f203004e699:   test   $0xf,%spl
+            ╭   0x00007f203004e69d:   je     0x00007f203004e6b5
+            │   0x00007f203004e6a3:   sub    $0x8,%rsp
+            │   0x00007f203004e6a7:   call   0x00007f2047b540e0           ;   {runtime_call SharedRuntime::enable_stack_reserved_zone(JavaThread*)}
+            │   0x00007f203004e6ac:   add    $0x8,%rsp
+            │╭  0x00007f203004e6b0:   jmp    0x00007f203004e6ba
+            ↘│  0x00007f203004e6b5:   call   0x00007f2047b540e0           ;   {runtime_call SharedRuntime::enable_stack_reserved_zone(JavaThread*)}
+             ↘  0x00007f203004e6ba:   jmp    0x00007f202f8ac9e0           ;   {runtime_call Shared Runtime throw_delayed_StackOverflowError_blob}
+                0x00007f203004e6bf:   movabs $0x7f2047f7973c,%rdi         ;   {external_word}
+....................................................................................................
+  26.48%  <total for region 2>
+
+....[Hottest Region 3]..............................................................................
+c2, level 4, io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease, version 2, compile id 2264 
+
+             0x00007f2030056200:   xchg   %ax,%ax
+           [Entry Point]
+             # {method} {0x00007f1fd8453cc8} &apos;readAndRelease&apos; &apos;(I)Lio/netty/buffer/ByteBuf;&apos; in &apos;io/github/neoionet/netty/microbenchmark/ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState&apos;
+             # this:     rsi:rsi   = &apos;io/github/neoionet/netty/microbenchmark/ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState&apos;
+             # parm0:    rdx       = int
+             #           [sp+0x50]  (sp of caller)
+             0x00007f2030056202:   mov    0x8(%rsi),%r10d
+             0x00007f2030056206:   cmp    0x8(%rax),%r10d
+             0x00007f203005620a:   jne    0x00007f202f8ad5e0           ;   {runtime_call Shared Runtime ic_miss_blob}
+           [Verified Entry Point]
+   0.02%     0x00007f2030056210:   mov    %eax,-0x14000(%rsp)
+   0.03%     0x00007f2030056217:   push   %rbp
+   0.02%     0x00007f2030056218:   sub    $0x40,%rsp
+   0.12%     0x00007f203005621c:   cmpl   $0x0,0x20(%r15)
+   0.02%     0x00007f2030056224:   jne    0x00007f203005644e           ;*synchronization entry
+                                                                       ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease@-1 (line 336)
+   0.01%     0x00007f203005622a:   mov    %rsi,%r11
+   0.02%     0x00007f203005622d:   mov    0x78(%rsi),%r10d             ;*getfield buffers {reexecute=0 rethrow=0 return_oop=0}
+                                                                       ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease@1 (line 336)
+   0.00%     0x00007f2030056231:   mov    0xc(%r12,%r10,8),%r9d        ; implicit exception: dispatches to 0x00007f20300563e9
+   0.08%     0x00007f2030056236:   cmp    %r9d,%edx
+          ╭  0x00007f2030056239:   jae    0x00007f2030056309
+          │  0x00007f203005623f:   shl    $0x3,%r10
+   0.01%  │  0x00007f2030056243:   mov    0x10(%r10,%rdx,4),%r9d       ;*aaload {reexecute=0 rethrow=0 return_oop=0}
+          │                                                            ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease@5 (line 336)
+   0.81%  │  0x00007f2030056248:   mov    0x8(%r12,%r9,8),%r10d        ; implicit exception: dispatches to 0x00007f2030056400
+   3.45%  │  0x00007f203005624d:   movzbl 0x6c(%rsi),%ebp              ;*getfield enableReadWrite {reexecute=0 rethrow=0 return_oop=0}
+          │                                                            ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease@12 (line 338)
+   0.00%  │  0x00007f2030056251:   test   %ebp,%ebp
+          │  0x00007f2030056253:   je     0x00007f2030056388           ;*ifeq {reexecute=0 rethrow=0 return_oop=0}
+          │                                                            ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease@15 (line 338)
+          │  0x00007f2030056259:   cmp    $0x1096788,%r10d             ;   {metadata(&apos;io/netty/buffer/AdaptivePoolingAllocator$AdaptiveByteBuf&apos;)}
+   0.03%  │  0x00007f2030056260:   jne    0x00007f2030056328
+          │  0x00007f2030056266:   lea    (%r12,%r9,8),%r10            ;*invokevirtual readByte {reexecute=0 rethrow=0 return_oop=0}
+          │                                                            ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease@19 (line 339)
+          │  0x00007f203005626a:   mov    %r10,0x8(%rsp)
+          │  0x00007f203005626f:   mov    0x20(%r10),%r9d              ;*getfield refCnt {reexecute=0 rethrow=0 return_oop=0}
+          │                                                            ; - io.netty.buffer.AbstractReferenceCountedByteBuf::isAccessible@1 (line 37)
+          │                                                            ; - io.netty.buffer.AbstractByteBuf::ensureAccessible@7 (line 1491)
+          │                                                            ; - io.netty.buffer.AbstractByteBuf::checkReadableBytes0@1 (line 1478)
+          │                                                            ; - io.netty.buffer.AbstractByteBuf::readByte@2 (line 749)
+          │                                                            ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease@19 (line 339)
+   0.22%  │  0x00007f2030056273:   mov    0xc(%r12,%r9,8),%ebp         ;*invokevirtual getInt {reexecute=0 rethrow=0 return_oop=0}
+          │                                                            ; - sun.misc.Unsafe::getInt@8 (line 180)
+          │                                                            ; - io.netty.util.internal.PlatformDependent0::getInt@5 (line 853)
+          │                                                            ; - io.netty.util.internal.PlatformDependent::getInt@2 (line 811)
+          │                                                            ; - io.netty.util.internal.RefCnt$UnsafeRefCnt::isLiveNonVolatile@4 (line 469)
+          │                                                            ; - io.netty.util.internal.RefCnt::isLiveNonVolatile@29 (line 183)
+          │                                                            ; - io.netty.buffer.AbstractReferenceCountedByteBuf::isAccessible@4 (line 37)
+          │                                                            ; - io.netty.buffer.AbstractByteBuf::ensureAccessible@7 (line 1491)
+          │                                                            ; - io.netty.buffer.AbstractByteBuf::checkReadableBytes0@1 (line 1478)
+          │                                                            ; - io.netty.buffer.AbstractByteBuf::readByte@2 (line 749)
+          │                                                            ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease@19 (line 339)
+   2.07%  │  0x00007f2030056278:   cmp    $0x2,%ebp
+   0.01%  │  0x00007f203005627b:   jne    0x00007f2030056370           ;*if_icmpne {reexecute=0 rethrow=0 return_oop=0}
+          │                                                            ; - io.netty.util.internal.RefCnt$UnsafeRefCnt::isLiveNonVolatile@10 (line 470)
+          │                                                            ; - io.netty.util.internal.RefCnt::isLiveNonVolatile@29 (line 183)
+          │                                                            ; - io.netty.buffer.AbstractReferenceCountedByteBuf::isAccessible@4 (line 37)
+          │                                                            ; - io.netty.buffer.AbstractByteBuf::ensureAccessible@7 (line 1491)
+          │                                                            ; - io.netty.buffer.AbstractByteBuf::checkReadableBytes0@1 (line 1478)
+          │                                                            ; - io.netty.buffer.AbstractByteBuf::readByte@2 (line 749)
+          │                                                            ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease@19 (line 339)
+          │  0x00007f2030056281:   mov    0x10(%r10),%r10d
+   0.00%  │  0x00007f2030056285:   mov    0x8(%rsp),%r8
+   0.01%  │  0x00007f203005628a:   mov    0xc(%r8),%r8d                ;*getfield readerIndex {reexecute=0 rethrow=0 return_oop=0}
+          │                                                            ; - io.netty.buffer.AbstractByteBuf::checkReadableBytes0@11 (line 1479)
+          │                                                            ; - io.netty.buffer.AbstractByteBuf::readByte@2 (line 749)
+          │                                                            ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease@19 (line 339)
+   0.00%  │  0x00007f203005628e:   dec    %r10d                        ;*isub {reexecute=0 rethrow=0 return_oop=0}
+          │                                                            ; - io.netty.buffer.AbstractByteBuf::checkReadableBytes0@19 (line 1479)
+          │                                                            ; - io.netty.buffer.AbstractByteBuf::readByte@2 (line 749)
+          │                                                            ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease@19 (line 339)
+   0.00%  │  0x00007f2030056291:   cmp    %r10d,%r8d
+   0.00%  │  0x00007f2030056294:   jg     0x00007f20300563a4           ;*if_icmple {reexecute=0 rethrow=0 return_oop=0}
+          │                                                            ; - io.netty.buffer.AbstractByteBuf::checkReadableBytes0@20 (line 1479)
+          │                                                            ; - io.netty.buffer.AbstractByteBuf::readByte@2 (line 749)
+          │                                                            ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease@19 (line 339)
+          │  0x00007f203005629a:   mov    0x8(%rsp),%r10
+   0.00%  │  0x00007f203005629f:   mov    0x28(%r10),%r10d             ;*getfield rootParent {reexecute=0 rethrow=0 return_oop=0}
+          │                                                            ; - io.netty.buffer.AdaptivePoolingAllocator$AdaptiveByteBuf::rootParent@1 (line 2798)
+          │                                                            ; - io.netty.buffer.AdaptivePoolingAllocator$AdaptiveByteBuf::_getByte@1 (line 2954)
+          │                                                            ; - io.netty.buffer.AbstractByteBuf::readByte@12 (line 751)
+          │                                                            ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease@19 (line 339)
+   0.00%  │  0x00007f20300562a3:   mov    0x8(%r12,%r10,8),%ecx        ; implicit exception: dispatches to 0x00007f2030056418
+   0.96%  │  0x00007f20300562a8:   cmp    $0x10ac688,%ecx              ;   {metadata(&apos;io/netty/buffer/UnpooledUnsafeDirectByteBuf&apos;)}
+   0.05%  │  0x00007f20300562ae:   jne    0x00007f2030056344           ;*invokevirtual _getByte {reexecute=0 rethrow=0 return_oop=0}
+          │                                                            ; - io.netty.buffer.AdaptivePoolingAllocator$AdaptiveByteBuf::_getByte@9 (line 2954)
+          │                                                            ; - io.netty.buffer.AbstractByteBuf::readByte@12 (line 751)
+          │                                                            ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease@19 (line 339)
+          │  0x00007f20300562b4:   inc    %r8d
+   0.00%  │  0x00007f20300562b7:   mov    0x8(%rsp),%r10
+   0.00%  │  0x00007f20300562bc:   mov    %r8d,0xc(%r10)
+   0.00%  │  0x00007f20300562c0:   mov    $0x2,%eax
+   0.00%  │  0x00007f20300562c5:   mov    $0x1,%edx
+          │  0x00007f20300562ca:   lock cmpxchg %edx,0xc(%r12,%r9,8)
+   1.85%  │  0x00007f20300562d1:   sete   %bpl
+   0.01%  │  0x00007f20300562d5:   movzbl %bpl,%ebp                    ;*invokevirtual compareAndSetInt {reexecute=0 rethrow=0 return_oop=0}
+          │                                                            ; - sun.misc.Unsafe::compareAndSwapInt@12 (line 1231)
+          │                                                            ; - io.netty.util.internal.PlatformDependent0::compareAndSwapInt@8 (line 869)
+          │                                                            ; - io.netty.util.internal.PlatformDependent::compareAndSwapInt@5 (line 823)
+          │                                                            ; - io.netty.util.internal.RefCnt$UnsafeRefCnt::release0@45 (line 455)
+          │                                                            ; - io.netty.util.internal.RefCnt$UnsafeRefCnt::release@2 (line 436)
+          │                                                            ; - io.netty.util.internal.RefCnt::release@29 (line 144)
+          │                                                            ; - io.netty.buffer.AbstractReferenceCountedByteBuf::release@5 (line 83)
+          │                                                            ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease@29 (line 342)
+   0.00%  │  0x00007f20300562d9:   test   %ebp,%ebp
+   0.32%  │  0x00007f20300562db:   je     0x00007f20300563c4           ;*ifeq {reexecute=0 rethrow=0 return_oop=0}
+          │                                                            ; - io.netty.util.internal.RefCnt$UnsafeRefCnt::release0@48 (line 455)
+          │                                                            ; - io.netty.util.internal.RefCnt$UnsafeRefCnt::release@2 (line 436)
+          │                                                            ; - io.netty.util.internal.RefCnt::release@29 (line 144)
+          │                                                            ; - io.netty.buffer.AbstractReferenceCountedByteBuf::release@5 (line 83)
+          │                                                            ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease@29 (line 342)
+   0.01%  │  0x00007f20300562e1:   mov    %r10,%rsi
+   0.22%  │  0x00007f20300562e4:   data16 xchg %ax,%ax
+          │  0x00007f20300562e7:   call   0x00007f202f8adae0           ; ImmutableOopMap {[8]=Oop }
+          │                                                            ;*invokespecial handleRelease {reexecute=0 rethrow=0 return_oop=0}
+          │                                                            ; - io.netty.buffer.AbstractReferenceCountedByteBuf::release@8 (line 83)
+          │                                                            ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease@29 (line 342)
+          │                                                            ;   {optimized virtual_call}
+   0.03%  │  0x00007f20300562ec:   nopl   0x1e4(%rax,%rax,1)           ;*invokespecial handleRelease {reexecute=0 rethrow=0 return_oop=0}
+          │                                                            ; - io.netty.buffer.AbstractReferenceCountedByteBuf::release@8 (line 83)
+          │                                                            ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease@29 (line 342)
+          │                                                            ;   {post_call_nop}
+   0.03%  │  0x00007f20300562f4:   mov    0x8(%rsp),%rax
+   0.09%  │  0x00007f20300562f9:   add    $0x40,%rsp
+   0.14%  │  0x00007f20300562fd:   pop    %rbp
+   0.03%  │  0x00007f20300562fe:   cmp    0x28(%r15),%rsp              ;   {poll_return}
+   0.03%  │  0x00007f2030056302:   ja     0x00007f2030056438
+          │  0x00007f2030056308:   ret    
+          ↘  0x00007f2030056309:   mov    $0xffffffe4,%esi
+             0x00007f203005630e:   mov    %r11,%rbp
+             0x00007f2030056311:   mov    %r10d,(%rsp)
+             0x00007f2030056315:   mov    %edx,0x4(%rsp)
+             0x00007f2030056319:   xchg   %ax,%ax
+             0x00007f203005631b:   call   0x00007f202f9945e0           ; ImmutableOopMap {rbp=Oop [0]=NarrowOop }
+                                                                       ;*aaload {reexecute=0 rethrow=0 return_oop=0}
+                                                                       ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease@5 (line 336)
+                                                                       ;   {runtime_call UncommonTrapBlob}
+....................................................................................................
+  10.71%  <total for region 3>
+
+....[Hottest Regions]...............................................................................
+  37.75%           c2, level 4  io.netty.buffer.AdaptivePoolingAllocator::allocateShared, version 6, compile id 2240 
+  26.48%           c2, level 4  io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease, version 2, compile id 2230 
+  10.71%           c2, level 4  io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease, version 2, compile id 2264 
+   9.09%           c2, level 4  io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::performDirectAllocation, version 4, compile id 2317 
+   4.03%           c2, level 4  io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::allocateDirect, version 6, compile id 2308 
+   2.11%           c2, level 4  io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::allocateDirect, version 6, compile id 2308 
+   1.71%           c2, level 4  io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::probeAlloc, version 2, compile id 2263 
+   0.84%           c2, level 4  io.netty.buffer.AdaptivePoolingAllocator$SizeClassMagazine::allocateSlow, version 2, compile id 2334 
+   0.65%           c2, level 4  io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunkCache::refile, version 2, compile id 2303 
+   0.55%           c2, level 4  io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunk::updateRemainingCapacity, version 2, compile id 2320 
+   0.31%           c2, level 4  io.netty.buffer.AdaptivePoolingAllocator::allocateShared, version 6, compile id 2240 
+   0.30%     [kernel.kallsyms]  __perf_event_task_sched_in 
+   0.26%           c2, level 4  io.github.neoionet.netty.microbenchmark.jmh_generated.ByteBufAllocatorAllocPatternBenchmark_directAllocation_jmhTest::directAllocation_avgt_jmhStub, version 2, compile id 2236 
+   0.26%     [kernel.kallsyms]  perf_ctx_unlock 
+   0.24%           c2, level 4  io.netty.buffer.AdaptivePoolingAllocator$SizeClassMagazine::purgeHeapSiblings, version 5, compile id 2311 
+   0.18%           c2, level 4  io.netty.buffer.AdaptivePoolingAllocator::allocateShared, version 6, compile id 2240 
+   0.15%           c2, level 4  io.netty.util.concurrent.MpscIntQueue$MpscAtomicIntegerArrayQueue::poll, version 2, compile id 2333 
+   0.14%           c2, level 4  io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease, version 2, compile id 2230 
+   0.14%             libc.so.6  __internal_syscall_cancel 
+   0.13%           c2, level 4  io.netty.buffer.AdaptivePoolingAllocator$SizeClassMagazine::allocateSlow, version 2, compile id 2334 
+   0.13%             libjvm.so  os::current_thread_id() 
+   0.09%             libc.so.6  __syscall_cancel_arch_end 
+   0.08%             libjvm.so  ElfSymbolTable::lookup(unsigned char*, int*, int*, int*, ElfFuncDescTable*) 
+   0.08%             libc.so.6  syscall 
+   0.07%           c2, level 4  io.netty.buffer.AdaptivePoolingAllocator::allocateShared, version 6, compile id 2240 
+   0.07%           c2, level 4  io.netty.buffer.AdaptivePoolingAllocator$SizeClassMagazine::allocateSlow, version 2, compile id 2334 
+   0.06%           c2, level 4  io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunk::hasRemainingCapacity, version 2, compile id 2207 
+   0.06%           c2, level 4  io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunkCache::refile, version 2, compile id 2303 
+   0.06%                        <unknown> 
+   0.06%     [kernel.kallsyms]  entry_SYSCALL_64 
+   0.06%           c2, level 4  io.netty.buffer.AdaptivePoolingAllocator::allocateShared, version 6, compile id 2240 
+   0.06%           c2, level 4  io.netty.buffer.AdaptivePoolingAllocator$SizeClassMagazine::allocateSlow, version 2, compile id 2334 
+   0.05%     [kernel.kallsyms]  entry_SYSCALL_64_after_hwframe 
+   0.05%           c2, level 4  io.netty.buffer.AdaptivePoolingAllocator::allocateShared, version 6, compile id 2240 
+   0.05%           c2, level 4  io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunkCache::refile, version 2, compile id 2303 
+   0.05%           c2, level 4  io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunkCache::refile, version 2, compile id 2303 
+   0.05%           c2, level 4  io.netty.buffer.AdaptivePoolingAllocator$SizeClassChunkController::newChunkAllocation, version 2, compile id 2374 
+   0.04%     [kernel.kallsyms]  do_syscall_64 
+   0.04%     [kernel.kallsyms]  get_jiffies_update 
+   0.03%           c2, level 4  io.netty.buffer.AdaptivePoolingAllocator$SizeClassMagazine::allocateSlow, version 2, compile id 2334 
+   2.76%  <...other 781 warm regions...>
+....................................................................................................
+ 100.00%  <totals>
+
+....[Hottest Methods (after inlining)]..............................................................
+  38.43%           c2, level 4  io.netty.buffer.AdaptivePoolingAllocator::allocateShared, version 6, compile id 2240 
+  26.63%           c2, level 4  io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease, version 2, compile id 2230 
+  10.71%           c2, level 4  io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease, version 2, compile id 2264 
+   9.09%           c2, level 4  io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::performDirectAllocation, version 4, compile id 2317 
+   6.14%           c2, level 4  io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::allocateDirect, version 6, compile id 2308 
+   1.71%           c2, level 4  io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::probeAlloc, version 2, compile id 2263 
+   1.20%           c2, level 4  io.netty.buffer.AdaptivePoolingAllocator$SizeClassMagazine::allocateSlow, version 2, compile id 2334 
+   0.83%           c2, level 4  io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunkCache::refile, version 2, compile id 2303 
+   0.55%           c2, level 4  io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunk::updateRemainingCapacity, version 2, compile id 2320 
+   0.32%     [kernel.kallsyms]  __perf_event_task_sched_in 
+   0.27%           c2, level 4  io.netty.buffer.AdaptivePoolingAllocator$SizeClassMagazine::purgeHeapSiblings, version 5, compile id 2311 
+   0.26%           c2, level 4  io.github.neoionet.netty.microbenchmark.jmh_generated.ByteBufAllocatorAllocPatternBenchmark_directAllocation_jmhTest::directAllocation_avgt_jmhStub, version 2, compile id 2236 
+   0.26%     [kernel.kallsyms]  perf_ctx_unlock 
+   0.23%                        <unknown> 
+   0.19%           c2, level 4  io.netty.buffer.AdaptivePoolingAllocator$SizeClassChunkController::newChunkAllocation, version 2, compile id 2374 
+   0.15%           c2, level 4  io.netty.util.concurrent.MpscIntQueue$MpscAtomicIntegerArrayQueue::poll, version 2, compile id 2333 
+   0.14%             libc.so.6  __internal_syscall_cancel 
+   0.13%             libjvm.so  os::current_thread_id() 
+   0.09%             libc.so.6  __syscall_cancel_arch_end 
+   0.08%             libjvm.so  ElfSymbolTable::lookup(unsigned char*, int*, int*, int*, ElfFuncDescTable*) 
+   0.08%             libc.so.6  syscall 
+   0.08%           c2, level 4  io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunk::recycleOrDeallocate, version 3, compile id 2381 
+   0.08%             libjvm.so  G1ParScanThreadState::trim_queue_to_threshold(unsigned int) 
+   0.07%           c2, level 4  io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunk::hasRemainingCapacity, version 2, compile id 2207 
+   0.07%     [kernel.kallsyms]  task_tick_fair 
+   0.06%     [kernel.kallsyms]  anon_pipe_write 
+   0.06%     [kernel.kallsyms]  entry_SYSCALL_64 
+   0.05%     [kernel.kallsyms]  do_syscall_64 
+   0.05%     [kernel.kallsyms]  entry_SYSCALL_64_after_hwframe 
+   0.04%     [kernel.kallsyms]  vfs_write 
+   0.04%             libjvm.so  void G1ScanCardClosure::do_oop_work<narrowOop>(narrowOop*) 
+   0.04%     [kernel.kallsyms]  get_jiffies_update 
+   0.03%           c2, level 4  io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunk::hasFullCapacity, version 2, compile id 2306 
+   0.03%     [kernel.kallsyms]  update_curr 
+   0.03%     [kernel.kallsyms]  _copy_from_iter 
+   0.03%           c2, level 4  io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunkCache::tickPurge, version 4, compile id 2314 
+   0.03%           c2, level 4  io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunk::readInitInto, version 2, compile id 2288 
+   0.03%     [kernel.kallsyms]  fdget_pos 
+   0.03%           c2, level 4  io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunkCache::probeExhausted, version 2, compile id 2291 
+   0.03%     [kernel.kallsyms]  __task_pid_nr_ns 
+   1.62%  <...other 432 warm methods...>
+....................................................................................................
+ 100.00%  <totals>
+
+....[Distribution by Source]........................................................................
+  96.47%           c2, level 4
+   2.12%     [kernel.kallsyms]
+   0.63%             libjvm.so
+   0.42%             libc.so.6
+   0.23%                      
+   0.05%           interpreter
+   0.02%        hsdis-amd64.so
+   0.01%           c1, level 3
+   0.01%  ld-linux-x86-64.so.2
+   0.01%           c1, level 2
+   0.00%      Unknown, level 0
+   0.00%              [amdgpu]
+   0.00%                [vdso]
+   0.00%      perf-1148290.map
+   0.00%           [nf_tables]
+....................................................................................................
+ 100.00%  <totals>
+
+
+
+# Run complete. Total time: 00:00:38
+
+REMEMBER: The numbers below are just data. To gain reusable insights, you need to follow up on
+why the numbers are the way they are. Use profilers (see -prof, -lprof), design factorial
+experiments, perform baseline and negative tests that provide experimental control, make sure
+the benchmarking environment is safe on JVM/OS/HW level, ask for reviews from the domain experts.
+Do not assume the numbers tell you what you want them to tell.
+
+NOTE: Current JVM experimentally supports Compiler Blackholes, and they are in use. Please exercise
+extra caution when trusting the results, look into the generated code to check the benchmark still
+works, and factor in a small probability of new VM bugs. Additionally, while comparisons between
+different JVMs are already problematic, the performance difference caused by different Blackhole
+modes can be very significant. Please make sure you use the consistent Blackhole mode for comparisons.
+
+Benchmark                                                   (MAX_LIVE_BUFFERS)  (allocatorType)  (enableReadWrite)  (sizePattern)  Mode  Cnt    Score    Error  Units
+ByteBufAllocatorAllocPatternBenchmark.directAllocation                    1024         ADAPTIVE               true     E_COMMERCE  avgt    5  405.584 ± 33.226  ns/op
+ByteBufAllocatorAllocPatternBenchmark.directAllocation:asm                1024         ADAPTIVE               true     E_COMMERCE  avgt           NaN             ---

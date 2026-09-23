@@ -1,0 +1,455 @@
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by org.openjdk.jmh.util.Utils (file:/tmp/claude-1000/-home-forked-franz-IdeaProjects-netty/01a26e43-89a8-433b-a89e-c560138e4359/scratchpad/lao/benchmark/target/benchmarks.jar)
+WARNING: Please consider reporting this to the maintainers of class org.openjdk.jmh.util.Utils
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+# JMH version: 1.37
+# VM version: JDK 25.0.3, OpenJDK 64-Bit Server VM, 25.0.3+9-LTS
+# VM invoker: /home/forked_franz/.sdkman/candidates/java/25.0.3-tem/bin/java
+# VM options: -server -dsa -da -XX:InitialRAMPercentage=40.0 -XX:MaxRAMPercentage=40.0 -Dio.netty.leakDetection.level=disabled -Djmh.executor=CUSTOM -Djmh.executor.class=io.github.neoionet.netty.microbenchmark.executor.FastThreadLocalThreadHarnessExecutor -XX:MaxRAM=60g --enable-native-access=ALL-UNNAMED --sun-misc-unsafe-memory-access=allow -Dffm.mimalloc.lib=/home/forked_franz/IdeaProjects/netty-ffm-allocator/native/mimalloc/out/release/libmimalloc.so
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 10 iterations, 1 s each
+# Measurement: 10 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Average time, time/op
+# Benchmark: io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark.directAllocation
+# Parameters: (MAX_LIVE_BUFFERS = 1024, allocatorType = ADAPTIVE, enableReadWrite = true, sizePattern = E_COMMERCE)
+
+# Run progress: 0.00% complete, ETA 00:01:20
+# Fork: 1 of 1
+# Preparing profilers: LinuxPerfNormProfiler 
+# Profilers consume stderr from target VM, use -v EXTRA to copy to console
+# Warmup Iteration   1: 80.817 ns/op
+# Warmup Iteration   2: 79.908 ns/op
+# Warmup Iteration   3: 78.493 ns/op
+# Warmup Iteration   4: 78.475 ns/op
+# Warmup Iteration   5: 78.488 ns/op
+# Warmup Iteration   6: 78.439 ns/op
+# Warmup Iteration   7: 78.514 ns/op
+# Warmup Iteration   8: 78.408 ns/op
+# Warmup Iteration   9: 78.652 ns/op
+# Warmup Iteration  10: 78.658 ns/op
+Iteration   1: 78.496 ns/op
+Iteration   2: 78.441 ns/op
+Iteration   3: 78.410 ns/op
+Iteration   4: 78.519 ns/op
+Iteration   5: 78.470 ns/op
+Iteration   6: 78.455 ns/op
+Iteration   7: 78.382 ns/op
+Iteration   8: 78.427 ns/op
+Iteration   9: 78.433 ns/op
+Iteration  10: cRSS-pRSS:[1104, 1104]
+;used-memory:[11]
+78.394 ns/op
+# Processing profiler results: LinuxPerfNormProfiler 
+
+
+Result "io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark.directAllocation":
+  78.443 ±(99.9%) 0.066 ns/op [Average]
+  (min, avg, max) = (78.382, 78.443, 78.519), stdev = 0.044
+  CI (99.9%): [78.377, 78.508] (assumes normal distribution)
+
+Secondary result "io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark.directAllocation:CPI":
+  0.307 clks/insn
+
+Secondary result "io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark.directAllocation:IPC":
+  3.258 insns/clk
+
+Secondary result "io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark.directAllocation:L1-dcache-load-misses":
+  5.756 #/op
+
+Secondary result "io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark.directAllocation:L1-dcache-loads":
+  245.212 #/op
+
+Secondary result "io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark.directAllocation:L1-icache-load-misses":
+  0.003 #/op
+
+Secondary result "io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark.directAllocation:L1-icache-loads":
+  1.178 #/op
+
+Secondary result "io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark.directAllocation:branch-misses":
+  0.555 #/op
+
+Secondary result "io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark.directAllocation:branches":
+  115.532 #/op
+
+Secondary result "io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark.directAllocation:cycles":
+  177.939 #/op
+
+Secondary result "io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark.directAllocation:dTLB-load-misses":
+  0.024 #/op
+
+Secondary result "io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark.directAllocation:dTLB-loads":
+  1.790 #/op
+
+Secondary result "io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark.directAllocation:iTLB-load-misses":
+  0.001 #/op
+
+Secondary result "io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark.directAllocation:iTLB-loads":
+  0.001 #/op
+
+Secondary result "io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark.directAllocation:instructions":
+  579.784 #/op
+
+Secondary result "io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark.directAllocation:stalled-cycles-frontend":
+  5.949 #/op
+
+
+# JMH version: 1.37
+# VM version: JDK 25.0.3, OpenJDK 64-Bit Server VM, 25.0.3+9-LTS
+# VM invoker: /home/forked_franz/.sdkman/candidates/java/25.0.3-tem/bin/java
+# VM options: -server -dsa -da -XX:InitialRAMPercentage=40.0 -XX:MaxRAMPercentage=40.0 -Dio.netty.leakDetection.level=disabled -Djmh.executor=CUSTOM -Djmh.executor.class=io.github.neoionet.netty.microbenchmark.executor.FastThreadLocalThreadHarnessExecutor -XX:MaxRAM=60g --enable-native-access=ALL-UNNAMED --sun-misc-unsafe-memory-access=allow -Dffm.mimalloc.lib=/home/forked_franz/IdeaProjects/netty-ffm-allocator/native/mimalloc/out/release/libmimalloc.so
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 10 iterations, 1 s each
+# Measurement: 10 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Average time, time/op
+# Benchmark: io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark.directAllocation
+# Parameters: (MAX_LIVE_BUFFERS = 1024, allocatorType = MIMALLOC, enableReadWrite = true, sizePattern = E_COMMERCE)
+
+# Run progress: 25.00% complete, ETA 00:01:11
+# Fork: 1 of 1
+# Preparing profilers: LinuxPerfNormProfiler 
+# Profilers consume stderr from target VM, use -v EXTRA to copy to console
+# Warmup Iteration   1: 82.908 ns/op
+# Warmup Iteration   2: 77.307 ns/op
+# Warmup Iteration   3: 81.752 ns/op
+# Warmup Iteration   4: 81.774 ns/op
+# Warmup Iteration   5: 81.743 ns/op
+# Warmup Iteration   6: 81.365 ns/op
+# Warmup Iteration   7: 81.807 ns/op
+# Warmup Iteration   8: 81.719 ns/op
+# Warmup Iteration   9: 81.736 ns/op
+# Warmup Iteration  10: 81.654 ns/op
+Iteration   1: 81.746 ns/op
+Iteration   2: 81.700 ns/op
+Iteration   3: 81.667 ns/op
+Iteration   4: 81.776 ns/op
+Iteration   5: 81.735 ns/op
+Iteration   6: 81.724 ns/op
+Iteration   7: 81.852 ns/op
+Iteration   8: 81.982 ns/op
+Iteration   9: 81.854 ns/op
+Iteration  10: cRSS-pRSS:[1060, 1061]
+;used-memory:[16]
+81.664 ns/op
+# Processing profiler results: LinuxPerfNormProfiler 
+
+
+Result "io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark.directAllocation":
+  81.770 ±(99.9%) 0.151 ns/op [Average]
+  (min, avg, max) = (81.664, 81.770, 81.982), stdev = 0.100
+  CI (99.9%): [81.619, 81.921] (assumes normal distribution)
+
+Secondary result "io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark.directAllocation:CPI":
+  0.374 clks/insn
+
+Secondary result "io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark.directAllocation:IPC":
+  2.673 insns/clk
+
+Secondary result "io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark.directAllocation:L1-dcache-load-misses":
+  6.523 #/op
+
+Secondary result "io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark.directAllocation:L1-dcache-loads":
+  211.052 #/op
+
+Secondary result "io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark.directAllocation:L1-icache-load-misses":
+  0.003 #/op
+
+Secondary result "io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark.directAllocation:L1-icache-loads":
+  1.609 #/op
+
+Secondary result "io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark.directAllocation:branch-misses":
+  0.659 #/op
+
+Secondary result "io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark.directAllocation:branches":
+  95.916 #/op
+
+Secondary result "io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark.directAllocation:cycles":
+  185.606 #/op
+
+Secondary result "io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark.directAllocation:dTLB-load-misses":
+  0.014 #/op
+
+Secondary result "io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark.directAllocation:dTLB-loads":
+  1.587 #/op
+
+Secondary result "io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark.directAllocation:iTLB-load-misses":
+  ≈ 10⁻³ #/op
+
+Secondary result "io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark.directAllocation:iTLB-loads":
+  0.001 #/op
+
+Secondary result "io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark.directAllocation:instructions":
+  496.188 #/op
+
+Secondary result "io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark.directAllocation:stalled-cycles-frontend":
+  7.085 #/op
+
+
+# JMH version: 1.37
+# VM version: JDK 25.0.3, OpenJDK 64-Bit Server VM, 25.0.3+9-LTS
+# VM invoker: /home/forked_franz/.sdkman/candidates/java/25.0.3-tem/bin/java
+# VM options: -server -dsa -da -XX:InitialRAMPercentage=40.0 -XX:MaxRAMPercentage=40.0 -Dio.netty.leakDetection.level=disabled -Djmh.executor=CUSTOM -Djmh.executor.class=io.github.neoionet.netty.microbenchmark.executor.FastThreadLocalThreadHarnessExecutor -XX:MaxRAM=60g --enable-native-access=ALL-UNNAMED --sun-misc-unsafe-memory-access=allow -Dffm.mimalloc.lib=/home/forked_franz/IdeaProjects/netty-ffm-allocator/native/mimalloc/out/release/libmimalloc.so
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 10 iterations, 1 s each
+# Measurement: 10 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Average time, time/op
+# Benchmark: io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark.directAllocation
+# Parameters: (MAX_LIVE_BUFFERS = 1024, allocatorType = FFM_GLIBC, enableReadWrite = true, sizePattern = E_COMMERCE)
+
+# Run progress: 50.00% complete, ETA 00:00:48
+# Fork: 1 of 1
+# Preparing profilers: LinuxPerfNormProfiler 
+# Profilers consume stderr from target VM, use -v EXTRA to copy to console
+# Warmup Iteration   1: 110.328 ns/op
+# Warmup Iteration   2: 108.138 ns/op
+# Warmup Iteration   3: 107.456 ns/op
+# Warmup Iteration   4: 107.436 ns/op
+# Warmup Iteration   5: 107.324 ns/op
+# Warmup Iteration   6: 107.238 ns/op
+# Warmup Iteration   7: 107.378 ns/op
+# Warmup Iteration   8: 107.493 ns/op
+# Warmup Iteration   9: 107.610 ns/op
+# Warmup Iteration  10: 107.518 ns/op
+Iteration   1: 107.502 ns/op
+Iteration   2: 107.489 ns/op
+Iteration   3: 107.474 ns/op
+Iteration   4: 107.379 ns/op
+Iteration   5: 107.267 ns/op
+Iteration   6: 107.241 ns/op
+Iteration   7: 107.342 ns/op
+Iteration   8: 107.258 ns/op
+Iteration   9: 107.230 ns/op
+Iteration  10: cRSS-pRSS:[1053, 1054]
+;used-memory:[0]
+107.275 ns/op
+# Processing profiler results: LinuxPerfNormProfiler 
+
+
+Result "io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark.directAllocation":
+  107.346 ±(99.9%) 0.163 ns/op [Average]
+  (min, avg, max) = (107.230, 107.346, 107.502), stdev = 0.108
+  CI (99.9%): [107.182, 107.509] (assumes normal distribution)
+
+Secondary result "io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark.directAllocation:CPI":
+  0.403 clks/insn
+
+Secondary result "io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark.directAllocation:IPC":
+  2.484 insns/clk
+
+Secondary result "io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark.directAllocation:L1-dcache-load-misses":
+  6.605 #/op
+
+Secondary result "io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark.directAllocation:L1-dcache-loads":
+  257.834 #/op
+
+Secondary result "io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark.directAllocation:L1-icache-load-misses":
+  0.002 #/op
+
+Secondary result "io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark.directAllocation:L1-icache-loads":
+  0.748 #/op
+
+Secondary result "io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark.directAllocation:branch-misses":
+  2.771 #/op
+
+Secondary result "io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark.directAllocation:branches":
+  126.261 #/op
+
+Secondary result "io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark.directAllocation:cycles":
+  243.281 #/op
+
+Secondary result "io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark.directAllocation:dTLB-load-misses":
+  0.048 #/op
+
+Secondary result "io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark.directAllocation:dTLB-loads":
+  4.139 #/op
+
+Secondary result "io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark.directAllocation:iTLB-load-misses":
+  0.001 #/op
+
+Secondary result "io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark.directAllocation:iTLB-loads":
+  0.001 #/op
+
+Secondary result "io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark.directAllocation:instructions":
+  604.232 #/op
+
+Secondary result "io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark.directAllocation:stalled-cycles-frontend":
+  29.821 #/op
+
+
+# JMH version: 1.37
+# VM version: JDK 25.0.3, OpenJDK 64-Bit Server VM, 25.0.3+9-LTS
+# VM invoker: /home/forked_franz/.sdkman/candidates/java/25.0.3-tem/bin/java
+# VM options: -server -dsa -da -XX:InitialRAMPercentage=40.0 -XX:MaxRAMPercentage=40.0 -Dio.netty.leakDetection.level=disabled -Djmh.executor=CUSTOM -Djmh.executor.class=io.github.neoionet.netty.microbenchmark.executor.FastThreadLocalThreadHarnessExecutor -XX:MaxRAM=60g --enable-native-access=ALL-UNNAMED --sun-misc-unsafe-memory-access=allow -Dffm.mimalloc.lib=/home/forked_franz/IdeaProjects/netty-ffm-allocator/native/mimalloc/out/release/libmimalloc.so
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 10 iterations, 1 s each
+# Measurement: 10 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Average time, time/op
+# Benchmark: io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark.directAllocation
+# Parameters: (MAX_LIVE_BUFFERS = 1024, allocatorType = FFM_MI, enableReadWrite = true, sizePattern = E_COMMERCE)
+
+# Run progress: 75.00% complete, ETA 00:00:24
+# Fork: 1 of 1
+# Preparing profilers: LinuxPerfNormProfiler 
+# Profilers consume stderr from target VM, use -v EXTRA to copy to console
+# Warmup Iteration   1: 74.469 ns/op
+# Warmup Iteration   2: 71.521 ns/op
+# Warmup Iteration   3: 79.764 ns/op
+# Warmup Iteration   4: 79.610 ns/op
+# Warmup Iteration   5: 79.022 ns/op
+# Warmup Iteration   6: 79.654 ns/op
+# Warmup Iteration   7: 79.918 ns/op
+# Warmup Iteration   8: 79.845 ns/op
+# Warmup Iteration   9: 79.436 ns/op
+# Warmup Iteration  10: 79.677 ns/op
+Iteration   1: 79.822 ns/op
+Iteration   2: 78.451 ns/op
+Iteration   3: 79.319 ns/op
+Iteration   4: 78.507 ns/op
+Iteration   5: 79.458 ns/op
+Iteration   6: 78.487 ns/op
+Iteration   7: 78.298 ns/op
+Iteration   8: 78.301 ns/op
+Iteration   9: 78.578 ns/op
+Iteration  10: cRSS-pRSS:[1057, 1064]
+;used-memory:[0]
+80.059 ns/op
+# Processing profiler results: LinuxPerfNormProfiler 
+
+
+Result "io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark.directAllocation":
+  78.928 ±(99.9%) 1.011 ns/op [Average]
+  (min, avg, max) = (78.298, 78.928, 80.059), stdev = 0.669
+  CI (99.9%): [77.917, 79.939] (assumes normal distribution)
+
+Secondary result "io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark.directAllocation:CPI":
+  0.353 clks/insn
+
+Secondary result "io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark.directAllocation:IPC":
+  2.831 insns/clk
+
+Secondary result "io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark.directAllocation:L1-dcache-load-misses":
+  8.834 #/op
+
+Secondary result "io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark.directAllocation:L1-dcache-loads":
+  199.383 #/op
+
+Secondary result "io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark.directAllocation:L1-icache-load-misses":
+  0.011 #/op
+
+Secondary result "io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark.directAllocation:L1-icache-loads":
+  1.966 #/op
+
+Secondary result "io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark.directAllocation:branch-misses":
+  0.747 #/op
+
+Secondary result "io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark.directAllocation:branches":
+  100.980 #/op
+
+Secondary result "io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark.directAllocation:cycles":
+  178.822 #/op
+
+Secondary result "io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark.directAllocation:dTLB-load-misses":
+  0.008 #/op
+
+Secondary result "io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark.directAllocation:dTLB-loads":
+  0.284 #/op
+
+Secondary result "io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark.directAllocation:iTLB-load-misses":
+  0.001 #/op
+
+Secondary result "io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark.directAllocation:iTLB-loads":
+  0.001 #/op
+
+Secondary result "io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark.directAllocation:instructions":
+  506.173 #/op
+
+Secondary result "io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark.directAllocation:stalled-cycles-frontend":
+  12.633 #/op
+
+
+# Run complete. Total time: 00:01:38
+
+REMEMBER: The numbers below are just data. To gain reusable insights, you need to follow up on
+why the numbers are the way they are. Use profilers (see -prof, -lprof), design factorial
+experiments, perform baseline and negative tests that provide experimental control, make sure
+the benchmarking environment is safe on JVM/OS/HW level, ask for reviews from the domain experts.
+Do not assume the numbers tell you what you want them to tell.
+
+NOTE: Current JVM experimentally supports Compiler Blackholes, and they are in use. Please exercise
+extra caution when trusting the results, look into the generated code to check the benchmark still
+works, and factor in a small probability of new VM bugs. Additionally, while comparisons between
+different JVMs are already problematic, the performance difference caused by different Blackhole
+modes can be very significant. Please make sure you use the consistent Blackhole mode for comparisons.
+
+Benchmark                                                                       (MAX_LIVE_BUFFERS)  (allocatorType)  (enableReadWrite)  (sizePattern)  Mode  Cnt    Score   Error      Units
+ByteBufAllocatorAllocPatternBenchmark.directAllocation                                        1024         ADAPTIVE               true     E_COMMERCE  avgt   10   78.443 ± 0.066      ns/op
+ByteBufAllocatorAllocPatternBenchmark.directAllocation:CPI                                    1024         ADAPTIVE               true     E_COMMERCE  avgt         0.307          clks/insn
+ByteBufAllocatorAllocPatternBenchmark.directAllocation:IPC                                    1024         ADAPTIVE               true     E_COMMERCE  avgt         3.258          insns/clk
+ByteBufAllocatorAllocPatternBenchmark.directAllocation:L1-dcache-load-misses                  1024         ADAPTIVE               true     E_COMMERCE  avgt         5.756               #/op
+ByteBufAllocatorAllocPatternBenchmark.directAllocation:L1-dcache-loads                        1024         ADAPTIVE               true     E_COMMERCE  avgt       245.212               #/op
+ByteBufAllocatorAllocPatternBenchmark.directAllocation:L1-icache-load-misses                  1024         ADAPTIVE               true     E_COMMERCE  avgt         0.003               #/op
+ByteBufAllocatorAllocPatternBenchmark.directAllocation:L1-icache-loads                        1024         ADAPTIVE               true     E_COMMERCE  avgt         1.178               #/op
+ByteBufAllocatorAllocPatternBenchmark.directAllocation:branch-misses                          1024         ADAPTIVE               true     E_COMMERCE  avgt         0.555               #/op
+ByteBufAllocatorAllocPatternBenchmark.directAllocation:branches                               1024         ADAPTIVE               true     E_COMMERCE  avgt       115.532               #/op
+ByteBufAllocatorAllocPatternBenchmark.directAllocation:cycles                                 1024         ADAPTIVE               true     E_COMMERCE  avgt       177.939               #/op
+ByteBufAllocatorAllocPatternBenchmark.directAllocation:dTLB-load-misses                       1024         ADAPTIVE               true     E_COMMERCE  avgt         0.024               #/op
+ByteBufAllocatorAllocPatternBenchmark.directAllocation:dTLB-loads                             1024         ADAPTIVE               true     E_COMMERCE  avgt         1.790               #/op
+ByteBufAllocatorAllocPatternBenchmark.directAllocation:iTLB-load-misses                       1024         ADAPTIVE               true     E_COMMERCE  avgt         0.001               #/op
+ByteBufAllocatorAllocPatternBenchmark.directAllocation:iTLB-loads                             1024         ADAPTIVE               true     E_COMMERCE  avgt         0.001               #/op
+ByteBufAllocatorAllocPatternBenchmark.directAllocation:instructions                           1024         ADAPTIVE               true     E_COMMERCE  avgt       579.784               #/op
+ByteBufAllocatorAllocPatternBenchmark.directAllocation:stalled-cycles-frontend                1024         ADAPTIVE               true     E_COMMERCE  avgt         5.949               #/op
+ByteBufAllocatorAllocPatternBenchmark.directAllocation                                        1024         MIMALLOC               true     E_COMMERCE  avgt   10   81.770 ± 0.151      ns/op
+ByteBufAllocatorAllocPatternBenchmark.directAllocation:CPI                                    1024         MIMALLOC               true     E_COMMERCE  avgt         0.374          clks/insn
+ByteBufAllocatorAllocPatternBenchmark.directAllocation:IPC                                    1024         MIMALLOC               true     E_COMMERCE  avgt         2.673          insns/clk
+ByteBufAllocatorAllocPatternBenchmark.directAllocation:L1-dcache-load-misses                  1024         MIMALLOC               true     E_COMMERCE  avgt         6.523               #/op
+ByteBufAllocatorAllocPatternBenchmark.directAllocation:L1-dcache-loads                        1024         MIMALLOC               true     E_COMMERCE  avgt       211.052               #/op
+ByteBufAllocatorAllocPatternBenchmark.directAllocation:L1-icache-load-misses                  1024         MIMALLOC               true     E_COMMERCE  avgt         0.003               #/op
+ByteBufAllocatorAllocPatternBenchmark.directAllocation:L1-icache-loads                        1024         MIMALLOC               true     E_COMMERCE  avgt         1.609               #/op
+ByteBufAllocatorAllocPatternBenchmark.directAllocation:branch-misses                          1024         MIMALLOC               true     E_COMMERCE  avgt         0.659               #/op
+ByteBufAllocatorAllocPatternBenchmark.directAllocation:branches                               1024         MIMALLOC               true     E_COMMERCE  avgt        95.916               #/op
+ByteBufAllocatorAllocPatternBenchmark.directAllocation:cycles                                 1024         MIMALLOC               true     E_COMMERCE  avgt       185.606               #/op
+ByteBufAllocatorAllocPatternBenchmark.directAllocation:dTLB-load-misses                       1024         MIMALLOC               true     E_COMMERCE  avgt         0.014               #/op
+ByteBufAllocatorAllocPatternBenchmark.directAllocation:dTLB-loads                             1024         MIMALLOC               true     E_COMMERCE  avgt         1.587               #/op
+ByteBufAllocatorAllocPatternBenchmark.directAllocation:iTLB-load-misses                       1024         MIMALLOC               true     E_COMMERCE  avgt        ≈ 10⁻³               #/op
+ByteBufAllocatorAllocPatternBenchmark.directAllocation:iTLB-loads                             1024         MIMALLOC               true     E_COMMERCE  avgt         0.001               #/op
+ByteBufAllocatorAllocPatternBenchmark.directAllocation:instructions                           1024         MIMALLOC               true     E_COMMERCE  avgt       496.188               #/op
+ByteBufAllocatorAllocPatternBenchmark.directAllocation:stalled-cycles-frontend                1024         MIMALLOC               true     E_COMMERCE  avgt         7.085               #/op
+ByteBufAllocatorAllocPatternBenchmark.directAllocation                                        1024        FFM_GLIBC               true     E_COMMERCE  avgt   10  107.346 ± 0.163      ns/op
+ByteBufAllocatorAllocPatternBenchmark.directAllocation:CPI                                    1024        FFM_GLIBC               true     E_COMMERCE  avgt         0.403          clks/insn
+ByteBufAllocatorAllocPatternBenchmark.directAllocation:IPC                                    1024        FFM_GLIBC               true     E_COMMERCE  avgt         2.484          insns/clk
+ByteBufAllocatorAllocPatternBenchmark.directAllocation:L1-dcache-load-misses                  1024        FFM_GLIBC               true     E_COMMERCE  avgt         6.605               #/op
+ByteBufAllocatorAllocPatternBenchmark.directAllocation:L1-dcache-loads                        1024        FFM_GLIBC               true     E_COMMERCE  avgt       257.834               #/op
+ByteBufAllocatorAllocPatternBenchmark.directAllocation:L1-icache-load-misses                  1024        FFM_GLIBC               true     E_COMMERCE  avgt         0.002               #/op
+ByteBufAllocatorAllocPatternBenchmark.directAllocation:L1-icache-loads                        1024        FFM_GLIBC               true     E_COMMERCE  avgt         0.748               #/op
+ByteBufAllocatorAllocPatternBenchmark.directAllocation:branch-misses                          1024        FFM_GLIBC               true     E_COMMERCE  avgt         2.771               #/op
+ByteBufAllocatorAllocPatternBenchmark.directAllocation:branches                               1024        FFM_GLIBC               true     E_COMMERCE  avgt       126.261               #/op
+ByteBufAllocatorAllocPatternBenchmark.directAllocation:cycles                                 1024        FFM_GLIBC               true     E_COMMERCE  avgt       243.281               #/op
+ByteBufAllocatorAllocPatternBenchmark.directAllocation:dTLB-load-misses                       1024        FFM_GLIBC               true     E_COMMERCE  avgt         0.048               #/op
+ByteBufAllocatorAllocPatternBenchmark.directAllocation:dTLB-loads                             1024        FFM_GLIBC               true     E_COMMERCE  avgt         4.139               #/op
+ByteBufAllocatorAllocPatternBenchmark.directAllocation:iTLB-load-misses                       1024        FFM_GLIBC               true     E_COMMERCE  avgt         0.001               #/op
+ByteBufAllocatorAllocPatternBenchmark.directAllocation:iTLB-loads                             1024        FFM_GLIBC               true     E_COMMERCE  avgt         0.001               #/op
+ByteBufAllocatorAllocPatternBenchmark.directAllocation:instructions                           1024        FFM_GLIBC               true     E_COMMERCE  avgt       604.232               #/op
+ByteBufAllocatorAllocPatternBenchmark.directAllocation:stalled-cycles-frontend                1024        FFM_GLIBC               true     E_COMMERCE  avgt        29.821               #/op
+ByteBufAllocatorAllocPatternBenchmark.directAllocation                                        1024           FFM_MI               true     E_COMMERCE  avgt   10   78.928 ± 1.011      ns/op
+ByteBufAllocatorAllocPatternBenchmark.directAllocation:CPI                                    1024           FFM_MI               true     E_COMMERCE  avgt         0.353          clks/insn
+ByteBufAllocatorAllocPatternBenchmark.directAllocation:IPC                                    1024           FFM_MI               true     E_COMMERCE  avgt         2.831          insns/clk
+ByteBufAllocatorAllocPatternBenchmark.directAllocation:L1-dcache-load-misses                  1024           FFM_MI               true     E_COMMERCE  avgt         8.834               #/op
+ByteBufAllocatorAllocPatternBenchmark.directAllocation:L1-dcache-loads                        1024           FFM_MI               true     E_COMMERCE  avgt       199.383               #/op
+ByteBufAllocatorAllocPatternBenchmark.directAllocation:L1-icache-load-misses                  1024           FFM_MI               true     E_COMMERCE  avgt         0.011               #/op
+ByteBufAllocatorAllocPatternBenchmark.directAllocation:L1-icache-loads                        1024           FFM_MI               true     E_COMMERCE  avgt         1.966               #/op
+ByteBufAllocatorAllocPatternBenchmark.directAllocation:branch-misses                          1024           FFM_MI               true     E_COMMERCE  avgt         0.747               #/op
+ByteBufAllocatorAllocPatternBenchmark.directAllocation:branches                               1024           FFM_MI               true     E_COMMERCE  avgt       100.980               #/op
+ByteBufAllocatorAllocPatternBenchmark.directAllocation:cycles                                 1024           FFM_MI               true     E_COMMERCE  avgt       178.822               #/op
+ByteBufAllocatorAllocPatternBenchmark.directAllocation:dTLB-load-misses                       1024           FFM_MI               true     E_COMMERCE  avgt         0.008               #/op
+ByteBufAllocatorAllocPatternBenchmark.directAllocation:dTLB-loads                             1024           FFM_MI               true     E_COMMERCE  avgt         0.284               #/op
+ByteBufAllocatorAllocPatternBenchmark.directAllocation:iTLB-load-misses                       1024           FFM_MI               true     E_COMMERCE  avgt         0.001               #/op
+ByteBufAllocatorAllocPatternBenchmark.directAllocation:iTLB-loads                             1024           FFM_MI               true     E_COMMERCE  avgt         0.001               #/op
+ByteBufAllocatorAllocPatternBenchmark.directAllocation:instructions                           1024           FFM_MI               true     E_COMMERCE  avgt       506.173               #/op
+ByteBufAllocatorAllocPatternBenchmark.directAllocation:stalled-cycles-frontend                1024           FFM_MI               true     E_COMMERCE  avgt        12.633               #/op

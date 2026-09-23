@@ -1,0 +1,102 @@
+# /home/forked_franz/IdeaProjects/netty-bench/results/h2h-merged-x86-2026-09-22/ffm/prof/async-ADAPTIVE/io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark.directAllocation-AverageTime-MAX_LIVE_BUFFERS-1024-allocatorType-ADAPTIVE-enableReadWrite-true-sizePattern-E_COMMERCE/collapsed-cpu.csv samples: 82636
+## top self time (leaf frame)
+   6.67%  io/github/neoionet/netty/microbenchmark/ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState.readAndRelease
+   6.60%  jdk/internal/misc/Unsafe.putByte
+   6.51%  java/util/concurrent/locks/StampedLock.casState
+   6.17%  sun/misc/Unsafe.putOrderedInt
+   4.41%  java/util/concurrent/locks/StampedLock.releaseWrite
+   4.03%  io/netty/buffer/AdaptivePoolingAllocator$StripedHeap.tryAllocate
+   3.98%  java/util/concurrent/locks/StampedLock.tryAcquireWrite
+   3.61%  io/github/neoionet/netty/microbenchmark/ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState.performDirectAllocation
+   3.50%  sun/misc/Unsafe.getInt
+   2.99%  io/netty/buffer/AdaptivePoolingAllocator$AdaptiveByteBuf.init
+   2.72%  io/netty/util/Recycler.get
+   2.61%  io/netty/buffer/AdaptivePoolingAllocator.allocate
+   2.54%  sun/misc/Unsafe.compareAndSwapInt
+   2.23%  io/netty/util/internal/RefCnt$UnsafeRefCnt.release0
+   1.77%  io/netty/util/internal/shaded/org/jctools/queues/MpscArrayQueue.relaxedOffer
+   1.70%  java/util/concurrent/locks/StampedLock.unlockWrite
+   1.70%  sun/misc/Unsafe.getObjectVolatile
+   1.56%  io/github/neoionet/netty/microbenchmark/ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState.probeAlloc
+## top any-frame (inclusive)
+  99.72%  io/github/neoionet/netty/microbenchmark/jmh_generated/ByteBufAllocatorAllocPatternBenchmark_directAllocation_jmhTest.directAllocation_AverageTime
+  99.61%  java/util/concurrent/ThreadPoolExecutor$Worker.run
+  99.61%  java/lang/Thread.run
+  99.61%  java/util/concurrent/ThreadPoolExecutor.runWorker
+  99.61%  java/util/concurrent/FutureTask.run
+  99.61%  java/lang/Thread.runWith
+  99.61%  org/openjdk/jmh/runner/BenchmarkHandler$BenchmarkTask.call
+  99.61%  java/util/concurrent/Executors$RunnableAdapter.call
+  99.61%  java/lang/reflect/Method.invoke
+  99.61%  jdk/internal/reflect/DirectMethodHandleAccessor.invokeImpl
+  99.61%  jdk/internal/reflect/DirectMethodHandleAccessor.invoke
+  99.61%  java/lang/invoke/LambdaForm$MH.0x00000000390e1000.invoke
+
+# /home/forked_franz/IdeaProjects/netty-bench/results/h2h-merged-x86-2026-09-22/ffm/prof/async-FFM_MI/io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark.directAllocation-AverageTime-MAX_LIVE_BUFFERS-1024-allocatorType-FFM_MI-enableReadWrite-true-sizePattern-E_COMMERCE/collapsed-cpu.csv samples: 82292
+## top self time (leaf frame)
+  13.53%  io/github/neoionet/netty/microbenchmark/ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState.readAndRelease
+  10.52%  __libc_malloc
+   6.23%  io/github/neoionet/netty/microbenchmark/ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState.performDirectAllocation
+   5.76%  sun/misc/Unsafe.getInt
+   5.18%  _mi_malloc_generic
+   4.67%  __libc_cfree
+   4.00%  io/netty/buffer/FfmByteBuf.init
+   3.29%  sun/misc/Unsafe.compareAndSwapInt
+   2.66%  io/github/neoionet/netty/microbenchmark/jmh_generated/ByteBufAllocatorAllocPatternBenchmark_directAllocation_jmhTest.directAllocation_avgt_jmhStub
+   2.65%  io/github/neoionet/netty/microbenchmark/ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState.probeAlloc
+   2.53%  _mi_page_malloc_zero
+   2.48%  io/github/neoionet/netty/microbenchmark/ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState.getNextSizeIndex
+   2.43%  io/netty/buffer/FfmByteBuf.deallocate
+   2.41%  io/netty/buffer/FfmMallocByteBufAllocator$LocalCache.pop
+   1.84%  mi_page_queue_find_free_ex
+   1.77%  io/github/neoionet/netty/microbenchmark/ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState.getNextReleaseIndex
+   1.70%  mi_find_page
+   1.66%  io/netty/buffer/AbstractByteBuf.ensureWritable0
+## top any-frame (inclusive)
+  99.94%  java/lang/Thread.runWith
+  99.94%  java/util/concurrent/ThreadPoolExecutor$Worker.run
+  99.94%  java/lang/Thread.run
+  99.94%  java/util/concurrent/ThreadPoolExecutor.runWorker
+  99.94%  java/util/concurrent/Executors$RunnableAdapter.call
+  99.94%  java/util/concurrent/FutureTask.run
+  99.94%  org/openjdk/jmh/runner/BenchmarkHandler$BenchmarkTask.call
+  99.94%  jdk/internal/reflect/DirectMethodHandleAccessor.invoke
+  99.94%  java/lang/reflect/Method.invoke
+  99.94%  java/lang/invoke/LambdaForm$MH.0x0000000098100000.invoke
+  99.94%  java/lang/invoke/LambdaForm$MH.0x0000000098068800.invokeExact_MT
+  99.94%  jdk/internal/reflect/DirectMethodHandleAccessor.invokeImpl
+
+# /home/forked_franz/IdeaProjects/netty-bench/results/h2h-merged-x86-2026-09-22/ffm/prof/async-MIMALLOC/io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark.directAllocation-AverageTime-MAX_LIVE_BUFFERS-1024-allocatorType-MIMALLOC-enableReadWrite-true-sizePattern-E_COMMERCE/collapsed-cpu.csv samples: 82161
+## top self time (leaf frame)
+  11.49%  io/github/neoionet/netty/mimalloc/MiMallocByteBufAllocator.allocate
+   6.91%  io/github/neoionet/netty/microbenchmark/ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState.readAndRelease
+   5.70%  io/netty/buffer/UnsafeByteBufUtil.getInt
+   5.60%  io/github/neoionet/netty/microbenchmark/ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState.performDirectAllocation
+   4.98%  java/util/concurrent/locks/StampedLock.casState
+   4.38%  jdk/internal/misc/Unsafe.putInt
+   4.08%  java/util/concurrent/locks/StampedLock.releaseWrite
+   3.08%  sun/misc/Unsafe.getInt
+   2.71%  java/util/concurrent/locks/StampedLock.tryAcquireWrite
+   2.67%  io/github/neoionet/netty/mimalloc/MiMallocByteBufAllocator.isThreadLocalAllocation
+   2.53%  sun/misc/Unsafe.compareAndSwapInt
+   2.29%  io/github/neoionet/netty/mimalloc/MiMallocByteBufAllocator$MiByteBuf.init
+   1.95%  java/util/ArrayDeque.pollFirst
+   1.67%  io/github/neoionet/netty/microbenchmark/ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState.probeAlloc
+   1.65%  io/github/neoionet/netty/mimalloc/MiMallocByteBufAllocator$MiByteBuf.deallocate
+   1.53%  io/github/neoionet/netty/microbenchmark/ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState.getNextReleaseIndex
+   1.48%  io/github/neoionet/netty/mimalloc/MiMallocByteBufAllocator.allocateGeneric
+   1.46%  java/util/concurrent/atomic/AtomicInteger.get
+## top any-frame (inclusive)
+  99.57%  io/github/neoionet/netty/microbenchmark/jmh_generated/ByteBufAllocatorAllocPatternBenchmark_directAllocation_jmhTest.directAllocation_AverageTime
+  99.44%  java/util/concurrent/ThreadPoolExecutor$Worker.run
+  99.44%  java/lang/Thread.run
+  99.44%  java/util/concurrent/ThreadPoolExecutor.runWorker
+  99.44%  java/lang/Thread.runWith
+  99.44%  java/util/concurrent/FutureTask.run
+  99.44%  org/openjdk/jmh/runner/BenchmarkHandler$BenchmarkTask.call
+  99.44%  java/util/concurrent/Executors$RunnableAdapter.call
+  99.43%  java/lang/invoke/LambdaForm$MH.0x000000009d069000.invokeExact_MT
+  99.43%  java/lang/reflect/Method.invoke
+  99.43%  jdk/internal/reflect/DirectMethodHandleAccessor.invokeImpl
+  99.43%  jdk/internal/reflect/DirectMethodHandleAccessor.invoke
+

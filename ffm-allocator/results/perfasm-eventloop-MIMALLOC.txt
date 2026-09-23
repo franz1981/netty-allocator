@@ -1,0 +1,1185 @@
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by org.openjdk.jmh.util.Utils (file:/tmp/claude-1000/-home-forked-franz-IdeaProjects-netty/01a26e43-89a8-433b-a89e-c560138e4359/scratchpad/lao/benchmark/target/benchmarks.jar)
+WARNING: Please consider reporting this to the maintainers of class org.openjdk.jmh.util.Utils
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+# JMH version: 1.37
+# VM version: JDK 25.0.3, OpenJDK 64-Bit Server VM, 25.0.3+9-LTS
+# VM invoker: /home/forked_franz/.sdkman/candidates/java/25.0.3-tem/bin/java
+# VM options: -server -dsa -da -XX:InitialRAMPercentage=40.0 -XX:MaxRAMPercentage=40.0 -Dio.netty.leakDetection.level=disabled -Djmh.executor=CUSTOM -Djmh.executor.class=io.github.neoionet.netty.microbenchmark.executor.FastThreadLocalThreadHarnessExecutor -XX:MaxRAM=60g --enable-native-access=ALL-UNNAMED --sun-misc-unsafe-memory-access=allow -Dffm.mimalloc.lib=/home/forked_franz/IdeaProjects/netty-ffm-allocator/native/mimalloc/out/release/libmimalloc.so
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 5 iterations, 1 s each
+# Measurement: 5 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 32 threads, will synchronize iterations
+# Benchmark mode: Average time, time/op
+# Benchmark: io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark.directAllocation
+# Parameters: (MAX_LIVE_BUFFERS = 1024, allocatorType = MIMALLOC, enableReadWrite = true, sizePattern = E_COMMERCE)
+
+# Run progress: 0.00% complete, ETA 00:00:10
+# Fork: 1 of 1
+# Preparing profilers: LinuxPerfAsmProfiler 
+# Profilers consume stdout and stderr from target VM, use -v EXTRA to copy to console
+# Warmup Iteration   1: 22933.507 ±(99.9%) 5715.826 ns/op
+# Warmup Iteration   2: 5201.179 ±(99.9%) 6794.767 ns/op
+# Warmup Iteration   3: 332.711 ±(99.9%) 87.225 ns/op
+# Warmup Iteration   4: 300.706 ±(99.9%) 98.866 ns/op
+# Warmup Iteration   5: 259.445 ±(99.9%) 35.410 ns/op
+Iteration   1: 264.498 ±(99.9%) 43.560 ns/op
+Iteration   2: 269.978 ±(99.9%) 58.235 ns/op
+Iteration   3: 295.529 ±(99.9%) 45.067 ns/op
+Iteration   4: 252.937 ±(99.9%) 34.073 ns/op
+Iteration   5: cRSS-pRSS:[2125, 2126]
+;used-memory:[512]
+262.712 ±(99.9%) 49.774 ns/op
+# Processing profiler results: LinuxPerfAsmProfiler 
+
+
+Result "io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark.directAllocation":
+  269.131 ±(99.9%) 61.564 ns/op [Average]
+  (min, avg, max) = (252.937, 269.131, 295.529), stdev = 15.988
+  CI (99.9%): [207.567, 330.695] (assumes normal distribution)
+
+Secondary result "io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark.directAllocation:asm":
+PrintAssembly processed: 545980 total address lines.
+Perf output processed (skipped 22.724 seconds):
+ Column 1: cycles (70453 events)
+
+Hottest code regions (>10.00% "cycles" events):
+ Event counts are percents of total event count.
+
+....[Hottest Region 1]..............................................................................
+c2, level 4, io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease, version 2, compile id 1846 
+
+                0x00007f60ac033900:   xchg   %ax,%ax
+              [Entry Point]
+                # {method} {0x00007f6054453cc8} &apos;readAndRelease&apos; &apos;(I)Lio/netty/buffer/ByteBuf;&apos; in &apos;io/github/neoionet/netty/microbenchmark/ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState&apos;
+                # this:     rsi:rsi   = &apos;io/github/neoionet/netty/microbenchmark/ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState&apos;
+                # parm0:    rdx       = int
+                #           [sp+0x50]  (sp of caller)
+                0x00007f60ac033902:   mov    0x8(%rsi),%r10d
+                0x00007f60ac033906:   cmp    0x8(%rax),%r10d
+                0x00007f60ac03390a:   jne    0x00007f60ab8ad5e0           ;   {runtime_call Shared Runtime ic_miss_blob}
+              [Verified Entry Point]
+   0.17%        0x00007f60ac033910:   mov    %eax,-0x14000(%rsp)
+   0.17%        0x00007f60ac033917:   push   %rbp
+   0.06%        0x00007f60ac033918:   sub    $0x40,%rsp
+   0.10%        0x00007f60ac03391c:   cmpl   $0x1,0x20(%r15)
+   0.10%        0x00007f60ac033924:   jne    0x00007f60ac0341fa           ;*synchronization entry
+                                                                          ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease@-1 (line 336)
+   0.05%        0x00007f60ac03392a:   mov    %rsi,%r11
+   0.12%        0x00007f60ac03392d:   mov    0x78(%rsi),%r10d             ;*getfield buffers {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease@1 (line 336)
+   0.01%        0x00007f60ac033931:   mov    0xc(%r12,%r10,8),%r9d        ; implicit exception: dispatches to 0x00007f60ac033e5c
+   0.47%        0x00007f60ac033936:   cmp    %r9d,%edx
+                0x00007f60ac033939:   jae    0x00007f60ac033be9
+                0x00007f60ac03393f:   shl    $0x3,%r10
+   0.02%        0x00007f60ac033943:   mov    0x10(%r10,%rdx,4),%r9d       ;*aaload {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease@5 (line 336)
+   2.18%        0x00007f60ac033948:   mov    0x8(%r12,%r9,8),%r10d        ; implicit exception: dispatches to 0x00007f60ac033f68
+   6.08%        0x00007f60ac03394d:   movzbl 0x6c(%rsi),%ebp              ;*getfield enableReadWrite {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease@12 (line 338)
+   0.00%        0x00007f60ac033951:   test   %ebp,%ebp
+                0x00007f60ac033953:   je     0x00007f60ac033d20           ;*ifeq {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease@15 (line 338)
+                0x00007f60ac033959:   cmp    $0x109e8e8,%r10d             ;   {metadata(&apos;io/github/neoionet/netty/mimalloc/MiMallocByteBufAllocator$MiByteBuf&apos;)}
+   0.02%        0x00007f60ac033960:   jne    0x00007f60ac033c4c
+                0x00007f60ac033966:   lea    (%r12,%r9,8),%r10            ;*invokevirtual readByte {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease@19 (line 339)
+   0.00%        0x00007f60ac03396a:   mov    %r10,0x20(%rsp)
+   0.01%        0x00007f60ac03396f:   mov    0x20(%r10),%ecx              ;*getfield refCnt {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::isAccessible@1 (line 37)
+                                                                          ; - io.netty.buffer.AbstractByteBuf::ensureAccessible@7 (line 1491)
+                                                                          ; - io.netty.buffer.AbstractByteBuf::checkReadableBytes0@1 (line 1478)
+                                                                          ; - io.netty.buffer.AbstractByteBuf::readByte@2 (line 749)
+                                                                          ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease@19 (line 339)
+   0.31%        0x00007f60ac033973:   mov    0xc(%r12,%rcx,8),%ebp        ;*invokevirtual getInt {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - sun.misc.Unsafe::getInt@8 (line 180)
+                                                                          ; - io.netty.util.internal.PlatformDependent0::getInt@5 (line 853)
+                                                                          ; - io.netty.util.internal.PlatformDependent::getInt@2 (line 811)
+                                                                          ; - io.netty.util.internal.RefCnt$UnsafeRefCnt::isLiveNonVolatile@4 (line 469)
+                                                                          ; - io.netty.util.internal.RefCnt::isLiveNonVolatile@29 (line 183)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::isAccessible@4 (line 37)
+                                                                          ; - io.netty.buffer.AbstractByteBuf::ensureAccessible@7 (line 1491)
+                                                                          ; - io.netty.buffer.AbstractByteBuf::checkReadableBytes0@1 (line 1478)
+                                                                          ; - io.netty.buffer.AbstractByteBuf::readByte@2 (line 749)
+                                                                          ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease@19 (line 339)
+   2.92%        0x00007f60ac033978:   cmp    $0x2,%ebp
+   0.01%        0x00007f60ac03397b:   jne    0x00007f60ac033c90           ;*if_icmpne {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.util.internal.RefCnt$UnsafeRefCnt::isLiveNonVolatile@10 (line 470)
+                                                                          ; - io.netty.util.internal.RefCnt::isLiveNonVolatile@29 (line 183)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::isAccessible@4 (line 37)
+                                                                          ; - io.netty.buffer.AbstractByteBuf::ensureAccessible@7 (line 1491)
+                                                                          ; - io.netty.buffer.AbstractByteBuf::checkReadableBytes0@1 (line 1478)
+                                                                          ; - io.netty.buffer.AbstractByteBuf::readByte@2 (line 749)
+                                                                          ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease@19 (line 339)
+   0.00%        0x00007f60ac033981:   mov    0x10(%r10),%r10d
+   0.01%        0x00007f60ac033985:   mov    0x20(%rsp),%r8
+   0.01%        0x00007f60ac03398a:   mov    0xc(%r8),%r8d                ;*getfield readerIndex {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.buffer.AbstractByteBuf::checkReadableBytes0@11 (line 1479)
+                                                                          ; - io.netty.buffer.AbstractByteBuf::readByte@2 (line 749)
+                                                                          ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease@19 (line 339)
+   0.00%        0x00007f60ac03398e:   dec    %r10d                        ;*isub {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.buffer.AbstractByteBuf::checkReadableBytes0@19 (line 1479)
+                                                                          ; - io.netty.buffer.AbstractByteBuf::readByte@2 (line 749)
+                                                                          ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease@19 (line 339)
+   0.00%        0x00007f60ac033991:   cmp    %r10d,%r8d
+   0.00%        0x00007f60ac033994:   jg     0x00007f60ac033d3c           ;*if_icmple {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.buffer.AbstractByteBuf::checkReadableBytes0@20 (line 1479)
+                                                                          ; - io.netty.buffer.AbstractByteBuf::readByte@2 (line 749)
+                                                                          ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease@19 (line 339)
+                0x00007f60ac03399a:   mov    0x20(%rsp),%r10
+   0.00%        0x00007f60ac03399f:   mov    0x24(%r10),%ebp              ;*getfield rootParent {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$MiByteBuf::_getByte@1 (line 2605)
+                                                                          ; - io.netty.buffer.AbstractByteBuf::readByte@12 (line 751)
+                                                                          ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease@19 (line 339)
+   0.00%        0x00007f60ac0339a3:   mov    0x8(%r12,%rbp,8),%r9d        ; implicit exception: dispatches to 0x00007f60ac033e70
+   0.44%        0x00007f60ac0339a8:   cmp    $0x10a6dd0,%r9d              ;   {metadata(&apos;io/github/neoionet/netty/mimalloc/MiUnpooledUnsafeDirectByteBuf&apos;)}
+   0.04%        0x00007f60ac0339af:   jne    0x00007f60ac033e0c           ;*checkcast {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$MiByteBuf::_getByte@4 (line 2605)
+                                                                          ; - io.netty.buffer.AbstractByteBuf::readByte@12 (line 751)
+                                                                          ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease@19 (line 339)
+                0x00007f60ac0339b5:   inc    %r8d
+                0x00007f60ac0339b8:   mov    %r8d,0xc(%r10)               ;*invokestatic beforeMemoryAccess {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - sun.misc.Unsafe::compareAndSwapInt@0 (line 1230)
+                                                                          ; - io.netty.util.internal.PlatformDependent0::compareAndSwapInt@8 (line 869)
+                                                                          ; - io.netty.util.internal.PlatformDependent::compareAndSwapInt@5 (line 823)
+                                                                          ; - io.netty.util.internal.RefCnt$UnsafeRefCnt::release0@45 (line 455)
+                                                                          ; - io.netty.util.internal.RefCnt$UnsafeRefCnt::release@2 (line 436)
+                                                                          ; - io.netty.util.internal.RefCnt::release@29 (line 144)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::release@5 (line 83)
+                                                                          ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease@29 (line 342)
+   0.00%        0x00007f60ac0339bc:   mov    $0x2,%eax
+   0.00%        0x00007f60ac0339c1:   mov    0x468(%r15),%r10
+   0.01%        0x00007f60ac0339c8:   mov    (%r10),%rbx
+   0.00%        0x00007f60ac0339cb:   mov    $0x1,%r11d
+                0x00007f60ac0339d1:   lock cmpxchg %r11d,0xc(%r12,%rcx,8)
+   2.38%        0x00007f60ac0339d8:   sete   %bpl
+   0.00%        0x00007f60ac0339dc:   movzbl %bpl,%ebp                    ;*invokevirtual compareAndSetInt {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - sun.misc.Unsafe::compareAndSwapInt@12 (line 1231)
+                                                                          ; - io.netty.util.internal.PlatformDependent0::compareAndSwapInt@8 (line 869)
+                                                                          ; - io.netty.util.internal.PlatformDependent::compareAndSwapInt@5 (line 823)
+                                                                          ; - io.netty.util.internal.RefCnt$UnsafeRefCnt::release0@45 (line 455)
+                                                                          ; - io.netty.util.internal.RefCnt$UnsafeRefCnt::release@2 (line 436)
+                                                                          ; - io.netty.util.internal.RefCnt::release@29 (line 144)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::release@5 (line 83)
+                                                                          ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease@29 (line 342)
+                0x00007f60ac0339e0:   test   %ebp,%ebp
+   0.41%        0x00007f60ac0339e2:   je     0x00007f60ac033d6c           ;*ifeq {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.util.internal.RefCnt$UnsafeRefCnt::release0@48 (line 455)
+                                                                          ; - io.netty.util.internal.RefCnt$UnsafeRefCnt::release@2 (line 436)
+                                                                          ; - io.netty.util.internal.RefCnt::release@29 (line 144)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::release@5 (line 83)
+                                                                          ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease@29 (line 342)
+                0x00007f60ac0339e8:   mov    0x20(%rsp),%r10
+   0.25%        0x00007f60ac0339ed:   mov    0x2c(%r10),%r11d             ;*getfield page {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$MiByteBuf::deallocate@33 (line 2475)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::release@8 (line 83)
+                                                                          ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease@29 (line 342)
+   0.00%        0x00007f60ac0339f1:   xor    %r10,%r10
+   0.02%        0x00007f60ac0339f4:   mov    0x20(%rsp),%rsi
+   0.00%        0x00007f60ac0339f9:   lea    0x28(%rsi),%r9
+   0.14%        0x00007f60ac0339fd:   cmpb   $0x0,0x48(%r15)
+   0.00%        0x00007f60ac033a02:   jne    0x00007f60ac033f92
+   0.00%        0x00007f60ac033a08:   mov    %r10d,(%r9)                  ;*putfield tmpNioBuf {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$MiByteBuf::deallocate@29 (line 2474)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::release@8 (line 83)
+                                                                          ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease@29 (line 342)
+   1.00%        0x00007f60ac033a0b:   lea    0x2c(%rsi),%r9
+   0.23%        0x00007f60ac033a0f:   cmpb   $0x0,0x48(%r15)
+   0.00%        0x00007f60ac033a14:   jne    0x00007f60ac034019
+   0.01%        0x00007f60ac033a1a:   mov    %r10d,(%r9)                  ;*putfield page {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$MiByteBuf::deallocate@39 (line 2476)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::release@8 (line 83)
+                                                                          ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease@29 (line 342)
+   0.00%        0x00007f60ac033a1d:   lea    0x24(%rsi),%r9
+   0.24%        0x00007f60ac033a21:   cmpb   $0x0,0x48(%r15)
+                0x00007f60ac033a26:   jne    0x00007f60ac034098
+   0.00%        0x00007f60ac033a2c:   mov    %r10d,(%r9)                  ;*putfield rootParent {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$MiByteBuf::deallocate@24 (line 2473)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::release@8 (line 83)
+                                                                          ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease@29 (line 342)
+   1.48%        0x00007f60ac033a2f:   mov    0x34(%r12,%r11,8),%r10d      ; implicit exception: dispatches to 0x00007f60ac033e94
+                                                                          ;*getfield allocator {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$MiByteBuf::deallocate@43 (line 2477)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::release@8 (line 83)
+                                                                          ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease@29 (line 342)
+   0.34%        0x00007f60ac033a34:   mov    0x38(%rsi),%r8d              ;*getfield adjustment {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$MiByteBuf::deallocate@48 (line 2477)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::release@8 (line 83)
+                                                                          ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease@29 (line 342)
+   0.01%        0x00007f60ac033a38:   test   %r10d,%r10d
+                0x00007f60ac033a3b:   je     0x00007f60ac033c08           ;*invokevirtual free {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$MiByteBuf::deallocate@52 (line 2477)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::release@8 (line 83)
+                                                                          ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease@29 (line 342)
+   0.00%        0x00007f60ac033a41:   mov    0x2c(%r12,%r11,8),%r9d       ;*getfield segment {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::free@19 (line 2022)
+                                                                          ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$MiByteBuf::deallocate@52 (line 2477)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::release@8 (line 83)
+                                                                          ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease@29 (line 342)
+   0.03%        0x00007f60ac033a46:   mov    0x10(%r12,%r9,8),%rcx        ; implicit exception: dispatches to 0x00007f60ac033ea8
+                                                                          ;*getfield ownerThreadId {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$Segment::access$2500@1 (line 1959)
+                                                                          ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::free@52 (line 2028)
+                                                                          ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$MiByteBuf::deallocate@52 (line 2477)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::release@8 (line 83)
+                                                                          ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease@29 (line 342)
+   0.32%        0x00007f60ac033a4b:   mov    0x30(%r12,%r9,8),%edx        ;*getfield ownerHeap {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$Segment::access$2600@1 (line 1959)
+                                                                          ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::free@45 (line 2024)
+                                                                          ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$MiByteBuf::deallocate@52 (line 2477)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::release@8 (line 83)
+                                                                          ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease@29 (line 342)
+   0.28%        0x00007f60ac033a50:   mov    %edx,0x28(%rsp)
+   0.00%        0x00007f60ac033a54:   mov    0x18(%rbx),%rbx              ;*getfield tid {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - java.lang.Thread::threadId@1 (line 2294)
+                                                                          ; - java.lang.Thread::getId@1 (line 2282)
+                                                                          ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::free@58 (line 2028)
+                                                                          ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$MiByteBuf::deallocate@52 (line 2477)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::release@8 (line 83)
+                                                                          ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease@29 (line 342)
+   0.34%        0x00007f60ac033a58:   cmp    %rbx,%rcx
+                0x00007f60ac033a5b:   jne    0x00007f60ac033cb0           ;*ifne {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::free@62 (line 2028)
+                                                                          ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$MiByteBuf::deallocate@52 (line 2477)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::release@8 (line 83)
+                                                                          ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease@29 (line 342)
+   0.00%        0x00007f60ac033a61:   mov    0x44(%r12,%rdx,8),%ebp       ; implicit exception: dispatches to 0x00007f60ac033ed4
+                                                                          ;*getfield sharedLock {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$LocalHeap::access$4800@1 (line 342)
+                                                                          ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::free@67 (line 2029)
+                                                                          ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$MiByteBuf::deallocate@52 (line 2477)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::release@8 (line 83)
+                                                                          ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease@29 (line 342)
+   2.01%        0x00007f60ac033a66:   test   %ebp,%ebp
+   0.17%        0x00007f60ac033a68:   jne    0x00007f60ac033cf8           ;*ifnonnull {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::free@74 (line 2030)
+                                                                          ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$MiByteBuf::deallocate@52 (line 2477)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::release@8 (line 83)
+                                                                          ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease@29 (line 342)
+                0x00007f60ac033a6e:   mov    0x30(%r12,%r11,8),%r9d       ;*getfield delegate {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$Page::freeBlockLocal@1 (line 1750)
+                                                                          ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$Page::access$1300@4 (line 1613)
+                                                                          ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::freeLocal@25 (line 2069)
+                                                                          ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::free@82 (line 2032)
+                                                                          ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$MiByteBuf::deallocate@52 (line 2477)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::release@8 (line 83)
+                                                                          ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease@29 (line 342)
+                0x00007f60ac033a73:   movzbl 0x26(%r12,%r11,8),%ebp       ;*getfield isInFull {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::freeLocal@21 (line 2069)
+                                                                          ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::free@82 (line 2032)
+                                                                          ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$MiByteBuf::deallocate@52 (line 2477)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::release@8 (line 83)
+                                                                          ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease@29 (line 342)
+   0.01%        0x00007f60ac033a79:   mov    0x8(%r12,%r9,8),%r10d        ; implicit exception: dispatches to 0x00007f60ac033ef4
+   0.03%        0x00007f60ac033a7e:   cmp    $0x10a6dd0,%r10d             ;   {metadata(&apos;io/github/neoionet/netty/mimalloc/MiUnpooledUnsafeDirectByteBuf&apos;)}
+   0.14%        0x00007f60ac033a85:   jne    0x00007f60ac033e2c           ;*checkcast {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$Page::freeBlockLocal@4 (line 1750)
+                                                                          ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$Page::access$1300@4 (line 1613)
+                                                                          ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::freeLocal@25 (line 2069)
+                                                                          ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::free@82 (line 2032)
+                                                                          ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$MiByteBuf::deallocate@52 (line 2477)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::release@8 (line 83)
+                                                                          ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease@29 (line 342)
+                0x00007f60ac033a8b:   movswl 0x24(%r12,%r11,8),%r10d
+                0x00007f60ac033a91:   mov    0x10(%r12,%r11,8),%ecx
+   0.02%        0x00007f60ac033a96:   mov    %r8d,0x10(%r12,%r11,8)       ;*putfield localFreeList {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$Page::freeBlockLocal@19 (line 1751)
+                                                                          ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$Page::access$1300@4 (line 1613)
+                                                                          ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::freeLocal@25 (line 2069)
+                                                                          ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::free@82 (line 2032)
+                                                                          ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$MiByteBuf::deallocate@52 (line 2477)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::release@8 (line 83)
+                                                                          ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease@29 (line 342)
+   1.24%        0x00007f60ac033a9b:   shl    $0x3,%rdx                    ;*getfield ownerHeap {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$Segment::access$2600@1 (line 1959)
+                                                                          ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::free@45 (line 2024)
+                                                                          ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$MiByteBuf::deallocate@52 (line 2477)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::release@8 (line 83)
+                                                                          ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease@29 (line 342)
+   0.17%        0x00007f60ac033a9f:   bswap  %ecx                         ;*invokestatic reverseBytes {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.netty.buffer.UnsafeByteBufUtil::setInt@18 (line 182)
+                                                                          ; - io.netty.buffer.UnpooledUnsafeDirectByteBuf::_setInt@22 (line 293)
+                                                                          ; - io.github.neoionet.netty.mimalloc.MiUnpooledUnsafeDirectByteBuf::_setInt@3 (line 98)
+                                                                          ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$Page::freeBlockLocal@12 (line 1750)
+                                                                          ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$Page::access$1300@4 (line 1613)
+                                                                          ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::freeLocal@25 (line 2069)
+                                                                          ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::free@82 (line 2032)
+                                                                          ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$MiByteBuf::deallocate@52 (line 2477)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::release@8 (line 83)
+                                                                          ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease@29 (line 342)
+                0x00007f60ac033aa1:   lea    (%r12,%r11,8),%rsi           ;*getfield page {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$MiByteBuf::deallocate@33 (line 2475)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::release@8 (line 83)
+                                                                          ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease@29 (line 342)
+                0x00007f60ac033aa5:   shl    $0x3,%r9                     ;*checkcast {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$Page::freeBlockLocal@4 (line 1750)
+                                                                          ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$Page::access$1300@4 (line 1613)
+                                                                          ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::freeLocal@25 (line 2069)
+                                                                          ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::free@82 (line 2032)
+                                                                          ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$MiByteBuf::deallocate@52 (line 2477)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::release@8 (line 83)
+                                                                          ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease@29 (line 342)
+   0.01%        0x00007f60ac033aa9:   mov    0x40(%r9),%r9
+   0.11%        0x00007f60ac033aad:   dec    %r10d                        ;*isub {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$Page::freeBlockLocal@28 (line 1752)
+                                                                          ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$Page::access$1300@4 (line 1613)
+                                                                          ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::freeLocal@25 (line 2069)
+                                                                          ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::free@82 (line 2032)
+                                                                          ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$MiByteBuf::deallocate@52 (line 2477)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::release@8 (line 83)
+                                                                          ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease@29 (line 342)
+                0x00007f60ac033ab0:   mov    %r10w,0x24(%r12,%r11,8)      ;*putfield usedBlocks {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$Page::freeBlockLocal@31 (line 1752)
+                                                                          ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$Page::access$1300@4 (line 1613)
+                                                                          ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::freeLocal@25 (line 2069)
+                                                                          ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::free@82 (line 2032)
+                                                                          ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$MiByteBuf::deallocate@52 (line 2477)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::release@8 (line 83)
+                                                                          ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease@29 (line 342)
+   0.03%        0x00007f60ac033ab6:   mov    %r9,%r11
+   0.78%        0x00007f60ac033ab9:   movswl %r10w,%r10d
+   0.17%        0x00007f60ac033abd:   movslq %r8d,%r8
+                0x00007f60ac033ac0:   mov    %ecx,(%r11,%r8,1)            ;*invokevirtual putInt {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - jdk.internal.misc.Unsafe::putInt@4 (line 375)
+                                                                          ; - sun.misc.Unsafe::putInt@8 (line 528)
+                                                                          ; - io.netty.util.internal.PlatformDependent0::putInt@5 (line 943)
+                                                                          ; - io.netty.util.internal.PlatformDependent::putInt@2 (line 983)
+                                                                          ; - io.netty.buffer.UnsafeByteBufUtil::setInt@21 (line 182)
+                                                                          ; - io.netty.buffer.UnpooledUnsafeDirectByteBuf::_setInt@22 (line 293)
+                                                                          ; - io.github.neoionet.netty.mimalloc.MiUnpooledUnsafeDirectByteBuf::_setInt@3 (line 98)
+                                                                          ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$Page::freeBlockLocal@12 (line 1750)
+                                                                          ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$Page::access$1300@4 (line 1613)
+                                                                          ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::freeLocal@25 (line 2069)
+                                                                          ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::free@82 (line 2032)
+                                                                          ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$MiByteBuf::deallocate@52 (line 2477)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::release@8 (line 83)
+                                                                          ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease@29 (line 342)
+   3.43%        0x00007f60ac033ac4:   test   %r10d,%r10d
+          ╭     0x00007f60ac033ac7:   je     0x00007f60ac033bcd           ;*ifne {reexecute=0 rethrow=0 return_oop=0}
+          │                                                               ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$Page::freeBlockLocal@34 (line 1752)
+          │                                                               ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$Page::access$1300@4 (line 1613)
+          │                                                               ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::freeLocal@25 (line 2069)
+          │                                                               ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::free@82 (line 2032)
+          │                                                               ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$MiByteBuf::deallocate@52 (line 2477)
+          │                                                               ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+          │                                                               ; - io.netty.buffer.AbstractReferenceCountedByteBuf::release@8 (line 83)
+          │                                                               ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease@29 (line 342)
+          │     0x00007f60ac033acd:   test   %ebp,%ebp
+   0.03%  │╭    0x00007f60ac033acf:   jne    0x00007f60ac033baf           ;*ifeq {reexecute=0 rethrow=0 return_oop=0}
+          ││                                                              ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$Page::freeBlockLocal@46 (line 1754)
+          ││                                                              ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$Page::access$1300@4 (line 1613)
+          ││                                                              ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::freeLocal@25 (line 2069)
+          ││                                                              ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::free@82 (line 2032)
+          ││                                                              ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$MiByteBuf::deallocate@52 (line 2477)
+          ││                                                              ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+          ││                                                              ; - io.netty.buffer.AbstractReferenceCountedByteBuf::release@8 (line 83)
+          ││                                                              ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease@29 (line 342)
+   0.00%  ││ ↗  0x00007f60ac033ad5:   mov    0x28(%rsp),%r10d
+   0.13%  ││ │  0x00007f60ac033ada:   mov    0x48(%r12,%r10,8),%r8d       ;*getfield miBufLocalDeque {reexecute=0 rethrow=0 return_oop=0}
+          ││ │                                                            ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$LocalHeap::access$5000@1 (line 342)
+          ││ │                                                            ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::freeLocal@33 (line 2071)
+          ││ │                                                            ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::free@82 (line 2032)
+          ││ │                                                            ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$MiByteBuf::deallocate@52 (line 2477)
+          ││ │                                                            ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+          ││ │                                                            ; - io.netty.buffer.AbstractReferenceCountedByteBuf::release@8 (line 83)
+          ││ │                                                            ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease@29 (line 342)
+   0.12%  ││ │  0x00007f60ac033adf:   mov    0x10(%r12,%r8,8),%r11d       ; implicit exception: dispatches to 0x00007f60ac033f20
+          ││ │                                                            ;*getfield arrayDeque {reexecute=0 rethrow=0 return_oop=0}
+          ││ │                                                            ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$ArrayDequeBounded::offerFirst@1 (line 319)
+          ││ │                                                            ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::freeLocal@37 (line 2071)
+          ││ │                                                            ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::free@82 (line 2032)
+          ││ │                                                            ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$MiByteBuf::deallocate@52 (line 2477)
+          ││ │                                                            ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+          ││ │                                                            ; - io.netty.buffer.AbstractReferenceCountedByteBuf::release@8 (line 83)
+          ││ │                                                            ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease@29 (line 342)
+   0.40%  ││ │  0x00007f60ac033ae4:   mov    0x14(%r12,%r11,8),%ebx       ; implicit exception: dispatches to 0x00007f60ac033f38
+          ││ │                                                            ;*getfield elements {reexecute=0 rethrow=0 return_oop=0}
+          ││ │                                                            ; - java.util.ArrayDeque::size@9 (line 647)
+          ││ │                                                            ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$ArrayDequeBounded::offerFirst@4 (line 319)
+          ││ │                                                            ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::freeLocal@37 (line 2071)
+          ││ │                                                            ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::free@82 (line 2032)
+          ││ │                                                            ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$MiByteBuf::deallocate@52 (line 2477)
+          ││ │                                                            ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+          ││ │                                                            ; - io.netty.buffer.AbstractReferenceCountedByteBuf::release@8 (line 83)
+          ││ │                                                            ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease@29 (line 342)
+   0.27%  ││ │  0x00007f60ac033ae9:   mov    0xc(%r12,%rbx,8),%edi        ; implicit exception: dispatches to 0x00007f60ac033f50
+          ││ │                                                            ;*arraylength {reexecute=0 rethrow=0 return_oop=0}
+          ││ │                                                            ; - java.util.ArrayDeque::size@12 (line 647)
+          ││ │                                                            ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$ArrayDequeBounded::offerFirst@4 (line 319)
+          ││ │                                                            ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::freeLocal@37 (line 2071)
+          ││ │                                                            ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::free@82 (line 2032)
+          ││ │                                                            ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$MiByteBuf::deallocate@52 (line 2477)
+          ││ │                                                            ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+          ││ │                                                            ; - io.netty.buffer.AbstractReferenceCountedByteBuf::release@8 (line 83)
+          ││ │                                                            ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease@29 (line 342)
+   0.56%  ││ │  0x00007f60ac033aee:   mov    0x10(%r12,%r11,8),%ecx       ;*getfield tail {reexecute=0 rethrow=0 return_oop=0}
+          ││ │                                                            ; - java.util.ArrayDeque::size@1 (line 647)
+          ││ │                                                            ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$ArrayDequeBounded::offerFirst@4 (line 319)
+          ││ │                                                            ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::freeLocal@37 (line 2071)
+          ││ │                                                            ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::free@82 (line 2032)
+          ││ │                                                            ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$MiByteBuf::deallocate@52 (line 2477)
+          ││ │                                                            ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+          ││ │                                                            ; - io.netty.buffer.AbstractReferenceCountedByteBuf::release@8 (line 83)
+          ││ │                                                            ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease@29 (line 342)
+   0.25%  ││ │  0x00007f60ac033af3:   mov    0xc(%r12,%r11,8),%r9d        ;*getfield head {reexecute=0 rethrow=0 return_oop=0}
+          ││ │                                                            ; - java.util.ArrayDeque::size@5 (line 647)
+          ││ │                                                            ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$ArrayDequeBounded::offerFirst@4 (line 319)
+          ││ │                                                            ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::freeLocal@37 (line 2071)
+          ││ │                                                            ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::free@82 (line 2032)
+          ││ │                                                            ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$MiByteBuf::deallocate@52 (line 2477)
+          ││ │                                                            ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+          ││ │                                                            ; - io.netty.buffer.AbstractReferenceCountedByteBuf::release@8 (line 83)
+          ││ │                                                            ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease@29 (line 342)
+   0.00%  ││ │  0x00007f60ac033af8:   mov    %ecx,%r10d
+   0.03%  ││ │  0x00007f60ac033afb:   sub    %r9d,%r10d                   ;*isub {reexecute=0 rethrow=0 return_oop=0}
+          ││ │                                                            ; - java.util.ArrayDeque::sub@2 (line 247)
+          ││ │                                                            ; - java.util.ArrayDeque::size@13 (line 647)
+          ││ │                                                            ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$ArrayDequeBounded::offerFirst@4 (line 319)
+          ││ │                                                            ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::freeLocal@37 (line 2071)
+          ││ │                                                            ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::free@82 (line 2032)
+          ││ │                                                            ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$MiByteBuf::deallocate@52 (line 2477)
+          ││ │                                                            ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+          ││ │                                                            ; - io.netty.buffer.AbstractReferenceCountedByteBuf::release@8 (line 83)
+          ││ │                                                            ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease@29 (line 342)
+          ││ │  0x00007f60ac033afe:   test   %r10d,%r10d
+   0.00%  ││ │  0x00007f60ac033b01:   jl     0x00007f60ac033d8c           ;*ifge {reexecute=0 rethrow=0 return_oop=0}
+          ││ │                                                            ; - java.util.ArrayDeque::sub@5 (line 247)
+          ││ │                                                            ; - java.util.ArrayDeque::size@13 (line 647)
+          ││ │                                                            ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$ArrayDequeBounded::offerFirst@4 (line 319)
+          ││ │                                                            ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::freeLocal@37 (line 2071)
+          ││ │                                                            ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::free@82 (line 2032)
+          ││ │                                                            ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$MiByteBuf::deallocate@52 (line 2477)
+          ││ │                                                            ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+          ││ │                                                            ; - io.netty.buffer.AbstractReferenceCountedByteBuf::release@8 (line 83)
+          ││ │                                                            ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease@29 (line 342)
+          ││ │  0x00007f60ac033b07:   mov    0xc(%r12,%r8,8),%ebp         ;*getfield capacity {reexecute=0 rethrow=0 return_oop=0}
+          ││ │                                                            ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$ArrayDequeBounded::offerFirst@8 (line 319)
+          ││ │                                                            ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::freeLocal@37 (line 2071)
+          ││ │                                                            ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::free@82 (line 2032)
+          ││ │                                                            ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$MiByteBuf::deallocate@52 (line 2477)
+          ││ │                                                            ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+          ││ │                                                            ; - io.netty.buffer.AbstractReferenceCountedByteBuf::release@8 (line 83)
+          ││ │                                                            ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease@29 (line 342)
+   0.01%  ││ │  0x00007f60ac033b0c:   cmp    %ebp,%r10d
+   0.00%  ││ │  0x00007f60ac033b0f:   jge    0x00007f60ac033db0           ;*if_icmplt {reexecute=0 rethrow=0 return_oop=0}
+          ││ │                                                            ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$ArrayDequeBounded::offerFirst@11 (line 319)
+          ││ │                                                            ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::freeLocal@37 (line 2071)
+          ││ │                                                            ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::free@82 (line 2032)
+          ││ │                                                            ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$MiByteBuf::deallocate@52 (line 2477)
+          ││ │                                                            ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+          ││ │                                                            ; - io.netty.buffer.AbstractReferenceCountedByteBuf::release@8 (line 83)
+          ││ │                                                            ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease@29 (line 342)
+          ││ │  0x00007f60ac033b15:   dec    %r9d                         ;*iinc {reexecute=0 rethrow=0 return_oop=0}
+          ││ │                                                            ; - java.util.ArrayDeque::dec@0 (line 225)
+          ││ │                                                            ; - java.util.ArrayDeque::addFirst@25 (line 286)
+          ││ │                                                            ; - java.util.ArrayDeque::offerFirst@2 (line 338)
+          ││ │                                                            ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$ArrayDequeBounded::offerFirst@21 (line 322)
+          ││ │                                                            ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::freeLocal@37 (line 2071)
+          ││ │                                                            ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::free@82 (line 2032)
+          ││ │                                                            ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$MiByteBuf::deallocate@52 (line 2477)
+          ││ │                                                            ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+          ││ │                                                            ; - io.netty.buffer.AbstractReferenceCountedByteBuf::release@8 (line 83)
+          ││ │                                                            ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease@29 (line 342)
+   0.11%  ││ │  0x00007f60ac033b18:   test   %r9d,%r9d
+          ││ │  0x00007f60ac033b1b:   jge    0x00007f60ac033dc8           ;*ifge {reexecute=0 rethrow=0 return_oop=0}
+          ││ │                                                            ; - java.util.ArrayDeque::dec@4 (line 225)
+          ││ │                                                            ; - java.util.ArrayDeque::addFirst@25 (line 286)
+          ││ │                                                            ; - java.util.ArrayDeque::offerFirst@2 (line 338)
+          ││ │                                                            ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$ArrayDequeBounded::offerFirst@21 (line 322)
+          ││ │                                                            ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::freeLocal@37 (line 2071)
+          ││ │                                                            ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::free@82 (line 2032)
+          ││ │                                                            ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$MiByteBuf::deallocate@52 (line 2477)
+          ││ │                                                            ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+          ││ │                                                            ; - io.netty.buffer.AbstractReferenceCountedByteBuf::release@8 (line 83)
+          ││ │                                                            ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease@29 (line 342)
+          ││ │  0x00007f60ac033b21:   lea    -0x1(%rdi),%ebp
+   0.17%  ││ │  0x00007f60ac033b24:   mov    %ebp,0xc(%r12,%r11,8)        ;*putfield head {reexecute=0 rethrow=0 return_oop=0}
+          ││ │                                                            ; - java.util.ArrayDeque::addFirst@29 (line 286)
+          ││ │                                                            ; - java.util.ArrayDeque::offerFirst@2 (line 338)
+          ││ │                                                            ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$ArrayDequeBounded::offerFirst@21 (line 322)
+          ││ │                                                            ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::freeLocal@37 (line 2071)
+          ││ │                                                            ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::free@82 (line 2032)
+          ││ │                                                            ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$MiByteBuf::deallocate@52 (line 2477)
+          ││ │                                                            ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+          ││ │                                                            ; - io.netty.buffer.AbstractReferenceCountedByteBuf::release@8 (line 83)
+          ││ │                                                            ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease@29 (line 342)
+   0.23%  ││ │  0x00007f60ac033b29:   cmp    %edi,%ebp
+   0.05%  ││ │  0x00007f60ac033b2b:   jae    0x00007f60ac033c24
+   0.00%  ││ │  0x00007f60ac033b31:   mov    0x8(%r12,%rbx,8),%r8d
+   0.03%  ││ │  0x00007f60ac033b36:   cmp    $0x172408,%r8d               ;   {metadata(&apos;java/lang/Object&apos;[])}
+   0.02%  ││ │  0x00007f60ac033b3d:   jne    0x00007f60ac033c68
+   0.00%  ││ │  0x00007f60ac033b43:   lea    (%r12,%rbx,8),%r10
+   0.01%  ││ │  0x00007f60ac033b47:   mov    0x20(%rsp),%rdx
+   0.09%  ││ │  0x00007f60ac033b4c:   lea    0xc(%r10,%rdi,4),%rbx
+   0.15%  ││ │  0x00007f60ac033b51:   cmpb   $0x0,0x48(%r15)
+   0.25%  ││ │  0x00007f60ac033b56:   jne    0x00007f60ac03410b
+   0.04%  ││ │  0x00007f60ac033b5c:   mov    %rdx,%r9
+   0.02%  ││ │  0x00007f60ac033b5f:   shr    $0x3,%r9
+   0.01%  ││ │  0x00007f60ac033b63:   mov    %r9d,(%rbx)
+   0.55%  ││ │  0x00007f60ac033b66:   mov    %rbx,%r8
+   0.00%  ││ │  0x00007f60ac033b69:   xor    %rdx,%r8
+   0.01%  ││ │  0x00007f60ac033b6c:   shr    $0x18,%r8
+   0.03%  ││╭│  0x00007f60ac033b70:   je     0x00007f60ac033b94
+          ││││  0x00007f60ac033b76:   mov    %rbx,%r8
+   0.00%  ││││  0x00007f60ac033b79:   shr    $0x9,%r8
+          ││││  0x00007f60ac033b7d:   movabs $0x7f609d200000,%r9
+          ││││  0x00007f60ac033b87:   add    %r9,%r8
+          ││││  0x00007f60ac033b8a:   cmpb   $0x2,(%r8)
+          ││││  0x00007f60ac033b8e:   jne    0x00007f60ac034176           ;*aastore {reexecute=0 rethrow=0 return_oop=0}
+          ││││                                                            ; - java.util.ArrayDeque::addFirst@33 (line 286)
+          ││││                                                            ; - java.util.ArrayDeque::offerFirst@2 (line 338)
+          ││││                                                            ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$ArrayDequeBounded::offerFirst@21 (line 322)
+          ││││                                                            ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::freeLocal@37 (line 2071)
+          ││││                                                            ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::free@82 (line 2032)
+          ││││                                                            ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$MiByteBuf::deallocate@52 (line 2477)
+          ││││                                                            ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+          ││││                                                            ; - io.netty.buffer.AbstractReferenceCountedByteBuf::release@8 (line 83)
+          ││││                                                            ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease@29 (line 342)
+   0.04%  ││↘│  0x00007f60ac033b94:   cmp    %ecx,%ebp
+   0.18%  ││ │  0x00007f60ac033b96:   je     0x00007f60ac033df0           ;*synchronization entry
+          ││ │                                                            ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease@-1 (line 336)
+          ││ │  0x00007f60ac033b9c:   mov    %rdx,%rax
+   0.06%  ││ │  0x00007f60ac033b9f:   add    $0x40,%rsp
+   0.01%  ││ │  0x00007f60ac033ba3:   pop    %rbp
+   0.13%  ││ │  0x00007f60ac033ba4:   cmp    0x28(%r15),%rsp              ;   {poll_return}
+   0.07%  ││ │  0x00007f60ac033ba8:   ja     0x00007f60ac0341e4
+          ││ │  0x00007f60ac033bae:   ret                                 ;*ifne {reexecute=0 rethrow=0 return_oop=0}
+          ││ │                                                            ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$Page::freeBlockLocal@34 (line 1752)
+          ││ │                                                            ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$Page::access$1300@4 (line 1613)
+          ││ │                                                            ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::freeLocal@25 (line 2069)
+          ││ │                                                            ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::free@82 (line 2032)
+          ││ │                                                            ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$MiByteBuf::deallocate@52 (line 2477)
+          ││ │                                                            ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+          ││ │                                                            ; - io.netty.buffer.AbstractReferenceCountedByteBuf::release@8 (line 83)
+          ││ │                                                            ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease@29 (line 342)
+          │↘ │  0x00007f60ac033baf:   mov    0x20(%rsp),%rbp
+   0.02%  │  │  0x00007f60ac033bb4:   mov    %rdx,0x8(%rsp)
+          │  │  0x00007f60ac033bb9:   xchg   %ax,%ax
+          │  │  0x00007f60ac033bbb:   call   0x00007f60ac034208           ; ImmutableOopMap {rbp=Oop [8]=Oop [32]=Oop [40]=NarrowOop }
+          │  │                                                            ;*invokespecial pageUnfull {reexecute=0 rethrow=0 return_oop=0}
+          │  │                                                            ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$Page::freeBlockLocal@58 (line 1755)
+          │  │                                                            ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$Page::access$1300@4 (line 1613)
+          │  │                                                            ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::freeLocal@25 (line 2069)
+          │  │                                                            ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::free@82 (line 2032)
+          │  │                                                            ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$MiByteBuf::deallocate@52 (line 2477)
+          │  │                                                            ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+          │  │                                                            ; - io.netty.buffer.AbstractReferenceCountedByteBuf::release@8 (line 83)
+          │  │                                                            ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease@29 (line 342)
+          │  │                                                            ;   {optimized virtual_call}
+   0.01%  │  │  0x00007f60ac033bc0:   nopl   0x3b8(%rax,%rax,1)           ;*invokespecial pageUnfull {reexecute=0 rethrow=0 return_oop=0}
+          │  │                                                            ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$Page::freeBlockLocal@58 (line 1755)
+          │  │                                                            ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$Page::access$1300@4 (line 1613)
+          │  │                                                            ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::freeLocal@25 (line 2069)
+          │  │                                                            ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::free@82 (line 2032)
+          │  │                                                            ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$MiByteBuf::deallocate@52 (line 2477)
+          │  │                                                            ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+          │  │                                                            ; - io.netty.buffer.AbstractReferenceCountedByteBuf::release@8 (line 83)
+          │  │                                                            ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease@29 (line 342)
+          │  │                                                            ;   {post_call_nop}
+   0.00%  │  ╰  0x00007f60ac033bc8:   jmp    0x00007f60ac033ad5           ;*invokeinterface _setInt {reexecute=0 rethrow=0 return_oop=0}
+          │                                                               ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$Page::freeBlockLocal@12 (line 1750)
+          │                                                               ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$Page::access$1300@4 (line 1613)
+          │                                                               ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::freeLocal@25 (line 2069)
+          │                                                               ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::free@82 (line 2032)
+          │                                                               ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$MiByteBuf::deallocate@52 (line 2477)
+          │                                                               ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+          │                                                               ; - io.netty.buffer.AbstractReferenceCountedByteBuf::release@8 (line 83)
+          │                                                               ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease@29 (line 342)
+          ↘     0x00007f60ac033bcd:   mov    0x20(%rsp),%rbp
+   0.01%        0x00007f60ac033bd2:   mov    %rdx,0x8(%rsp)
+                0x00007f60ac033bd7:   call   0x00007f60ac034217           ; ImmutableOopMap {rbp=Oop [8]=Oop [32]=Oop [40]=NarrowOop }
+                                                                          ;*invokespecial pageRetire {reexecute=0 rethrow=0 return_oop=0}
+                                                                          ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$Page::freeBlockLocal@39 (line 1753)
+                                                                          ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$Page::access$1300@4 (line 1613)
+                                                                          ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::freeLocal@25 (line 2069)
+                                                                          ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::free@82 (line 2032)
+                                                                          ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$MiByteBuf::deallocate@52 (line 2477)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease@5 (line 93)
+                                                                          ; - io.netty.buffer.AbstractReferenceCountedByteBuf::release@8 (line 83)
+                                                                          ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease@29 (line 342)
+                                                                          ;   {optimized virtual_call}
+   0.01%        0x00007f60ac033bdc:   nopl   0x10003d4(%rax,%rax,1)       ;*invokespecial pageRetire {reexecute=0 rethrow=0 return_oop=0}
+....................................................................................................
+  33.30%  <total for region 1>
+
+....[Hottest Region 2]..............................................................................
+c2, level 4, io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::performDirectAllocation, version 4, compile id 1892 
+
+            --------------------------------------------------------------------------------
+            [Instructions begin]
+              0x00007f60ac03b380:   xchg   %ax,%ax
+            [Entry Point]
+              # {method} {0x00007f6054453a60} &apos;performDirectAllocation&apos; &apos;()Lio/netty/buffer/ByteBuf;&apos; in &apos;io/github/neoionet/netty/microbenchmark/ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState&apos;
+              #           [sp+0x50]  (sp of caller)
+              0x00007f60ac03b382:   mov    0x8(%rsi),%r10d
+              0x00007f60ac03b386:   cmp    0x8(%rax),%r10d
+              0x00007f60ac03b38a:   jne    0x00007f60ab8ad5e0           ;   {runtime_call Shared Runtime ic_miss_blob}
+            [Verified Entry Point]
+   0.16%      0x00007f60ac03b390:   mov    %eax,-0x14000(%rsp)
+   0.27%      0x00007f60ac03b397:   push   %rbp
+   0.08%      0x00007f60ac03b398:   sub    $0x40,%rsp
+   0.28%      0x00007f60ac03b39c:   cmpl   $0x1,0x20(%r15)
+   0.08%      0x00007f60ac03b3a4:   jne    0x00007f60ac03ba01           ;*synchronization entry
+                                                                        ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::performDirectAllocation@-1 (line 306)
+   0.05%      0x00007f60ac03b3aa:   mov    %rsi,(%rsp)
+   0.13%      0x00007f60ac03b3ae:   mov    0x70(%rsi),%r11d             ;*getfield releaseIndexes {reexecute=0 rethrow=0 return_oop=0}
+                                                                        ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::getNextReleaseIndex@63 (line 236)
+                                                                        ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::performDirectAllocation@1 (line 306)
+   0.09%      0x00007f60ac03b3b2:   mov    0xc(%r12,%r11,8),%r10d       ; implicit exception: dispatches to 0x00007f60ac03b880
+                                                                        ;*arraylength {reexecute=0 rethrow=0 return_oop=0}
+                                                                        ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::getNextReleaseIndex@66 (line 236)
+                                                                        ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::performDirectAllocation@1 (line 306)
+   0.83%      0x00007f60ac03b3b7:   mov    0xc(%rsi),%ebp               ;*getfield nextReleaseIndex {reexecute=0 rethrow=0 return_oop=0}
+                                                                        ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::getNextReleaseIndex@51 (line 235)
+                                                                        ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::performDirectAllocation@1 (line 306)
+   0.05%      0x00007f60ac03b3ba:   lea    -0x1(%r10),%r9d
+   0.13%      0x00007f60ac03b3be:   lea    0x1(%rbp),%ecx
+   0.13%      0x00007f60ac03b3c1:   and    %r9d,%ecx
+   0.24%      0x00007f60ac03b3c4:   mov    %ecx,0xc(%rsi)               ;*putfield nextReleaseIndex {reexecute=0 rethrow=0 return_oop=0}
+                                                                        ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::getNextReleaseIndex@70 (line 236)
+                                                                        ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::performDirectAllocation@1 (line 306)
+   0.04%      0x00007f60ac03b3c7:   cmp    %r10d,%ebp
+              0x00007f60ac03b3ca:   jae    0x00007f60ac03b6cb           ;*invokevirtual getNextReleaseIndex {reexecute=0 rethrow=0 return_oop=0}
+                                                                        ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::performDirectAllocation@1 (line 306)
+              0x00007f60ac03b3d0:   lea    (%r12,%r11,8),%r10
+   0.05%      0x00007f60ac03b3d4:   mov    0x10(%r10,%rbp,4),%edx       ;*iaload {reexecute=0 rethrow=0 return_oop=0}
+                                                                        ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::getNextReleaseIndex@78 (line 237)
+                                                                        ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::performDirectAllocation@1 (line 306)
+   0.42%      0x00007f60ac03b3d9:   mov    %edx,%ebp
+   0.03%      0x00007f60ac03b3db:   mov    %edx,0x8(%rsp)
+   0.04%      0x00007f60ac03b3df:   call   0x00007f60ac033910           ; ImmutableOopMap {[0]=Oop }
+                                                                        ;*invokevirtual readAndRelease {reexecute=0 rethrow=0 return_oop=1}
+                                                                        ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::performDirectAllocation@7 (line 307)
+                                                                        ;   {optimized virtual_call}
+   0.11%      0x00007f60ac03b3e4:   nopl   0x15c(%rax,%rax,1)           ;*invokevirtual readAndRelease {reexecute=0 rethrow=0 return_oop=0}
+                                                                        ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::performDirectAllocation@7 (line 307)
+                                                                        ;   {post_call_nop}
+   0.06%      0x00007f60ac03b3ec:   mov    (%rsp),%r10
+   0.22%      0x00007f60ac03b3f0:   mov    0x74(%r10),%ecx              ;*getfield sizes {reexecute=0 rethrow=0 return_oop=0}
+                                                                        ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::performDirectAllocation@12 (line 308)
+   0.15%      0x00007f60ac03b3f4:   mov    0xc(%r12,%rcx,8),%r10d       ; implicit exception: dispatches to 0x00007f60ac03b894
+                                                                        ;*arraylength {reexecute=0 rethrow=0 return_oop=0}
+                                                                        ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::getNextSizeIndex@16 (line 290)
+                                                                        ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::performDirectAllocation@16 (line 308)
+   0.98%      0x00007f60ac03b3f9:   mov    (%rsp),%r11
+   0.07%      0x00007f60ac03b3fd:   mov    0x60(%r11),%ebp              ;*getfield nextSizeIndex {reexecute=0 rethrow=0 return_oop=0}
+                                                                        ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::getNextSizeIndex@1 (line 289)
+                                                                        ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::performDirectAllocation@16 (line 308)
+   0.06%      0x00007f60ac03b401:   lea    -0x1(%r10),%r8d
+   0.06%      0x00007f60ac03b405:   lea    0x1(%rbp),%r9d
+   0.03%      0x00007f60ac03b409:   and    %r8d,%r9d
+   0.16%      0x00007f60ac03b40c:   mov    %r9d,0x60(%r11)              ;*putfield nextSizeIndex {reexecute=0 rethrow=0 return_oop=0}
+                                                                        ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::getNextSizeIndex@20 (line 290)
+                                                                        ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::performDirectAllocation@16 (line 308)
+   0.16%      0x00007f60ac03b410:   cmp    %r10d,%ebp
+              0x00007f60ac03b413:   jae    0x00007f60ac03b6e4           ;*invokevirtual getNextSizeIndex {reexecute=0 rethrow=0 return_oop=0}
+                                                                        ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::performDirectAllocation@16 (line 308)
+              0x00007f60ac03b419:   mov    0x7c(%r11),%r11d
+   0.03%      0x00007f60ac03b41d:   lea    (%r12,%rcx,8),%r10
+   0.02%      0x00007f60ac03b421:   mov    0x10(%r10,%rbp,4),%edx       ;*iaload {reexecute=0 rethrow=0 return_oop=0}
+                                                                        ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::performDirectAllocation@19 (line 308)
+   0.24%      0x00007f60ac03b426:   mov    %r11,%rsi
+   0.03%      0x00007f60ac03b429:   shl    $0x3,%rsi                    ;*getfield allocator {reexecute=0 rethrow=0 return_oop=0}
+                                                                        ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::performDirectAllocation@22 (line 309)
+              0x00007f60ac03b42d:   mov    %edx,%ebp
+   0.02%      0x00007f60ac03b42f:   mov    %edx,0xc(%rsp)
+   0.04%      0x00007f60ac03b433:   call   0x00007f60ac037600           ; ImmutableOopMap {[0]=Oop }
+                                                                        ;*invokestatic allocateDirect {reexecute=0 rethrow=0 return_oop=1}
+                                                                        ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::performDirectAllocation@26 (line 309)
+                                                                        ;   {static_call}
+   0.12%      0x00007f60ac03b438:   nopl   0x10001b0(%rax,%rax,1)       ;*invokestatic allocateDirect {reexecute=0 rethrow=0 return_oop=0}
+                                                                        ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::performDirectAllocation@26 (line 309)
+                                                                        ;   {post_call_nop}
+   0.03%      0x00007f60ac03b440:   mov    %rax,0x10(%rsp)
+   0.10%      0x00007f60ac03b445:   mov    (%rsp),%rsi
+   0.15%      0x00007f60ac03b449:   mov    %rax,%rdx
+   0.05%      0x00007f60ac03b44c:   data16 xchg %ax,%ax
+              0x00007f60ac03b44f:   call   0x00007f60ac033010           ; ImmutableOopMap {[0]=Oop [16]=Oop }
+                                                                        ;*invokevirtual probeAlloc {reexecute=0 rethrow=0 return_oop=0}
+                                                                        ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::performDirectAllocation@32 (line 310)
+                                                                        ;   {optimized virtual_call}
+   0.09%      0x00007f60ac03b454:   nopl   0x20001cc(%rax,%rax,1)       ;*invokevirtual probeAlloc {reexecute=0 rethrow=0 return_oop=0}
+                                                                        ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::performDirectAllocation@32 (line 310)
+                                                                        ;   {post_call_nop}
+   0.01%      0x00007f60ac03b45c:   mov    (%rsp),%r10
+   0.03%      0x00007f60ac03b460:   movzbl 0x6c(%r10),%ebp              ;*getfield enableReadWrite {reexecute=0 rethrow=0 return_oop=0}
+                                                                        ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::performDirectAllocation@36 (line 311)
+   0.79%      0x00007f60ac03b465:   test   %ebp,%ebp
+              0x00007f60ac03b467:   je     0x00007f60ac03b7bc           ;*ifeq {reexecute=0 rethrow=0 return_oop=0}
+                                                                        ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::performDirectAllocation@39 (line 311)
+              0x00007f60ac03b46d:   mov    0x10(%rsp),%r10
+   0.05%      0x00007f60ac03b472:   mov    0x8(%r10),%r11d              ; implicit exception: dispatches to 0x00007f60ac03b8a8
+   0.19%      0x00007f60ac03b476:   cmp    $0x109e8e8,%r11d             ;   {metadata(&apos;io/github/neoionet/netty/mimalloc/MiMallocByteBufAllocator$MiByteBuf&apos;)}
+   0.01%      0x00007f60ac03b47d:   jne    0x00007f60ac03b714           ;*invokevirtual writeByte {reexecute=0 rethrow=0 return_oop=0}
+                                                                        ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::performDirectAllocation@44 (line 312)
+              0x00007f60ac03b483:   mov    %r10,0x18(%rsp)
+   0.04%      0x00007f60ac03b488:   mov    0x10(%r10),%r10d             ;*getfield writerIndex {reexecute=0 rethrow=0 return_oop=0}
+                                                                        ; - io.netty.buffer.AbstractByteBuf::writerIndex@1 (line 141)
+                                                                        ; - io.netty.buffer.AbstractByteBuf::ensureWritable0@1 (line 297)
+                                                                        ; - io.netty.buffer.AbstractByteBuf::writeByte@2 (line 1003)
+                                                                        ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::performDirectAllocation@44 (line 312)
+   0.05%      0x00007f60ac03b48c:   mov    %r10d,0x28(%rsp)
+   0.04%      0x00007f60ac03b491:   lea    0x1(%r10),%r11d
+   0.02%      0x00007f60ac03b495:   mov    %r11d,0x2c(%rsp)
+   0.22%      0x00007f60ac03b49a:   test   %r11d,%r11d
+   0.04%      0x00007f60ac03b49d:   jl     0x00007f60ac03b744           ;*iflt {reexecute=0 rethrow=0 return_oop=0}
+                                                                        ; - io.netty.buffer.AbstractByteBuf::ensureWritable0@10 (line 300)
+                                                                        ; - io.netty.buffer.AbstractByteBuf::writeByte@2 (line 1003)
+                                                                        ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::performDirectAllocation@44 (line 312)
+              0x00007f60ac03b4a3:   mov    0x18(%rsp),%r10
+   0.50%      0x00007f60ac03b4a8:   mov    0x30(%r10),%r11d
+   0.19%      0x00007f60ac03b4ac:   mov    0x2c(%rsp),%r8d
+   0.47%      0x00007f60ac03b4b1:   cmp    %r11d,%r8d
+          ╭   0x00007f60ac03b4b4:   jg     0x00007f60ac03b5a3           ;*ifeq {reexecute=0 rethrow=0 return_oop=0}
+          │                                                             ; - io.netty.buffer.AbstractByteBuf::ensureWritable0@32 (line 300)
+          │                                                             ; - io.netty.buffer.AbstractByteBuf::writeByte@2 (line 1003)
+          │                                                             ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::performDirectAllocation@44 (line 312)
+          │   0x00007f60ac03b4ba:   mov    0x20(%r10),%r11d             ;*getfield refCnt {reexecute=0 rethrow=0 return_oop=0}
+          │                                                             ; - io.netty.buffer.AbstractReferenceCountedByteBuf::isAccessible@1 (line 37)
+          │                                                             ; - io.netty.buffer.AbstractByteBuf::ensureAccessible@7 (line 1491)
+          │                                                             ; - io.netty.buffer.AbstractByteBuf::ensureWritable0@36 (line 301)
+          │                                                             ; - io.netty.buffer.AbstractByteBuf::writeByte@2 (line 1003)
+          │                                                             ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::performDirectAllocation@44 (line 312)
+   0.02%  │   0x00007f60ac03b4be:   mov    0xc(%r12,%r11,8),%ebp        ;*invokevirtual getInt {reexecute=0 rethrow=0 return_oop=0}
+          │                                                             ; - sun.misc.Unsafe::getInt@8 (line 180)
+          │                                                             ; - io.netty.util.internal.PlatformDependent0::getInt@5 (line 853)
+          │                                                             ; - io.netty.util.internal.PlatformDependent::getInt@2 (line 811)
+          │                                                             ; - io.netty.util.internal.RefCnt$UnsafeRefCnt::isLiveNonVolatile@4 (line 469)
+          │                                                             ; - io.netty.util.internal.RefCnt::isLiveNonVolatile@29 (line 183)
+          │                                                             ; - io.netty.buffer.AbstractReferenceCountedByteBuf::isAccessible@4 (line 37)
+          │                                                             ; - io.netty.buffer.AbstractByteBuf::ensureAccessible@7 (line 1491)
+          │                                                             ; - io.netty.buffer.AbstractByteBuf::ensureWritable0@36 (line 301)
+          │                                                             ; - io.netty.buffer.AbstractByteBuf::writeByte@2 (line 1003)
+          │                                                             ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::performDirectAllocation@44 (line 312)
+   0.77%  │   0x00007f60ac03b4c3:   cmp    $0x2,%ebp
+          │   0x00007f60ac03b4c6:   jne    0x00007f60ac03b7a8           ;*getfield writerIndex {reexecute=0 rethrow=0 return_oop=0}
+          │                                                             ; - io.netty.buffer.AbstractByteBuf::writeByte@8 (line 1004)
+          │                                                             ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::performDirectAllocation@44 (line 312)
+          │   0x00007f60ac03b4cc:   mov    0x18(%rsp),%r10
+   0.03%  │   0x00007f60ac03b4d1:   mov    0x2c(%rsp),%r11d
+   0.13%  │   0x00007f60ac03b4d6:   mov    %r11d,0x10(%r10)             ;*putfield writerIndex {reexecute=0 rethrow=0 return_oop=0}
+          │                                                             ; - io.netty.buffer.AbstractByteBuf::writeByte@14 (line 1004)
+          │                                                             ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::performDirectAllocation@44 (line 312)
+   0.05%  │   0x00007f60ac03b4da:   mov    0x24(%r10),%r10d             ;*getfield rootParent {reexecute=0 rethrow=0 return_oop=0}
+          │                                                             ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$MiByteBuf::_setByte@1 (line 2671)
+          │                                                             ; - io.netty.buffer.AbstractByteBuf::writeByte@18 (line 1004)
+          │                                                             ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::performDirectAllocation@44 (line 312)
+   0.17%  │   0x00007f60ac03b4de:   mov    0x8(%r12,%r10,8),%r11d       ; implicit exception: dispatches to 0x00007f60ac03b8c0
+   0.75%  │   0x00007f60ac03b4e3:   cmp    $0x10a6dd0,%r11d             ;   {metadata(&apos;io/github/neoionet/netty/mimalloc/MiUnpooledUnsafeDirectByteBuf&apos;)}
+   0.18%  │   0x00007f60ac03b4ea:   jne    0x00007f60ac03b838           ;*checkcast {reexecute=0 rethrow=0 return_oop=0}
+          │                                                             ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$MiByteBuf::_setByte@4 (line 2671)
+          │                                                             ; - io.netty.buffer.AbstractByteBuf::writeByte@18 (line 1004)
+          │                                                             ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::performDirectAllocation@44 (line 312)
+          │   0x00007f60ac03b4f0:   mov    0x18(%rsp),%r8
+   0.01%  │   0x00007f60ac03b4f5:   mov    0x28(%rsp),%r11d
+   0.13%  │   0x00007f60ac03b4fa:   add    0x38(%r8),%r11d
+   0.06%  │   0x00007f60ac03b4fe:   mov    (%rsp),%r8
+   0.06%  │   0x00007f60ac03b502:   mov    0x78(%r8),%ebp               ;*getfield buffers {reexecute=0 rethrow=0 return_oop=0}
+          │                                                             ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::performDirectAllocation@49 (line 314)
+   0.24%  │   0x00007f60ac03b506:   shl    $0x3,%r10                    ;*checkcast {reexecute=0 rethrow=0 return_oop=0}
+          │                                                             ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$MiByteBuf::_setByte@4 (line 2671)
+          │                                                             ; - io.netty.buffer.AbstractByteBuf::writeByte@18 (line 1004)
+          │                                                             ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::performDirectAllocation@44 (line 312)
+   0.03%  │   0x00007f60ac03b50a:   mov    0x40(%r10),%r10
+   0.25%  │   0x00007f60ac03b50e:   movslq %r11d,%r11
+   0.10%  │   0x00007f60ac03b511:   mov    0xc(%rsp),%r9d
+   0.01%  │   0x00007f60ac03b516:   mov    %r9b,(%r10,%r11,1)           ;*invokevirtual putByte {reexecute=0 rethrow=0 return_oop=0}
+          │                                                             ; - jdk.internal.misc.Unsafe::putByte@4 (line 339)
+          │                                                             ; - sun.misc.Unsafe::putByte@8 (line 456)
+          │                                                             ; - io.netty.util.internal.PlatformDependent0::putByte@5 (line 930)
+          │                                                             ; - io.netty.util.internal.PlatformDependent::putByte@2 (line 975)
+          │                                                             ; - io.netty.buffer.UnsafeByteBufUtil::setByte@3 (line 135)
+          │                                                             ; - io.netty.buffer.UnpooledUnsafeDirectByteBuf::_setByte@6 (line 235)
+          │                                                             ; - io.github.neoionet.netty.mimalloc.MiUnpooledUnsafeDirectByteBuf::_setByte@3 (line 73)
+          │                                                             ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$MiByteBuf::_setByte@13 (line 2671)
+          │                                                             ; - io.netty.buffer.AbstractByteBuf::writeByte@18 (line 1004)
+          │                                                             ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::performDirectAllocation@44 (line 312)
+   1.33%  │   0x00007f60ac03b51a:   mov    0xc(%r12,%rbp,8),%r11d       ; implicit exception: dispatches to 0x00007f60ac03b8f4
+   0.61%  │   0x00007f60ac03b51f:   mov    0x8(%rsp),%r8d
+   0.12%  │   0x00007f60ac03b524:   cmp    %r11d,%r8d
+          │   0x00007f60ac03b527:   jae    0x00007f60ac03b6fc
+          │   0x00007f60ac03b52d:   mov    0x8(%r12,%rbp,8),%r10d
+   0.14%  │   0x00007f60ac03b532:   cmp    $0x10b94b8,%r10d             ;   {metadata(&apos;io/netty/buffer/ByteBuf&apos;[])}
+   0.11%  │   0x00007f60ac03b539:   jne    0x00007f60ac03b72c
+   0.00%  │   0x00007f60ac03b53f:   lea    (%r12,%rbp,8),%r10
+   0.02%  │   0x00007f60ac03b543:   mov    0x18(%rsp),%rbx
+   0.01%  │   0x00007f60ac03b548:   lea    0x10(%r10,%r8,4),%r9
+   0.27%  │   0x00007f60ac03b54d:   cmpb   $0x0,0x48(%r15)
+   0.09%  │   0x00007f60ac03b552:   jne    0x00007f60ac03b94c
+   0.09%  │   0x00007f60ac03b558:   mov    %rbx,%rcx
+   0.04%  │   0x00007f60ac03b55b:   shr    $0x3,%rcx
+          │   0x00007f60ac03b55f:   mov    %ecx,(%r9)
+   0.42%  │   0x00007f60ac03b562:   mov    %r9,%r11
+   0.01%  │   0x00007f60ac03b565:   xor    %rbx,%r11
+          │   0x00007f60ac03b568:   shr    $0x18,%r11
+   0.02%  │╭  0x00007f60ac03b56c:   je     0x00007f60ac03b590
+          ││  0x00007f60ac03b572:   mov    %r9,%r11
+          ││  0x00007f60ac03b575:   shr    $0x9,%r11
+          ││  0x00007f60ac03b579:   movabs $0x7f609d200000,%rcx
+          ││  0x00007f60ac03b583:   add    %rcx,%r11
+          ││  0x00007f60ac03b586:   cmpb   $0x2,(%r11)
+   0.00%  ││  0x00007f60ac03b58a:   jne    0x00007f60ac03b9a3           ;*synchronization entry
+          ││                                                            ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::performDirectAllocation@-1 (line 306)
+   0.23%  │↘  0x00007f60ac03b590:   mov    %rbx,%rax
+   0.01%  │   0x00007f60ac03b593:   add    $0x40,%rsp
+   0.13%  │   0x00007f60ac03b597:   pop    %rbp
+   0.36%  │   0x00007f60ac03b598:   cmp    0x28(%r15),%rsp              ;   {poll_return}
+   0.22%  │   0x00007f60ac03b59c:   ja     0x00007f60ac03b9eb
+          │   0x00007f60ac03b5a2:   ret    
+          ↘   0x00007f60ac03b5a3:   mov    0x1c(%r10),%r11d
+              0x00007f60ac03b5a7:   cmp    %r11d,%r8d
+              0x00007f60ac03b5aa:   jle    0x00007f60ac03b610           ;*if_icmple {reexecute=0 rethrow=0 return_oop=0}
+                                                                        ; - io.netty.buffer.AbstractByteBuf::ensureWritable0@55 (line 304)
+                                                                        ; - io.netty.buffer.AbstractByteBuf::writeByte@2 (line 1003)
+                                                                        ; - io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::performDirectAllocation@44 (line 312)
+              0x00007f60ac03b5ac:   mov    0x18(%rsp),%rsi
+              0x00007f60ac03b5b1:   mov    (%rsp),%rbp
+              0x00007f60ac03b5b5:   xchg   %ax,%ax
+....................................................................................................
+  15.93%  <total for region 2>
+
+....[Hottest Region 3]..............................................................................
+c2, level 4, io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::allocate, version 4, compile id 1888 
+
+            # this:     rsi:rsi   = &apos;io/github/neoionet/netty/mimalloc/MiMallocByteBufAllocator&apos;
+            # parm0:    rdx       = int
+            # parm1:    rcx       = int
+            # parm2:    r8:r8     = &apos;io/github/neoionet/netty/mimalloc/MiMallocByteBufAllocator$MiByteBuf&apos;
+            # parm3:    r9        = boolean
+            #           [sp+0x50]  (sp of caller)
+            0x00007f60ac03bc02:   mov    0x8(%rsi),%r10d
+            0x00007f60ac03bc06:   cmp    0x8(%rax),%r10d
+            0x00007f60ac03bc0a:   jne    0x00007f60ab8ad5e0           ;   {runtime_call Shared Runtime ic_miss_blob}
+          [Verified Entry Point]
+   0.34%    0x00007f60ac03bc10:   mov    %eax,-0x14000(%rsp)
+   0.61%    0x00007f60ac03bc17:   push   %rbp
+   0.09%    0x00007f60ac03bc18:   sub    $0x40,%rsp
+   0.10%    0x00007f60ac03bc1c:   cmpl   $0x1,0x20(%r15)
+   0.06%    0x00007f60ac03bc24:   jne    0x00007f60ac03c8b2           ;*synchronization entry
+                                                                      ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::allocate@-1 (line 2184)
+   0.04%    0x00007f60ac03bc2a:   mov    %r9d,0x18(%rsp)
+   0.21%    0x00007f60ac03bc2f:   mov    %ecx,0xc(%rsp)
+   0.04%    0x00007f60ac03bc33:   mov    %rsi,%r13
+   0.12%    0x00007f60ac03bc36:   mov    0x34(%rsi),%r11d             ;*getfield heapStrategyParam {reexecute=0 rethrow=0 return_oop=0}
+                                                                      ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::isThreadLocalAllocation@4 (line 2172)
+                                                                      ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::allocate@4 (line 2185)
+   0.43%    0x00007f60ac03bc3a:   mov    0xc(%r12,%r11,8),%r11d       ; implicit exception: dispatches to 0x00007f60ac03c3b0
+                                                                      ;*getfield ordinal {reexecute=0 rethrow=0 return_oop=0}
+                                                                      ; - java.lang.Enum::ordinal@1 (line 128)
+                                                                      ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::isThreadLocalAllocation@7 (line 2172)
+                                                                      ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::allocate@4 (line 2185)
+   0.86%    0x00007f60ac03bc3f:   cmp    $0x3,%r11d
+            0x00007f60ac03bc43:   jae    0x00007f60ac03c068
+            0x00007f60ac03bc49:   movabs $0x7b20500c0,%r10            ;   {oop([I{0x00000007b20500c0})}
+   0.02%    0x00007f60ac03bc53:   mov    0x10(%r10,%r11,4),%ebp       ;*iaload {reexecute=0 rethrow=0 return_oop=0}
+                                                                      ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::isThreadLocalAllocation@10 (line 2172)
+                                                                      ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::allocate@4 (line 2185)
+   1.51%    0x00007f60ac03bc58:   cmp    $0x3,%ebp
+            0x00007f60ac03bc5b:   jl     0x00007f60ac03c0d4
+   0.10%    0x00007f60ac03bc61:   mov    0x468(%r15),%r10
+   0.03%    0x00007f60ac03bc68:   mov    (%r10),%rcx                  ;*invokestatic currentThread {reexecute=0 rethrow=0 return_oop=0}
+                                                                      ; - io.netty.util.concurrent.FastThreadLocalThread::currentThreadWillCleanupFastThreadLocals@0 (line 132)
+                                                                      ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::isThreadLocalAllocation@40 (line 2179)
+                                                                      ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::allocate@4 (line 2185)
+   0.05%    0x00007f60ac03bc6b:   mov    0x8(%rcx),%r10d
+   1.03%    0x00007f60ac03bc6f:   cmp    $0x1064448,%r10d             ;   {metadata(&apos;io/netty/util/concurrent/FastThreadLocalThread&apos;)}
+   0.06%    0x00007f60ac03bc76:   jne    0x00007f60ac03c2ea           ;*instanceof {reexecute=0 rethrow=0 return_oop=0}
+                                                                      ; - io.netty.util.concurrent.FastThreadLocalThread::currentThreadWillCleanupFastThreadLocals@5 (line 133)
+                                                                      ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::isThreadLocalAllocation@40 (line 2179)
+                                                                      ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::allocate@4 (line 2185)
+            0x00007f60ac03bc7c:   movzbl 0x74(%rcx),%ebp              ;*getfield cleanupFastThreadLocals {reexecute=0 rethrow=0 return_oop=0}
+                                                                      ; - io.netty.util.concurrent.FastThreadLocalThread::willCleanupFastThreadLocals@1 (line 113)
+                                                                      ; - io.netty.util.concurrent.FastThreadLocalThread::currentThreadWillCleanupFastThreadLocals@15 (line 134)
+                                                                      ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::isThreadLocalAllocation@40 (line 2179)
+                                                                      ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::allocate@4 (line 2185)
+   0.24%    0x00007f60ac03bc80:   test   %ebp,%ebp
+            0x00007f60ac03bc82:   je     0x00007f60ac03c1b0           ;*ifeq {reexecute=0 rethrow=0 return_oop=0}
+                                                                      ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::allocate@7 (line 2185)
+            0x00007f60ac03bc88:   mov    0x20(%rsi),%r10d             ;*getfield THREAD_LOCAL_HEAP {reexecute=0 rethrow=0 return_oop=0}
+                                                                      ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::allocate@17 (line 2186)
+   0.01%    0x00007f60ac03bc8c:   mov    0xc(%r12,%r10,8),%ebx        ; implicit exception: dispatches to 0x00007f60ac03c3d4
+                                                                      ;*getfield index {reexecute=0 rethrow=0 return_oop=0}
+                                                                      ; - io.netty.util.concurrent.FastThreadLocal::get@6 (line 138)
+                                                                      ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::allocate@20 (line 2186)
+   0.18%    0x00007f60ac03bc91:   mov    0x70(%rcx),%r9d              ;*getfield threadLocalMap {reexecute=0 rethrow=0 return_oop=0}
+                                                                      ; - io.netty.util.concurrent.FastThreadLocalThread::threadLocalMap@36 (line 91)
+                                                                      ; - io.netty.util.internal.InternalThreadLocalMap::fastGet@1 (line 120)
+                                                                      ; - io.netty.util.internal.InternalThreadLocalMap::get@15 (line 113)
+                                                                      ; - io.netty.util.concurrent.FastThreadLocal::get@0 (line 137)
+                                                                      ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::allocate@20 (line 2186)
+   0.13%    0x00007f60ac03bc95:   mov    0x54(%r12,%r9,8),%edi        ; implicit exception: dispatches to 0x00007f60ac03c504
+                                                                      ;*getfield indexedVariables {reexecute=0 rethrow=0 return_oop=0}
+                                                                      ; - io.netty.util.internal.InternalThreadLocalMap::indexedVariable@1 (line 318)
+                                                                      ; - io.netty.util.concurrent.FastThreadLocal::get@9 (line 138)
+                                                                      ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::allocate@20 (line 2186)
+   0.63%    0x00007f60ac03bc9a:   mov    0xc(%r12,%rdi,8),%ebp        ; implicit exception: dispatches to 0x00007f60ac03c3fc
+                                                                      ;*arraylength {reexecute=0 rethrow=0 return_oop=0}
+                                                                      ; - io.netty.util.internal.InternalThreadLocalMap::indexedVariable@7 (line 319)
+                                                                      ; - io.netty.util.concurrent.FastThreadLocal::get@9 (line 138)
+                                                                      ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::allocate@20 (line 2186)
+   1.59%    0x00007f60ac03bc9f:   cmp    %ebp,%ebx
+            0x00007f60ac03bca1:   jge    0x00007f60ac03c1d0           ;*if_icmpge {reexecute=0 rethrow=0 return_oop=0}
+                                                                      ; - io.netty.util.internal.InternalThreadLocalMap::indexedVariable@8 (line 319)
+                                                                      ; - io.netty.util.concurrent.FastThreadLocal::get@9 (line 138)
+                                                                      ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::allocate@20 (line 2186)
+            0x00007f60ac03bca7:   cmp    %ebp,%ebx
+   0.02%    0x00007f60ac03bca9:   jae    0x00007f60ac03c090
+            0x00007f60ac03bcaf:   lea    (%r12,%rdi,8),%r11
+   0.00%    0x00007f60ac03bcb3:   mov    0x10(%r11,%rbx,4),%ebp       ;*aaload {reexecute=0 rethrow=0 return_oop=0}
+                                                                      ; - io.netty.util.internal.InternalThreadLocalMap::indexedVariable@13 (line 319)
+                                                                      ; - io.netty.util.concurrent.FastThreadLocal::get@9 (line 138)
+                                                                      ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::allocate@20 (line 2186)
+   0.12%    0x00007f60ac03bcb8:   cmp    $0xf6404501,%ebp             ;   {oop(a &apos;java/lang/Object&apos;{0x00000007b2022808})}
+   0.11%    0x00007f60ac03bcbe:   je     0x00007f60ac03c200           ;*if_acmpeq {reexecute=0 rethrow=0 return_oop=0}
+                                                                      ; - io.netty.util.concurrent.FastThreadLocal::get@17 (line 139)
+                                                                      ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::allocate@20 (line 2186)
+            0x00007f60ac03bcc4:   mov    0x8(%r12,%rbp,8),%r11d       ; implicit exception: dispatches to 0x00007f60ac03c424
+   1.62%    0x00007f60ac03bcc9:   cmp    $0x10af3c0,%r11d             ;   {metadata(&apos;io/github/neoionet/netty/mimalloc/MiMallocByteBufAllocator$LocalHeap&apos;)}
+   0.12%    0x00007f60ac03bcd0:   jne    0x00007f60ac03c31c
+            0x00007f60ac03bcd6:   lea    (%r12,%rbp,8),%rbx           ;*checkcast {reexecute=0 rethrow=0 return_oop=0}
+                                                                      ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::allocate@23 (line 2186)
+   0.01%    0x00007f60ac03bcda:   mov    %edx,%r11d
+   0.02%    0x00007f60ac03bcdd:   cmp    $0x400,%edx
+   0.00%    0x00007f60ac03bce3:   jg     0x00007f60ac03befa           ;*if_icmpgt {reexecute=0 rethrow=0 return_oop=0}
+                                                                      ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::allocate@4 (line 2241)
+                                                                      ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::allocate@26 (line 2186)
+            0x00007f60ac03bce9:   lea    0x7(%rdx),%r10d
+   0.04%    0x00007f60ac03bced:   sar    $0x3,%r10d                   ;*ishr {reexecute=0 rethrow=0 return_oop=0}
+                                                                      ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::toWordSize@23 (line 2343)
+                                                                      ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::allocate@8 (line 2242)
+                                                                      ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::allocate@26 (line 2186)
+   0.00%    0x00007f60ac03bcf1:   test   %r10d,%r10d
+            0x00007f60ac03bcf4:   je     0x00007f60ac03c05d           ;*ireturn {reexecute=0 rethrow=0 return_oop=0}
+                                                                      ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::toWordSize@34 (line 2344)
+                                                                      ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::allocate@8 (line 2242)
+                                                                      ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::allocate@26 (line 2186)
+            0x00007f60ac03bcfa:   mov    0x30(%rbx),%ebp              ;*getfield pagesFreeDirect {reexecute=0 rethrow=0 return_oop=0}
+                                                                      ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::allocate@15 (line 2243)
+                                                                      ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::allocate@26 (line 2186)
+   0.08%    0x00007f60ac03bcfd:   mov    0xc(%r12,%rbp,8),%r9d        ; implicit exception: dispatches to 0x00007f60ac03c44c
+   1.52%    0x00007f60ac03bd02:   cmp    %r9d,%r10d
+   0.00%    0x00007f60ac03bd05:   jae    0x00007f60ac03c0f4
+            0x00007f60ac03bd0b:   lea    (%r12,%rbp,8),%r9
+   0.00%    0x00007f60ac03bd0f:   mov    0x10(%r9,%r10,4),%r9d        ;*aaload {reexecute=0 rethrow=0 return_oop=0}
+                                                                      ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::allocate@20 (line 2243)
+                                                                      ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::allocate@26 (line 2186)
+   0.31%    0x00007f60ac03bd14:   mov    0xc(%r12,%r9,8),%ecx         ; implicit exception: dispatches to 0x00007f60ac03c464
+                                                                      ;*getfield freeList {reexecute=0 rethrow=0 return_oop=0}
+                                                                      ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::allocate@25 (line 2245)
+                                                                      ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::allocate@26 (line 2186)
+   1.83%    0x00007f60ac03bd19:   cmp    $0xffffffff,%ecx
+            0x00007f60ac03bd1c:   je     0x00007f60ac03befa           ;*if_icmpeq {reexecute=0 rethrow=0 return_oop=0}
+                                                                      ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::allocate@33 (line 2246)
+                                                                      ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::allocate@26 (line 2186)
+            0x00007f60ac03bd22:   test   %r8,%r8
+   0.01%    0x00007f60ac03bd25:   jne    0x00007f60ac03c22c           ;*ifnonnull {reexecute=0 rethrow=0 return_oop=0}
+                                                                      ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::allocate@163 (line 2252)
+                                                                      ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::allocate@26 (line 2186)
+            0x00007f60ac03bd2b:   mov    0x48(%rbx),%r8d              ;*getfield miBufLocalDeque {reexecute=0 rethrow=0 return_oop=0}
+                                                                      ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$LocalHeap::getMiByteBuf@1 (line 1585)
+                                                                      ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$LocalHeap::access$5400@1 (line 342)
+                                                                      ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::allocate@168 (line 2253)
+                                                                      ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::allocate@26 (line 2186)
+   0.00%    0x00007f60ac03bd2f:   mov    0x10(%r12,%r8,8),%edi        ; implicit exception: dispatches to 0x00007f60ac03c478
+                                                                      ;*getfield arrayDeque {reexecute=0 rethrow=0 return_oop=0}
+                                                                      ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$ArrayDequeBounded::pollFirst@1 (line 326)
+                                                                      ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$LocalHeap::getMiByteBuf@4 (line 1585)
+                                                                      ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$LocalHeap::access$5400@1 (line 342)
+                                                                      ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::allocate@168 (line 2253)
+                                                                      ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::allocate@26 (line 2186)
+   0.01%    0x00007f60ac03bd34:   mov    0x14(%r12,%rdi,8),%r8d       ; implicit exception: dispatches to 0x00007f60ac03c48c
+                                                                      ;*getfield elements {reexecute=0 rethrow=0 return_oop=0}
+                                                                      ; - java.util.ArrayDeque::pollFirst@1 (line 377)
+                                                                      ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$ArrayDequeBounded::pollFirst@4 (line 326)
+                                                                      ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$LocalHeap::getMiByteBuf@4 (line 1585)
+                                                                      ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$LocalHeap::access$5400@1 (line 342)
+                                                                      ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::allocate@168 (line 2253)
+                                                                      ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::allocate@26 (line 2186)
+   0.07%    0x00007f60ac03bd39:   mov    0xc(%r12,%rdi,8),%eax        ;*getfield head {reexecute=0 rethrow=0 return_oop=0}
+                                                                      ; - java.util.ArrayDeque::pollFirst@7 (line 377)
+                                                                      ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$ArrayDequeBounded::pollFirst@4 (line 326)
+                                                                      ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$LocalHeap::getMiByteBuf@4 (line 1585)
+                                                                      ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$LocalHeap::access$5400@1 (line 342)
+                                                                      ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::allocate@168 (line 2253)
+                                                                      ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::allocate@26 (line 2186)
+   0.05%    0x00007f60ac03bd3e:   mov    0xc(%r12,%r8,8),%r10d        ; implicit exception: dispatches to 0x00007f60ac03c4a0
+   0.72%    0x00007f60ac03bd43:   cmp    %r10d,%eax
+            0x00007f60ac03bd46:   jae    0x00007f60ac03c120
+            0x00007f60ac03bd4c:   lea    (%r12,%r8,8),%r14
+            0x00007f60ac03bd50:   mov    0x10(%r14,%rax,4),%ebp       ;*aaload {reexecute=0 rethrow=0 return_oop=0}
+                                                                      ; - java.util.ArrayDeque::elementAt@2 (line 257)
+                                                                      ; - java.util.ArrayDeque::pollFirst@12 (line 377)
+                                                                      ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$ArrayDequeBounded::pollFirst@4 (line 326)
+                                                                      ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$LocalHeap::getMiByteBuf@4 (line 1585)
+                                                                      ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$LocalHeap::access$5400@1 (line 342)
+                                                                      ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::allocate@168 (line 2253)
+                                                                      ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::allocate@26 (line 2186)
+   0.42%    0x00007f60ac03bd55:   test   %ebp,%ebp
+   0.01%    0x00007f60ac03bd57:   jne    0x00007f60ac03bf2a           ;*ifnull {reexecute=0 rethrow=0 return_oop=0}
+                                                                      ; - java.util.ArrayDeque::pollFirst@17 (line 378)
+                                                                      ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$ArrayDequeBounded::pollFirst@4 (line 326)
+                                                                      ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$LocalHeap::getMiByteBuf@4 (line 1585)
+                                                                      ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$LocalHeap::access$5400@1 (line 342)
+                                                                      ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::allocate@168 (line 2253)
+                                                                      ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::allocate@26 (line 2186)
+            0x00007f60ac03bd5d:   mov    0x4c(%rbx),%ebx              ;*getfield miBufCrossThreadsQueue {reexecute=0 rethrow=0 return_oop=0}
+                                                                      ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$LocalHeap::getMiByteBuf@16 (line 1587)
+                                                                      ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$LocalHeap::access$5400@1 (line 342)
+                                                                      ; - io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::allocate@168 (line 2253)
+....................................................................................................
+  15.57%  <total for region 3>
+
+....[Hottest Regions]...............................................................................
+  33.30%           c2, level 4  io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease, version 2, compile id 1846 
+  15.93%           c2, level 4  io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::performDirectAllocation, version 4, compile id 1892 
+  15.57%           c2, level 4  io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::allocate, version 4, compile id 1888 
+   8.56%           c2, level 4  io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::allocate, version 4, compile id 1888 
+   4.02%           c2, level 4  io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::allocateGeneric, version 4, compile id 2162 
+   3.19%           c2, level 4  io.github.neoionet.netty.microbenchmark.jmh_generated.ByteBufAllocatorAllocPatternBenchmark_directAllocation_jmhTest::directAllocation_avgt_jmhStub, version 2, compile id 1858 
+   2.45%           c2, level 4  io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::allocateGeneric, version 2, compile id 1864 
+   2.23%           c2, level 4  io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::allocateDirect, version 4, compile id 1886 
+   2.08%           c2, level 4  io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::allocateGeneric, version 4, compile id 2162 
+   1.83%           c2, level 4  io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::probeAlloc, version 2, compile id 1844 
+   1.18%           c2, level 4  io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$LocalHeap::pageQueueFindFreeEx, version 4, compile id 1867 
+   1.13%           c2, level 4  io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::allocateGeneric, version 2, compile id 1864 
+   0.35%           c2, level 4  io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$Page::pageUnfull, version 2, compile id 1910 
+   0.28%           c2, level 4  io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$LocalHeap::pageQueueFindFreeEx, version 4, compile id 1867 
+   0.25%           c2, level 4  io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$Page::pageUnfull, version 2, compile id 1910 
+   0.24%     [kernel.kallsyms]  __perf_event_task_sched_in 
+   0.20%           c1, level 3  io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::allocateGeneric, version 3, compile id 2158 
+   0.20%             libc.so.6  __internal_syscall_cancel 
+   0.18%     [kernel.kallsyms]  perf_ctx_unlock 
+   0.18%           c2, level 4  io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::allocateGeneric, version 2, compile id 1864 
+   0.18%           c1, level 3  io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::allocateGeneric, version 3, compile id 2158 
+   0.16%             libjvm.so  os::current_thread_id() 
+   0.16%             libjvm.so  ElfSymbolTable::lookup(unsigned char*, int*, int*, int*, ElfFuncDescTable*) 
+   0.16%           c2, level 4  io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$LocalHeap::access$5700, version 2, compile id 1783 
+   0.14%           c1, level 3  io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::allocateGeneric, version 3, compile id 2158 
+   0.14%           c2, level 4  io.github.neoionet.netty.microbenchmark.jmh_generated.ByteBufAllocatorAllocPatternBenchmark_directAllocation_jmhTest::directAllocation_AverageTime, version 2, compile id 1945 
+   0.13%           c2, level 4  io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$Page::pageRetire, version 2, compile id 1914 
+   0.13%           c1, level 3  io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::allocateGeneric, version 3, compile id 2158 
+   0.12%           c1, level 3  io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::allocateGeneric, version 3, compile id 2158 
+   0.11%           c1, level 3  io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::allocateGeneric, version 3, compile id 2158 
+   0.11%           c1, level 3  io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::allocateGeneric, version 3, compile id 2158 
+   0.10%           c1, level 3  io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::allocateGeneric, version 3, compile id 2158 
+   0.10%           c2, level 4  io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$LocalHeap::access$5700, version 2, compile id 1783 
+   0.10%     [kernel.kallsyms]  entry_SYSCALL_64 
+   0.10%           c2, level 4  io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$LocalHeap::access$5700, version 2, compile id 1783 
+   0.09%                        <unknown> 
+   0.09%           c2, level 4  io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$LocalHeap::access$5700, version 2, compile id 1783 
+   0.09%             libc.so.6  syscall 
+   0.08%           c2, level 4  io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$LocalHeap::access$5700, version 2, compile id 1783 
+   0.08%             libc.so.6  __syscall_cancel_arch_end 
+   4.26%  <...other 836 warm regions...>
+....................................................................................................
+ 100.00%  <totals>
+
+....[Hottest Methods (after inlining)]..............................................................
+  33.30%           c2, level 4  io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease, version 2, compile id 1846 
+  24.13%           c2, level 4  io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::allocate, version 4, compile id 1888 
+  15.93%           c2, level 4  io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::performDirectAllocation, version 4, compile id 1892 
+   6.10%           c2, level 4  io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::allocateGeneric, version 4, compile id 2162 
+   3.77%           c2, level 4  io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::allocateGeneric, version 2, compile id 1864 
+   3.19%           c2, level 4  io.github.neoionet.netty.microbenchmark.jmh_generated.ByteBufAllocatorAllocPatternBenchmark_directAllocation_jmhTest::directAllocation_avgt_jmhStub, version 2, compile id 1858 
+   2.23%           c2, level 4  io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::allocateDirect, version 4, compile id 1886 
+   1.86%           c2, level 4  io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$LocalHeap::pageQueueFindFreeEx, version 4, compile id 1867 
+   1.83%           c2, level 4  io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::probeAlloc, version 2, compile id 1844 
+   1.58%           c1, level 3  io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::allocateGeneric, version 3, compile id 2158 
+   0.64%           c2, level 4  io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$Page::pageUnfull, version 2, compile id 1910 
+   0.56%           c2, level 4  io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$LocalHeap::access$5700, version 2, compile id 1783 
+   0.32%                        <unknown> 
+   0.28%           c2, level 4  io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$Page::pageRetire, version 2, compile id 1914 
+   0.25%           c2, level 4  io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$LocalHeap::segmentsPageFindAndAllocate, version 2, compile id 1776 
+   0.25%     [kernel.kallsyms]  __perf_event_task_sched_in 
+   0.20%             libc.so.6  __internal_syscall_cancel 
+   0.18%     [kernel.kallsyms]  perf_ctx_unlock 
+   0.16%             libjvm.so  os::current_thread_id() 
+   0.16%             libjvm.so  ElfSymbolTable::lookup(unsigned char*, int*, int*, int*, ElfFuncDescTable*) 
+   0.16%           c2, level 4  io.github.neoionet.netty.microbenchmark.jmh_generated.ByteBufAllocatorAllocPatternBenchmark_directAllocation_jmhTest::directAllocation_AverageTime, version 2, compile id 1945 
+   0.10%     [kernel.kallsyms]  entry_SYSCALL_64 
+   0.09%             libc.so.6  syscall 
+   0.08%             libc.so.6  __syscall_cancel_arch_end 
+   0.07%           c2, level 4  io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$LocalHeap::pageQueueMoveToFront, version 2, compile id 1817 
+   0.06%     [kernel.kallsyms]  task_tick_fair 
+   0.06%     [kernel.kallsyms]  anon_pipe_write 
+   0.06%     [kernel.kallsyms]  do_syscall_64 
+   0.05%     [kernel.kallsyms]  vfs_write 
+   0.05%     [kernel.kallsyms]  entry_SYSCALL_64_after_hwframe 
+   0.05%     [kernel.kallsyms]  update_curr 
+   0.05%     [kernel.kallsyms]  get_jiffies_update 
+   0.04%     [kernel.kallsyms]  __task_pid_nr_ns 
+   0.04%     [kernel.kallsyms]  reweight_entity 
+   0.04%     [kernel.kallsyms]  perf_ctx_enable 
+   0.04%     [kernel.kallsyms]  fdget_pos 
+   0.03%           c2, level 4  io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$LocalHeap::heapQueueFirstUpdate, version 3, compile id 1790 
+   0.03%             libjvm.so  xmlStream::write_text(char const*, unsigned long) [clone .part.0] 
+   0.03%     [kernel.kallsyms]  ksys_write 
+   0.03%     [kernel.kallsyms]  error_entry 
+   1.95%  <...other 418 warm methods...>
+....................................................................................................
+ 100.00%  <totals>
+
+....[Distribution by Source]........................................................................
+  94.40%           c2, level 4
+   2.38%     [kernel.kallsyms]
+   1.59%           c1, level 3
+   0.64%             libjvm.so
+   0.49%             libc.so.6
+   0.32%                      
+   0.11%           interpreter
+   0.03%        hsdis-amd64.so
+   0.02%  ld-linux-x86-64.so.2
+   0.01%           c1, level 2
+   0.00%                [vdso]
+   0.00%              [amdgpu]
+   0.00%             libzip.so
+   0.00%      Unknown, level 0
+   0.00%      perf-1150286.map
+....................................................................................................
+ 100.00%  <totals>
+
+
+
+# Run complete. Total time: 00:00:35
+
+REMEMBER: The numbers below are just data. To gain reusable insights, you need to follow up on
+why the numbers are the way they are. Use profilers (see -prof, -lprof), design factorial
+experiments, perform baseline and negative tests that provide experimental control, make sure
+the benchmarking environment is safe on JVM/OS/HW level, ask for reviews from the domain experts.
+Do not assume the numbers tell you what you want them to tell.
+
+NOTE: Current JVM experimentally supports Compiler Blackholes, and they are in use. Please exercise
+extra caution when trusting the results, look into the generated code to check the benchmark still
+works, and factor in a small probability of new VM bugs. Additionally, while comparisons between
+different JVMs are already problematic, the performance difference caused by different Blackhole
+modes can be very significant. Please make sure you use the consistent Blackhole mode for comparisons.
+
+Benchmark                                                   (MAX_LIVE_BUFFERS)  (allocatorType)  (enableReadWrite)  (sizePattern)  Mode  Cnt    Score    Error  Units
+ByteBufAllocatorAllocPatternBenchmark.directAllocation                    1024         MIMALLOC               true     E_COMMERCE  avgt    5  269.131 ± 61.564  ns/op
+ByteBufAllocatorAllocPatternBenchmark.directAllocation:asm                1024         MIMALLOC               true     E_COMMERCE  avgt           NaN             ---

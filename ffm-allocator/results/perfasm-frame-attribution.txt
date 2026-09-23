@@ -1,0 +1,203 @@
+# perfasm-platform-ADAPTIVE.txt
+# region totals printed by perfasm: [37.75, 26.48, 10.71]  sum of annotated instruction pct: 59.27%
+## innermost frame
+   32.01%  <unannotated instruction>
+    8.99%  java.util.concurrent.locks.StampedLock::releaseWrite
+    3.42%  java.util.concurrent.locks.StampedLock::tryAcquireWrite
+    2.97%  io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunk::releaseSegment
+    2.23%  io.netty.buffer.AdaptivePoolingAllocator$AdaptiveByteBuf::deallocate
+    1.31%  io.netty.util.Recycler::get
+    1.26%  io.netty.buffer.AbstractByteBuf::discardMarks
+    0.85%  io.netty.buffer.AbstractReferenceCountedByteBuf::handleRelease
+    0.80%  io.netty.buffer.AdaptivePoolingAllocator$SizeClassMagazine::allocate
+    0.78%  io.netty.buffer.AdaptivePoolingAllocator$StripedHeap::tryAllocate
+    0.53%  io.netty.buffer.AdaptivePoolingAllocator::allocateShared
+    0.49%  io.netty.buffer.AdaptivePoolingAllocator$AdaptiveByteBuf::init
+    0.33%  sun.misc.Unsafe::putOrderedLong
+    0.32%  io.netty.util.internal.shaded.org.jctools.queues.MpscArrayQueue::offer
+    0.29%  io.netty.buffer.AdaptivePoolingAllocator$SizeClassMagazine::tickAllocPurge
+## any class in the inline chain
+   32.01%  <unannotated instruction>
+   15.58%  io.netty.buffer.AdaptivePoolingAllocator
+   14.93%  io.netty.buffer.AdaptivePoolingAllocator$StripedHeap
+   12.97%  java.util.concurrent.locks.StampedLock
+   11.81%  io.netty.buffer.AbstractReferenceCountedByteBuf
+   11.44%  io.netty.buffer.AdaptivePoolingAllocator$AdaptiveByteBuf
+    9.48%  io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunk
+    5.97%  io.netty.buffer.AdaptivePoolingAllocator$SizeClassMagazine
+    4.81%  io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunkCache
+    2.00%  io.netty.util.Recycler
+    1.42%  io.netty.buffer.AbstractByteBuf
+    1.03%  io.netty.util.Recycler$LocalPool
+    1.00%  io.netty.util.internal.shaded.org.jctools.queues.MpscArrayQueue
+    0.69%  io.netty.util.Recycler$UnguardedLocalPool
+    0.64%  sun.misc.Unsafe
+
+# perfasm-platform-FFM_MI.txt
+# region totals printed by perfasm: [25.1, 20.99, 13.31]  sum of annotated instruction pct: 59.60%
+## innermost frame
+   46.04%  <unannotated instruction>
+    5.02%  io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease
+    1.22%  io.netty.buffer.FfmByteBuf::deallocate
+    1.17%  io.netty.buffer.FfmMallocByteBufAllocator$LocalCache::push
+    0.99%  io.netty.buffer.FfmByteBuf::init
+    0.71%  io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::performDirectAllocation
+    0.64%  io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::getNextSizeIndex
+    0.55%  io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::getNextReleaseIndex
+    0.54%  sun.misc.Unsafe::getInt
+    0.35%  io.netty.buffer.FfmNative$Mi::doFree
+    0.33%  io.netty.buffer.FfmMallocByteBufAllocator$LocalCache::pop
+    0.30%  java.lang.ThreadLocal$ThreadLocalMap::getEntry
+    0.30%  io.netty.buffer.AbstractByteBuf::setIndex0
+    0.22%  io.netty.buffer.FfmMallocByteBufAllocator::newDirectBuffer
+    0.22%  io.netty.util.internal.RefCnt$UnsafeRefCnt::release0
+## any class in the inline chain
+   46.04%  <unannotated instruction>
+   13.56%  io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState
+    4.34%  io.netty.buffer.FfmByteBuf
+    3.92%  io.netty.buffer.FfmMallocByteBufAllocator
+    3.85%  io.netty.buffer.AbstractReferenceCountedByteBuf
+    2.75%  io.netty.buffer.AbstractByteBufAllocator
+    1.50%  io.netty.buffer.FfmMallocByteBufAllocator$LocalCache
+    1.22%  io.netty.buffer.AbstractByteBuf
+    0.90%  io.netty.util.internal.RefCnt
+    0.90%  io.netty.util.internal.RefCnt$UnsafeRefCnt
+    0.70%  io.netty.util.internal.PlatformDependent
+    0.70%  io.netty.util.internal.PlatformDependent0
+    0.70%  sun.misc.Unsafe
+    0.54%  io.netty.buffer.FfmNative$Mi
+    0.39%  java.lang.ThreadLocal
+
+# perfasm-platform-MIMALLOC.txt
+# region totals printed by perfasm: [16.61, 14.72, 10.56, 10.55]  sum of annotated instruction pct: 50.94%
+## innermost frame
+   24.30%  <unannotated instruction>
+   13.00%  java.util.concurrent.locks.StampedLock::releaseWrite
+    4.46%  io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::allocate
+    2.22%  io.netty.buffer.UnsafeByteBufUtil::getInt
+    1.34%  java.util.concurrent.locks.StampedLock::tryAcquireWrite
+    1.19%  io.netty.util.internal.RefCnt$UnsafeRefCnt::release0
+    0.77%  io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$MiByteBuf::deallocate
+    0.71%  java.util.ArrayDeque::size
+    0.67%  io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$Segment::access$2600
+    0.37%  java.util.concurrent.locks.StampedLock::unlockWrite
+    0.28%  jdk.internal.misc.Unsafe::putInt
+    0.27%  io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$LocalHeap::access$4800
+    0.21%  io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::free
+    0.20%  io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$ArrayDequeBounded::offerFirst
+    0.16%  io.netty.buffer.UnsafeByteBufUtil::setInt
+## any class in the inline chain
+   24.62%  io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator
+   24.30%  <unannotated instruction>
+   14.84%  java.util.concurrent.locks.StampedLock
+    9.58%  io.netty.buffer.AbstractReferenceCountedByteBuf
+    8.43%  io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$MiByteBuf
+    2.78%  io.netty.buffer.UnpooledUnsafeDirectByteBuf
+    2.78%  io.github.neoionet.netty.mimalloc.MiUnpooledUnsafeDirectByteBuf
+    2.66%  io.netty.buffer.UnsafeByteBufUtil
+    1.19%  io.netty.util.internal.RefCnt
+    1.19%  io.netty.util.internal.RefCnt$UnsafeRefCnt
+    1.08%  io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$ArrayDequeBounded
+    0.88%  java.util.ArrayDeque
+    0.67%  io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$Page
+    0.67%  io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$Segment
+    0.39%  io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$LocalHeap
+
+# perfasm-eventloop-ADAPTIVE.txt
+# region totals printed by perfasm: [33.11, 31.15, 20.88]  sum of annotated instruction pct: 49.92%
+## innermost frame
+   36.33%  <unannotated instruction>
+    5.64%  io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease
+    1.11%  io.netty.buffer.AdaptivePoolingAllocator$IntStack::push
+    1.09%  io.netty.util.internal.InternalThreadLocalMap::indexedVariable
+    0.95%  io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::performDirectAllocation
+    0.85%  io.netty.util.internal.RefCnt$UnsafeRefCnt::release0
+    0.74%  io.netty.util.concurrent.FastThreadLocalThread::threadLocalMap
+    0.55%  io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::getNextReleaseIndex
+    0.55%  io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::getNextSizeIndex
+    0.47%  io.netty.buffer.AdaptivePoolingAllocator$AdaptiveByteBuf::deallocate
+    0.35%  sun.misc.Unsafe::getInt
+    0.32%  io.netty.buffer.AdaptivePoolingAllocator::allocate
+    0.22%  io.netty.util.Recycler$LocalPool::acquire
+    0.14%  io.netty.buffer.AdaptiveByteBufAllocator::newDirectBuffer
+    0.14%  io.netty.util.concurrent.FastThreadLocal::get
+## any class in the inline chain
+   36.33%  <unannotated instruction>
+   10.78%  io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState
+    2.91%  io.netty.buffer.AbstractReferenceCountedByteBuf
+    2.81%  io.netty.buffer.AdaptiveByteBufAllocator
+    2.67%  io.netty.buffer.AdaptivePoolingAllocator
+    1.97%  io.netty.util.concurrent.FastThreadLocal
+    1.83%  io.netty.util.internal.InternalThreadLocalMap
+    1.76%  io.netty.buffer.AdaptivePoolingAllocator$AdaptiveByteBuf
+    1.22%  io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunk
+    1.21%  io.netty.util.internal.RefCnt
+    1.21%  io.netty.util.internal.RefCnt$UnsafeRefCnt
+    1.11%  io.netty.buffer.AdaptivePoolingAllocator$IntStack
+    1.01%  io.netty.buffer.AdaptivePoolingAllocator$ThreadLocalSizeClassHeap
+    0.99%  io.netty.buffer.AdaptivePoolingAllocator$SizeClassMagazine
+    0.98%  io.netty.util.Recycler
+
+# perfasm-eventloop-FFM_MI.txt
+# region totals printed by perfasm: [29.9, 25.36, 15.12]  sum of annotated instruction pct: 33.27%
+## innermost frame
+   24.86%  <unannotated instruction>
+    6.13%  io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::getNextSizeIndex
+    0.94%  io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::performDirectAllocation
+    0.24%  io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::getNextReleaseIndex
+    0.19%  io.netty.buffer.FfmNative$Mi::doMalloc
+    0.18%  io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease
+    0.15%  io.netty.buffer.FfmMallocByteBufAllocator::newDirectBuffer
+    0.15%  io.netty.util.internal.InternalThreadLocalMap::indexedVariable
+    0.15%  io.netty.buffer.FfmMallocByteBufAllocator$LocalCache::pop
+    0.10%  io.netty.util.concurrent.FastThreadLocal::get
+    0.06%  io.netty.buffer.FfmMallocByteBufAllocator::localCache
+    0.06%  io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::allocateDirect
+    0.03%  io.netty.buffer.AbstractByteBuf::writerIndex
+    0.03%  io.netty.buffer.AbstractByteBuf::ensureWritable0
+## any class in the inline chain
+   24.86%  <unannotated instruction>
+    8.41%  io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState
+    0.80%  io.netty.buffer.AbstractByteBufAllocator
+    0.80%  io.netty.buffer.FfmMallocByteBufAllocator
+    0.25%  io.netty.util.concurrent.FastThreadLocal
+    0.19%  io.netty.buffer.FfmNative$Mi
+    0.15%  io.netty.util.internal.InternalThreadLocalMap
+    0.15%  io.netty.buffer.FfmMallocByteBufAllocator$LocalCache
+    0.06%  io.netty.buffer.AbstractByteBuf
+
+# perfasm-eventloop-MIMALLOC.txt
+# region totals printed by perfasm: [33.3, 15.93, 15.57]  sum of annotated instruction pct: 53.43%
+## innermost frame
+   37.22%  <unannotated instruction>
+    6.32%  io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::readAndRelease
+    2.08%  io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$MiByteBuf::deallocate
+    1.56%  io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$Segment::access$2600
+    1.34%  io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::getNextReleaseIndex
+    0.79%  io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::performDirectAllocation
+    0.76%  io.netty.util.internal.InternalThreadLocalMap::indexedVariable
+    0.43%  java.lang.Enum::ordinal
+    0.41%  io.netty.util.internal.RefCnt$UnsafeRefCnt::release0
+    0.38%  io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState::getNextSizeIndex
+    0.38%  io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::allocate
+    0.31%  sun.misc.Unsafe::getInt
+    0.27%  io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$Page::freeBlockLocal
+    0.18%  io.netty.util.concurrent.FastThreadLocalThread::threadLocalMap
+    0.17%  io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator::free
+## any class in the inline chain
+   37.22%  <unannotated instruction>
+   13.98%  io.github.neoionet.netty.microbenchmark.ByteBufAllocatorAllocPatternBenchmark$AllocationPatternState
+    5.02%  io.netty.buffer.AbstractReferenceCountedByteBuf
+    4.43%  io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator
+    4.32%  io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$MiByteBuf
+    1.59%  io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$Segment
+    1.06%  io.netty.util.concurrent.FastThreadLocal
+    0.94%  io.netty.util.internal.InternalThreadLocalMap
+    0.73%  io.netty.util.internal.RefCnt
+    0.73%  io.netty.util.internal.RefCnt$UnsafeRefCnt
+    0.46%  io.netty.buffer.AbstractByteBuf
+    0.44%  io.github.neoionet.netty.mimalloc.MiMallocByteBufAllocator$Page
+    0.43%  java.lang.Enum
+    0.31%  io.netty.util.internal.PlatformDependent
+    0.31%  io.netty.util.internal.PlatformDependent0
+
