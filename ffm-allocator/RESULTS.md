@@ -358,8 +358,36 @@ lowest for MIMALLOC (7.6/op) which is nevertheless slower than FFM_MI (10.1/op),
 1/op everywhere, and front-end stalls are 14-17/op for all three. Nothing here says "cache" or
 "speculation"; the extra time tracks the extra instructions.
 
-(JMH's perfnorm event set on this box does not include LLC or `cache-misses` counters; they were asked for
-explicitly in a second run, see below.)
+### The cache counters, asked for explicitly
+
+JMH's default perfnorm event set on this box has no LLC or `cache-misses` counters, so a second run asked
+for them (`-prof perfnorm:events=...`, `run-why2.sh`). `LLC-loads` / `LLC-load-misses` / `LLC-stores` /
+`LLC-store-misses` produced **no rows at all** — those aliases are not collected here — so what came back is
+`cache-references` and `cache-misses`:
+
+| per op | executor | ADAPTIVE | MIMALLOC | FFM_MI |
+| --- | --- | ---: | ---: | ---: |
+| instructions | platform | 762.7 | 749.8 | 511.6 |
+| instructions | event loop | 535.4 | 503.5 | 513.9 |
+| cache-references | platform | 17.03 | 8.90 | 13.08 |
+| cache-references | event loop | 11.57 | 9.43 | 12.89 |
+| cache-misses | platform | 0.738 | 0.432 | 0.813 |
+| cache-misses | event loop | 0.157 | 0.291 | 0.826 |
+
+**Read the counts, not the scores, from this run.** Another user of this machine restores the CPU to
+4300 MHz when their own benchmarks finish, and that happened between the two cells: the platform cell's
+439.7 cycles/op against 448.4 ns/op is consistent with 2300 MHz, the event-loop cell's 271.2 cycles/op
+against 133.3 ns/op is consistent with 4300 MHz. Per-op *counts* do not depend on the clock; the ns/op of
+these two cells cannot be compared with any other table here.
+
+The instruction counts reproduce the first run (FFM_MI 511.6 vs 512.8 platform, 513.9 vs 514.6 event loop;
+MIMALLOC 749.8 vs 748.2 platform), except ADAPTIVE on platform threads, which came out at 762.7 here
+against 851.7 in the first run — an 11% swing between two single forks of the same cell, which the other
+two allocators do not show. I did not chase it down.
+
+`cache-misses` is below one per operation everywhere (0.16-0.83), so the live set is not falling out of the
+last-level cache in any of these configurations, and last-level cache behaviour is not what separates the
+three allocators.
 
 ## 2. perfasm (`event=cycles`, never `cycles:P`): the extra instructions are a StampedLock
 
