@@ -10,6 +10,9 @@ It is the native counterpart of this repository's `mimalloc` module, which is a 
 mimalloc algorithm: same allocator, one reimplemented on the Java heap, the other called through FFM.
 `RESULTS.md` has them measured against each other and against Netty's `AdaptiveByteBufAllocator`.
 
+> Standalone, self-contained copy of this module (same sources, released Netty dependency, raw results
+> and the profile against the Java port): **https://github.com/franz1981/netty-ffm-allocator**
+
 Heap buffers are out of scope: they are delegated to `UnpooledByteBufAllocator`.
 
 ## Build
