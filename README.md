@@ -148,7 +148,8 @@ fully resident.
 | :--- | :--- | :--- |
 | mimalloc (this project) | `mimalloc` | - |
 | Netty `AdaptiveByteBufAllocator` | `adaptive` | to test another Netty build, put its `netty-common`, `netty-buffer` and `netty-transport` before the benchmarks jar on the class path |
-| the same, page-store build ([netty#17151](https://github.com/netty/netty/pull/17151) follow-up), `malloc` regions instead of `mmap` | `adaptive` | `-Dio.netty.allocator.segmentRegionSize=0` |
+| the same, page-store build ([franz1981/netty `adaptive-page-store`](https://github.com/franz1981/netty/tree/adaptive-page-store)), `mmap` regions | `adaptive` | that build first on the class path; `mmap` needs JDK 22+, Linux x86_64 or aarch64 and `--enable-native-access=ALL-UNNAMED`, else it falls back to `malloc` |
+| the same, `malloc` regions | `adaptive` | `-Dio.netty.allocator.segmentRegionSize=0` |
 
 ## 🌟 Acknowledgments
 
