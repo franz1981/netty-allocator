@@ -110,6 +110,46 @@ b.group(group)
     *   **Description:** Determines the page search strategy. `best` stands for **best-fit**, `first` stands for **first-fit**.
     *   **Default value:** `best`
 
+## 🧪 Mixed memory test
+
+`MixedMemoryTest` (in the `benchmark` module) shows how much memory an allocator keeps, and gives back, over time,
+when event loops and platform threads share it. It prints one line per second:
+`MEM <phase> <epoch_ms> <rss_kib> <jvm_direct_bytes> <jvm_direct_count> <allocator_used_direct>`.
+
+Phases: `baseline` (5 s idle); `burst` (every thread allocates and holds buffers of every size class and some large
+ones, in random order); `release` (each thread frees half of its own buffers and half of another thread's, event loops
+and platform threads mixed, then 5 s idle); `traffic` (every thread allocates and frees one 1-16 KiB buffer per
+millisecond).
+
+```
+mvn -pl benchmark -am package -DskipTests
+java -cp benchmark/target/benchmarks.jar <JVM flags> io.github.neoionet.netty.microbenchmark.MixedMemoryTest \
+     <adaptive|mimalloc> <eventLoops> <platformThreads> <perSizeClass> <perLargeSize> <trafficSeconds> \
+     [largeEvery] [silent|active] [secondBurstAtSeconds]
+```
+
+Scenarios we run (8 event loops, 16 platform threads, 32 buffers per size class, 4 per large size, 60 s of traffic):
+
+| scenario | arguments after the allocator |
+| :--- | :--- |
+| default | `8 16 32 4 60 0` |
+| second burst 30 s into the traffic | `8 16 32 4 60 0 active 30` |
+| trickle: 1 in 1000 traffic buffers is 256 KiB | `8 16 32 4 60 1000` |
+| silent: platform threads stop after the burst | `8 16 32 4 60 0 silent` |
+
+JVM flags, for every configuration (JDK 25): `--enable-native-access=ALL-UNNAMED -Dtouch=true
+-Dio.netty.leakDetection.level=disabled -Xms2g -Xmx2g -XX:+AlwaysPreTouch -XX:MaxDirectMemorySize=16g`.
+`-Dtouch=true` writes every 4 KiB page of each buffer, as an application filling its buffers would; a fixed,
+pre-touched Java heap does not move RSS. Do not add `--sun-misc-unsafe-memory-access=allow`: with it Netty uses
+`sun.misc.Unsafe`, and the direct memory it would `malloc` comes from `ByteBuffer.allocateDirect` instead, zeroed and
+fully resident.
+
+| configuration | allocator argument | extra |
+| :--- | :--- | :--- |
+| mimalloc (this project) | `mimalloc` | - |
+| Netty `AdaptiveByteBufAllocator` | `adaptive` | to test another Netty build, put its `netty-common`, `netty-buffer` and `netty-transport` before the benchmarks jar on the class path |
+| the same, page-store build ([netty#17151](https://github.com/netty/netty/pull/17151) follow-up), `malloc` regions instead of `mmap` | `adaptive` | `-Dio.netty.allocator.segmentRegionSize=0` |
+
 ## 🌟 Acknowledgments
 
 This project would not be possible without the following open-source works:
